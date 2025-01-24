@@ -1,11 +1,11 @@
 name: Publish LaTeX script
 on:
-  push:
-    paths:
-      - 'Script/**'
-      - 'Beispiele/**'
-    branches:
-      - main
+  # push:
+  #   paths:
+  #     - 'Script/**'
+  #     - 'Beispiele/**'
+  #   branches:
+  #     - main
   workflow_dispatch:
 
 jobs:
