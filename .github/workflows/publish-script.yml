@@ -1,0 +1,47 @@
+name: Publish LaTeX script
+on:
+  push:
+    paths:
+      - 'Script/**'
+      - 'Beispiele/**'
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v4
+
+      - name: Compile script
+        uses: xu-cheng/texlive-action@v2
+        with:
+          scheme: full
+          run: |
+            cd Script
+            apk add make
+            make
+            make
+            mv main.pdf script_programmieren.pdf
+
+      - name: Commit to download repository
+        run: |
+          set -x
+          git clone -b download https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git download
+          cd download
+          cp ../Script/script_programmieren.pdf script_programmieren.pdf
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -f script_programmieren.pdf
+          if (git diff --quiet) || (git diff --staged --quiet)
+          then
+            git commit --amend -m "Update script_programmieren.pdf"
+            until git push --force-with-lease origin download; do
+              git pull --rebase origin download
+            done
+          else
+            echo "No changes to commit"
+          fi
+          git push
