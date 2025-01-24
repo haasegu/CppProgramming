@@ -1,0 +1,514 @@
+\chapter{Einführung in die STL}
+\label{p:11}
+%
+%Container -- Algorithmen -- Iteratoren
+%\\
+%Nutzung; Nutzung mit eigenen Klassen
+
+%% komplett umschreiben mit Bsp. v_9a
+% Container --> Iterator --> Algorithmus
+% -  max_element
+% -  sort
+% -  find
+% -  find_if
+% Entferne Elemen aus Vektor
+
+\section{Was ist neu?}
+\label{p:11.1}
+
+Die \textbf{S}tandard  \textbf{T}emplate \textbf{L}ibrary (STL) enthält
+Schablonen (engl.: templates) zur Datenspeicherung, Schablonen für
+oft gebräuchliche Algorithmen sowie verallgemeinerte Pointer (Iteratoren) um
+beide miteinander zu verbinden.
+
+Die Standardbibliothek enh"alt in der STL (Standard Template Library)
+schon viele brauchbare Klassen
+und Methoden, welche man nicht immer wieder neu implementieren mu"s.
+Wir gehen nur auf einige wenige M"oglichkeiten der STL ein,
+es sei auf \cite[\S49]{Meyers:1998:ECP},  \cite[\S6.4.1]{Meyers:1997:MEC},\cite[\S10]{Yang:2001:COO},
+\cite[567-711]{KirchPrinz:2002:OOP}, \cite{KuhlinsSchader:2002:DCS} verwiesen.
+Die Klassen und Methoden der Standardbibliothek sind im Namensraum \texttt{std} untergebracht,
+soda"s, z.B., \texttt{cout}
+via den Namespace \texttt{std::cout} aufgerufen werden mu"s (nicht zu Verwechseln mit
+dem Scope-Operator) oder man gibt einzelne Komponenten des Namensraumes "uber
+\verb|using std::cout| bzw. den gesamten Namensraum "uber
+\verb|using namespace| frei.
+%\exfile{A1/a1\_1.cpp} frei.
+
+Die STL basiert auf drei grunds"atzlichen Konzepten:
+Containern, Iteratoren und Algorithmen.
+\index{Container}\index{Iteratoren}\index{Algorithmen}
+Die Container beinhalten (mehrere) Objekte deren Templates konkretisiert werden,
+und in welchen mit Hilfe von Iteratoren navigiert werden kann.
+In Fortf"uhrung dessen sind Algorithmen
+Funktionen welche auf Containern (mittels der Iteratoren) bestimmte
+Operationen durchf"uhren.
+
+\begin{lstlisting}[caption={Intro STL},label=lst:stl_a,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+
+#include <vector>                       //  vector<T>
+#include <algorithm>                    //  find()
+using namespace std;
+...
+{
+    vector<int> v(10);                  // container
+    // Init v
+    ....
+    vector<int>::iterator it;           // iterator
+    it = find(v.begin(), v.end(), 4);   // algorithm, iterators
+}
+\end{lstlisting}
+Das kurzes Codefragment~\ref{lst:stl_a} enthält alle drei Konzept der STL:
+\begin{itemize}
+    \item \ghref{http://www.cplusplus.com/reference/stl/}{\emph{Container}}: unterschiedliche Datenstrukturen zur Speicherung von Elementen, z.B.,
+      \verb|vector|, \verb|list|, \verb|stack|.
+      \\
+      Container sind eigenen Templateklassen mit eigenen Methoden (z.B., \verb|erase|, \verb|assign|)
+      und zugehörigen Iteratoren.
+    \item \ghref{http://www.cplusplus.com/reference/algorithm/}{\emph{Algorithmen}}:
+      unabhängig vom konkreten Containers implementierte Algorithmen, z.B.,
+      \verb|find|, \verb|find_if|, \verb|sort|, \verb|unique|, \verb|count|, \verb|accumulate|.{}
+      \\[0.5ex]
+      $\Longrightarrow$ Algorithmen und Container haben nichts miteinander zu tun.
+    \item \ghref{http://www.cplusplus.com/reference/iterator/}{\emph{Iteratoren}}:
+       sind das Bindeglied zwischen Containern und Algorithmen.
+       Ein klassischer C-Pointer \verb|int*| kann als Iterator betrachtet und auch als solcher benutzt werden.
+\end{itemize}
+In obigem Code~\ref{lst:stl_a} sind \verb|v.begin()| und \verb|v.end()| Methoden des Containers
+\verb|vector<int>| welche Iteratoren auf das erste und das hinterletzte Element zurückliefern,
+also den Definitionsbereich für den Algorithmus~\verb|find|.
+Der Algorithmus liefert wiederum einen Iterator auf das gefundenen Element zurück welcher
+in \verb|it| gespeichert wird. Mit der Dereferenzierung \verb|*it| können wir direkt auf
+den Containereintrag zugreifen.
+% allerdings nur dann wenn \verb| it != v.end()| ist.
+
+
+
+Das Finden des größten Elements eines Vektors, für welches wir in Listing~\ref{lst:fkt_template_s}
+auf Seite~\ref{lst:fkt_template_s} eine eigene Templatefunktion geschrieben haben, läßt sich mittels
+der STL ganz einfach lösen.
+\begin{lstlisting}[caption={Größter Vektoreintrag: STL anwenden.},label=lst:stl_b,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+ const int N = 10;
+ vector<int>    ia(N);
+ vector<double> da(N);
+          // Vektoren initialisieren
+ ...
+
+ vector<int>::iterator pm;
+ pm = max_element(ia.begin(),ia.end());
+ int im = *pm;
+ cout << "   int-Feld(max):  " << im << endl;
+
+ double dm = *max_element(da.begin(),da.end());
+ cout << "double-Feld(max):  " << dm << endl;
+
+ return 0;
+}
+\end{lstlisting}
+\begin{itemize}
+    \item Zeile 14 definiert den notwendigen Iterator.
+    \item Zeile 15 bestimmt den Iterator des maximalen Elements des gesamten Vektors.
+    \item Zeile 16 dereferenziert den Iterator und speichert den Wert.
+    \item Zeile 19 kombiniert Zeilen 14-16 in einem Schritt für den entsprechenden Container.
+    \item Der Algorithmus~\verb|max_element| benötigt den Vergleichsoperator \verb|operator<|
+    für die Elemente des Containers.
+\end{itemize}
+
+Einige allgemeine Hinweise zur Benutzung der STL-Algorithmen:
+\begin{enumerate}
+    \item Jeder STL-Algorithmus benötigt einen, von Iteratoren begrenzten, Input-bereich 
+      eines Containers auf welchen der Algorithmus anzuwenden ist, z.B., \verb|ia.begin(),ia.end()| in 
+      obigem Beispiel.
+    \item Manche STL-Algorithmen benötigen zusätzlich einen Output-bereich dessen Container
+     \textbf{eine ausreichende Länge} haben muß, z.B., in 
+     \ghref{http://www.cplusplus.com/reference/algorithm/copy/}{\texttt{copy}}. 
+    \item Viele STL-Algorithmen haben mehrere Aufrufmöglichkeiten, einmal mit einem Standardvergleichoperator 
+    und zum zweiten mit einer spezifischen Vergleichsfunktion. 
+    Siehe dazu die \ghref{http://www.cplusplus.com/reference/algorithm/max_element}{Info zu \texttt{max\_element}} 
+    und das Beispiel dort. Näheres im nächsten Abschnitt.
+\end{enumerate} 
+
+\section{Wie benutze ich \texttt{max\_element} ?}
+\label{p:11.2}
+Wir beschränken uns in diesem Abschnitt auf den Algorithmus \verb|max_element| um einige beachtenswerte Details 
+hervorzuheben. 
+%
+\subsection{Container mit Standarddatentypen}
+\label{p:11.2.1}
+In Fortsetzung obigen Beispiels betrachten wir den folgenden 
+\ghref{imsc.uni-graz.at/haasegu/Lectures/Kurs-C/Beispiele/v_stl_intro.zip}{C++11-Code}
+der Anwendung von \verb|max_element| auf
+einen Container \verb|vector<int>|.
+
+%
+\paragraph{Nutzung des Standardvergleichsoperators} 
+\label{p:11.2.1.1}
+%
+Da die Elemente des Containers vom Typ \verb|int| sind, nutzt die 
+Standardversion des Algorithmus den Vergleichsoperator \verb|<| dieser
+Klasse \verb|int| in Zeile~10 des Listings~\ref{lst:v_stl_int_a}.
+%
+\includecode[linerange={3-6,35-37,40-43,62-64},label=lst:v_stl_int_a]{v_stl_intro/main.cpp}
+{Algorithmus mit Standardvergleichoperator \texttt{operator<}}
+%
+Die erweiterte Version des Algorithmus erfordert eine boolesche Vergleichsfunktion welche auf 
+drei verschiedene Weisen in den nächsten Beispielen definiert wird.
+%
+\paragraph{Nutzung einer Vergleichsfunktion} 
+\label{p:11.2.1.2}
+%
+In den Zeilen 6-9 wird eine boolesche Vergleichsfunktion~\texttt{fkt\_abs\_less} definiert, welche in Zeile~15 
+zum betragsmäßigen Vergleich der Elemente benutzt wird. 
+%
+\includecode[linerange={3-6,20-24,35-37,44-44,48-50,62-64},label=lst:v_stl_int_b]{v_stl_intro/main.cpp}
+{Algorithmus mit Vergleichsfunktion}
+%
+
+\paragraph{Nutzung eines Funktors} 
+\label{p:11.2.1.3}
+%
+In den Zeilen 6-12 wird eine Funktorklasse (-struktur) \texttt{funktor\_abs\_less} 
+deklariert, welche nur den Klammeroperator \verb|operator()| als Methode mit booleschem Rückgabewert besitzt.
+Dieser Klammeroperator wird beim Vergleich im Algorithmus in Zeile~18 benutzt.
+%
+\includecode[linerange={3-6,26-33,35-37,44-44,52-54,62-64},label=lst:v_stl_int_c]{v_stl_intro/main.cpp}
+{Algorithmus mit Funktor}
+%
+
+\paragraph{Nutzung einer Lambda-Funktion} 
+\label{p:11.2.1.4}
+%
+Mit C++11 kann die Definition der kurzen Funktion~\texttt{fkt\_abs\_less} aus~\S\ref{p:11.2.1.2} 
+gleich in die Rufzeile des Algorithmus geschrieben werden.
+Diese Lambda-Funktion\index{Lambda-Funktion} wird in Zeile~10 definiert und gleichzeitig angewendet.
+Mehr zu Lambda-Funktionen in Alex Allains sehr gutem 
+\ghref{http://www.cprogramming.com/c++11/c++11-lambda-closures.html}{Tutorial}.
+%
+\includecode[linerange={3-6, 35-37,44-44,57-60,62-64},label=lst:v_stl_int_d]{v_stl_intro/main.cpp}
+{Algorithmus mit Lambda-Funktion}
+%
+
+
+\subsection{Container mit Elementen der eigenen Klasse}
+\label{p:11.2.2}
+Wenn wir statt der Standarddatentypen die eigene Klasse \verb|komplex| aus \S\ref{p:9.1} benutzen, 
+dann muß unsere Klasse einige Anforderungen erfüllen. 
+Insbesondere müssen zumindest die Vergleichsoperatoren \verb|operator<| und \verb|operator==| vorhanden sein. 
+Desgleichen ist der Zuweisungsoperator  \verb|operator=| für Kopieroperationen nötig 
+(es reicht normalerweise der vom Compiler generierte Zuweisungsoperator).
+%
+%
+\paragraph{Nutzung des Standardvergleichsoperators} 
+\label{p:11.2.2.1}
+\mbox{}
+\includecode[linerange={3-7,36-38,42-43,63-64},label=lst:v_stl2_int_a]{v_stl_intro2/main.cpp}
+{Algorithmus mit Standardvergleichoperator \texttt{operator<}}
+Der Standardvergleichsoperator muß für unsere Klasse deklariert und definiert sein:
+\includecode[linerange={1-1,47-50},label=lst:v_stl2_int_b]{v_stl_intro2/komplex.cpp}
+{Standardvergleichoperator \texttt{operator<} für \texttt{Komplex}}
+
+\paragraph{Nutzung einer Vergleichsfunktion} 
+\label{p:11.2.2.2}
+%
+In den Zeilen 7-10 wird eine boolesche Vergleichsfunktion~\texttt{fkt\_abs\_less} definiert welche in Zeile~14 
+zum betragsmäßigen Vergleich der Elemente benutzt wird. 
+%
+\includecode[linerange={3-7,21-25,36-38,50-50,63-64},label=lst:v_stl2_int_c]{v_stl_intro2/main.cpp}
+{Algorithmus mit Vergleichsfunktion}
+%
+Hierzu benötigen wir noch die Funktion \verb|abs| für unsere Klasse.
+\includecode[linerange={118-121},label=lst:v_stl2_int_c_abs]{v_stl_intro2/komplex.h}
+{Inline-Funktion \texttt{abs}}
+Natürlich hätten wird \verb|abs| auch als Methode der Klasse \texttt{Komplex} implementieren können, dann 
+müßte man nur die Vergleichsfunktion etwas umschreiben (\verb|return a.abs()<b.abs();|)
+%
+
+Die Verwendung von Funktor bzw.\  Lambda-Funktion erfolgt analog zu \S\ref{p:11.2.1}.
+
+\section{Einige Grundaufgaben und deren Lösung mit der STL}
+\label{p:11.3}
+
+Die Grundidee bei allen STL-Algorithmen besteht darin, daß nur Iteratoren auf Container übergeben 
+werden. Damit besteht auch für den Algorithmus keinerlei Möglichkeit, die Länge eines Containers 
+zu verändern. Dies kann nur über Methoden des Containers erfolgen, z.B., \verb|erase| oder \verb|resize|.{}
+Manche Algorithmen erfordern spezielle Eigenschaften der Iteratoren wie wahlfreien Zugriff (engl.: random access) 
+welche nicht von allen Containeriteratoren bereitgestellt werden können. Für diese steht dann eine entsprechende Methode 
+zur Verfügung, siehe~\S\ref{p:11.3.2}.
+
+Die folgenen Beispiele demonstrieren die Nutzung der STL für einige Grundaufgaben an Hand 
+der Container \verb|vector| (random access iterator) und \verb|list| (bidirectional iterator). 
+%
+\includecode[linerange={3-30,56-58,124-124,186-187},label=lst:v_stl3_main]
+{v_stl_intro3/main.cpp}{Rahmencode für STL-Demonstration}
+%
+Der \emph{range-for}-Loop in Zeilen 20-23 ist die allgemeingültige Lösung um über 
+den Gesamtbereich eines beliebigen Containers zu itererieren, d.h., dies wäre auch für die Ausgabe des 
+vectors anwendbar. Da der \verb|list|-Iterator nicht wahlfrei ist, kann der for-Loop aus den Zeilen 10-13 
+nicht auf diesen angewandt werden. 
+
+
+\subsection{Kopieren von Daten}
+\label{p:11.3.1}
+%
+\includecode[linerange={64-65},label=lst:v_stl3_copy_vec]
+{v_stl_intro3/main.cpp}{Kopieren eines Vektors}
+%
+%
+\includecode[linerange={130-131},label=lst:v_stl3_copy_list]
+{v_stl_intro3/main.cpp}{Kopieren einer Liste}
+%
+
+\subsection{Aufsteigendes Sortieren von Daten}
+\label{p:11.3.2}
+%
+\includecode[linerange={70-70},label=lst:v_stl3_sort_vec]
+{v_stl_intro3/main.cpp}{Aufsteigendes Sortieren eines Vektors}
+%
+%
+\includecode[linerange={137-137},label=lst:v_stl3_sort_list]
+{v_stl_intro3/main.cpp}{Aufsteigendes Sortieren einer Liste}
+%
+\subsection{Mehrfache Elemente entfernen}
+\label{p:11.3.3}
+Der Algorithmus \verb|unique| entfernt nur diejenigen Elemente aus einem Container, 
+welche darin \textbf{benachbart} gespeichert sind. 
+Wenn man also aus einem Container alle mehrfachen Elemente, unabhängig von deren originaler Nachbarschaftsbeziehung, 
+entfernen will, dann muß der Container vorher sortiert werden wie in \S\ref{p:11.3.2}.
+Die Länge des Containers muß anschließend mit der Methode \verb|erase| korrigiert werden.
+%
+\includecode[linerange={76-79},label=lst:v_stl3_unique_vec]
+{v_stl_intro3/main.cpp}{Entfernen mehrfacher Elemente aus einem geordneten Vektor}
+%
+%
+\includecode[linerange={143-145},label=lst:v_stl3_unique_list]
+{v_stl_intro3/main.cpp}{Entfernen mehrfacher Elemente aus einer geordneten Liste}
+
+%
+%
+\subsection{Kopieren von Elementen welche einem Kriterium nicht entsprechen}
+\label{p:11.3.4}
+Wie beim Kopieren muß der Zielcontainer groß genug sein.
+In unsererm Beispiel kopiert der Algorithmus 
+%\verb|remove_copy_if| 
+\verb|copy_if| 
+nur diejenigen Elemente welche nichtnegativ 
+(Boolesche Funktion \verb|IsNotNegative|) sind. 
+Die Länge des Containers muß anschließend mit der Methode \verb|erase| korrigiert werden.
+%
+\includecode[linerange={41-41},label=lst:v_stl3_rcif_fkt]
+{v_stl_intro3/main.cpp}{Boolesche Funktion}
+%
+\includecode[linerange={84-87},label=lst:v_stl3_rcif_vec]
+{v_stl_intro3/main.cpp}{Kopieren von bestimmten Elementen aus einem Vektor}
+%
+%
+\includecode[linerange={151-153},label=lst:v_stl3_rcif_list]
+{v_stl_intro3/main.cpp}{Kopieren von bestimmten Elementen aus einer Liste}
+%
+%Mit dem Algorithmus \verb|copy_if| hätten wir das Ziel leichter erreicht aber diesen Algorithmus 
+%gibt es erst seit C++11. Dazu sagt Bjarne Stroustrup: 
+%\emph{Aufgrund eines mir unterlaufenen Fehlers fehlt dieser Algorithmus im ISO-Standard 1998. 
+%Der Fehler wurde zwar inzwischen behoben, aber es gibt immer noch Implementierungen ohne \texttt{copy\_if}.} 
+%\cite[\S21.7.4]{Stroustrup:2010:EPC}
+
+%
+%
+\subsection{Absteigendes Sortieren von Elementen}
+\label{p:11.3.5}
+%
+\includecode[linerange={111-111},label=lst:v_stl3_sortb_vec]
+{v_stl_intro3/main.cpp}{Absteigendes Sortieren eines Vektors}
+%
+%
+\includecode[linerange={176-176},label=lst:v_stl3_sortb_list]
+{v_stl_intro3/main.cpp}{Absteigendes Sortieren einer Liste}
+%
+Statt des Funktors \verb|greater<int>()| (benutzt intern \verb|int::operator>|) kann 
+natürlich auch eine beliebige andere Boolesche Funktion benutzt werden 
+(Listings \ref{lst:v_stl_int_b}-\ref{lst:v_stl_int_d}).
+
+%
+%
+\subsection{Zählen bestimmter Elemente}
+\label{p:11.3.6}
+%
+%
+\includecode[linerange={117-117},label=lst:v_stl3_count_vec]
+{v_stl_intro3/main.cpp}{Zählen bestimmter Elemente eines Vektors}
+%
+%
+\includecode[linerange={182-182},label=lst:v_stl3_count_list]
+{v_stl_intro3/main.cpp}{Zählen bestimmter Elemente einer Liste}
+%
+
+%
+%
+\subsection{Sortieren mit zusätzlichem Permutationsvektor}
+\label{p:11.3.7}
+% 
+Der Sortieralgorithmus der STL liefert keinen Indexvektor der Umordnung zurück.
+Folgende zwei Lösungen werden bei 
+\ghref{http://stackoverflow.com/questions/1577475/c-sorting-and-keeping-track-of-indexes}{\emph{stackoverflow}} 
+vorgeschlagen.
+\begin{itemize}
+    \item Statt des zu sortierenden \verb|vector<double>| wird 
+       \verb|vector< pair<double,int> >| sortiert, wobei der zweite Parameter mit den Indizes $0,1,2,\ldots$ 
+       inialisiert wird. 
+       Hinterher muß man nur noch die zweiten Parameter in einen Indexvektor extrahieren.
+    \item Meine favorisierte Lösung ist die folgende, welche eine Lambda-Funktion nutzt und 
+    statt den Datenvektor umzuordnen nur den Permutationsvektor der Umordnung zurückliefert. 
+    Auf das Minimum des Datenvektors kann anschließend mittels \verb| v[idx[0]] | zugegriffen werden (\htmladdnormallinkfoot{Code}{http://imsc.uni-graz.at/haasegu/Lectures/Kurs-C/Beispiele/sort_index.cpp}).
+\begin{lstlisting}[caption={Sortieren mit Permutationsvektor},label=lst:sort_permutvektor,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+template <typename T>
+vector<size_t> sort_indexes(const vector<T> &v) 
+{
+  // initialize original index locations
+  vector<size_t> idx(v.size());
+  for (size_t i = 0; i != idx.size(); ++i) idx[i] = i;
+
+  // sort indexes based on comparing values in v
+  sort(idx.begin(), idx.end(),
+       [&v](size_t i1, size_t i2) {return v[i1] < v[i2];});
+
+  return idx;
+}
+
+//   Application
+vector<double> v = {....};        // initialize v
+vector<size_t>  idx =  sort_indexes(v);
+\end{lstlisting}    
+\end{itemize}
+
+
+%
+\subsection{Ausgabe der Elemente eines Containers}
+\label{p:11.3.8}
+% 
+Wir nehmen als Beispielcontainer wieder \texttt{std::vector<T>}, die Codes sind leicht auf 
+andere Container übertragbar. 
+Abgesehen von der recht plumpen Lösung über eine Funktion \verb|void print(vector<T> const & x)| 
+ist das Definieren eines Ausgabeoperators die beste Lösung.
+%
+\begin{lstlisting}[caption={Vektorausgabe: Version 1},label=lst:cout_vector1,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+#include <iostream>
+#include <vector>
+
+template <class T>
+ostream& operator<<(ostream &s, vector<T> const &x)
+{
+   for (const auto &pi: x)
+   {
+      s << pi << "  ";
+   }
+   return s;
+}
+
+//   Application
+vector<double> v{....};        // initialize v
+cout << v << endl;
+\end{lstlisting}  
+%
+Der range-for-Loop in obigem Listing ersetzt den Loop von \verb|cbegin(x)| bis \verb|cend(x)| 
+und kann auch durch ein direktes Kopieren auf den Ausgabestrom ersetzt werden.
+%
+\begin{lstlisting}[caption={Vektorausgabe: Version 2},label=lst:cout_vector1,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+template <class T>
+ostream& operator<<(ostream &s, vector<T> const &x)
+{
+  copy(cbegin(x), cend(x), ostream_iterator<T>(s, "  "));
+  return s;
+}
+
+...
+//   Application
+vector<double> v{....};        // initialize v
+cout << v << endl;
+...
+\end{lstlisting}  
+%
+%
+%
+\section{Allgemeine Bemerkungen zur STL}
+\label{p:11.4}
+%
+Die wichtigsten Quelle zur STL sind \ghref{https://en.cppreference.com/w/}{\texttt{cppreference.com}}  oder  \ghref{http://www.cplusplus.com}{\texttt{cplusplus.com}}, 
+da man hier schnell Details zu einzelnen Algorithmen, zu Iteratoren oder Methoden von Containern findet. 
+
+Die meisten STL-Algorithmen existieren in einer Standardvariante, in welcher ein Operator 
+der Containerelemente benutzt wird (\verb|operator<| in \verb|sort|) und einer weiteren Variante, in welcher 
+ein entsprechender Operator (oder eine Funktion) übergeben wird, meist über eine Lambda-Funktion. 
+Genauso gibt es häufig Zwillings-Algorithmen wie \verb|count| und \verb|count_if|. 
+%
+%
+%
+\section{\mbox{}$^{*}$Parallelität in der STL [C++17]}
+\label{p:11.5}
+Ab C++-17 sind zu vielen Algorithmen auch parallele Versionen verfügbar 
+welche als zusätzlichen ersten Parameter eine \emph{execution policy} entgegennehmen,
+siehe dazu Versionen~(2) und~(4) von \ghref{https://en.cppreference.com/w/cpp/algorithm/sort}{\texttt{sort}}
+sowie \ghref{https://en.cppreference.com/w/cpp/algorithm/execution_policy_tag_t}{\texttt{std::execution::par}}.
+Dabei werden alle verfügbaren Cores der CPU(s) benutzt, 
+dank Hyperthreading werde normalerweise doppelt so viele Threads für die Parallelisierung benutzt. 
+Diese Anzahl der benutzen Threads ist nicht steuerbar, im Gegensatz zu einer OpenMP-Parallelisierung.
+\\
+\underline{Achtung:} Beim Linken muß das Flag \texttt{-ltbb} nach den Objektfiles hinzugefügt werden.\\
+Gegebenenfalls muß die Option \texttt{-std=c++17} beim Compilieren angegeben werden.
+
+Das Sortieren eines Containers läßt sich wie folgt beschleunigen. 
+%
+\begin{lstlisting}[caption={Paralleles Sortieren},label=lst:par_sort,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+// thread_17
+#include <algorithm>
+#include <execution>          // execution policy
+#include <vector>
+
+...
+{
+    size_t const N = 1<<25;
+    vector<double> v(N);
+    iota(v.begin(), v.end(), 1);
+    std::shuffle(v.begin(), v.end(), std::mt19937{std::random_device{}()});
+
+    sort(std::execution::par, v.begin(), v.end());
+}
+...
+\end{lstlisting}
+%
+In obigem Beispiel \ghref{https://imsc.uni-graz.at/haasegu/Lectures/Kurs-C/SS21/thread_17.zip}{\texttt{thread\_17}} 
+und einem Vector mit 33.554.432 Elementen
+beträgt die erzielte Beschleunigung (SpeedUp) gegenüber der sequentiellen Variante 7.5 für eine 8-core CPU (AMD Ryzen 7 3800X) 
+bzw.\  16.5 für eine 32-core CPU (AMD EPYC 7551P). 
+\\
+Die erzielten Beschleunigungen ändern sich mit der Anzahl der Elemente 
+und mit deren Datentyp (Speicherbandbreite; memory bandwidth). 
+%
+
+%%\subsection{Nutzung einer Klassenhierarchie in der STL}
+%%\label{sec:A10.3}
+%%%
+%%\subsubsection{Die Klassenhierarchie}
+%%\label{sec:A10.3.1}
+%%%
+%%\subsubsection{Sortieren der Instanzen einer Klasse}
+%%\label{sec:A10.3.2}
+%%%
+%%\subsubsection{Sortieren der Instanzen aus der Klassenhierarchie}
+%%\label{sec:A10.3.3}
+%%

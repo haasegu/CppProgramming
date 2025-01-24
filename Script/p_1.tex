@@ -1,0 +1,394 @@
+\chapter{Ein Schnelleinstieg}
+\label{p:1}
+%
+\section{Was ist ein Programm und was nützt es \emph{mir}?}
+\label{p:1.1}
+%
+Eigentlich kennt jeder bereits Programme, jedoch versteht
+man oft verschiedene Inhalte darunter.
+\begin{itemize}
+ \item Parteiprogramm	\hfill $\Longleftrightarrow$ \hfill Ideen
+ \item Theaterprogramm	\hfill $\Longleftrightarrow$ \hfill Ablaufplanung
+ \item Musikpartitur	\hfill $\Longleftrightarrow$ \hfill strikte Anweisungsfolge
+ \item Windowsprogramm	\hfill $\Longleftrightarrow$ \hfill
+ 			interaktive Aktion mit dem Computer
+\end{itemize}
+\textbf{Programmieren} ist das Lösen von Aufgaben auf dem Computer
+mittels eigener Software und beinhaltet alle vier Teilaspekte in obiger
+Liste.
+
+Eine typische Übungsaufgabe beinhaltet folgenden Satz:
+
+\fbox {\begin{minipage} {0.95\textwidth}
+ \mbox{}\hfill \vdots \hfill\mbox{} \\
+ Ändern [editieren] Sie das Quellfile [source file] entsprechend
+ der Aufgabenstellung, übersetzen [compilieren] und testen
+ Sie das Programm.
+\end{minipage}}
+\\[1.5ex]
+
+% \pagebreak[4]
+\centerline {\Large Was (?) soll ich machen ?}
+\mbox{}\\[1ex]
+%
+\begin{tabular}{p{0.25\textwidth}@{\qquad}p{0.5\textwidth}@{\qquad}p{0.15\textwidth}}
+ Idee, z.B.\   math.\  Verfahren & Im Kopf oder auf dem Papier. \newline(Was soll der Computer machen?) & Programmidee \\
+ $\hspace{0.09\textwidth}\Downarrow$  \\
+%
+ Idee f"ur den Computer aufbereiten &
+ 	Entwurf.\newline (Wie kann der Computer die Idee realisieren?) & Struktogramm \\
+ $\hspace{0.09\textwidth}\Downarrow$  \\
+%
+ Idee in einer Pro\-grammier\-sprache formulieren.
+  & Quelltext/Quellfile  editieren.\newline
+   (Welche Ausdr"ucke darf ich verwenden?) & Programmcode \\
+  $\hspace{0.09\textwidth}\Downarrow$  \\
+%
+ Quellfile f"ur den Computer "ubersetzen
+  & File compilieren [und linken]. \newline("Ubersetzung in Prozessorsprache)
+  & ausf"uhrbares Programm
+  \\
+ $\hspace{0.09\textwidth}\Downarrow$  \\
+%
+ Programmcode ausf"uhren
+ & Programm mit verschiedenen Datens"atzen testen
+ & Programmtest
+\end{tabular}
+\\[2ex]
+
+\begin{samepage}
+Bemerkungen:
+\begin{enumerate}
+ \item Software = ausf"uhrbares Programm + Programmcode  + \textbf{Ideen}
+ \item Der Lernproze{\ss}  beim Programmieren erfolgt typischerweise von
+ unten nach oben in der vorangegangenen "Ubersicht.
+ \item Als Mathematiker sind vorrangig Ihre mathematischen Kenntnisse und Ideen gefragt,
+   jedoch ist deren \textbf{eigenständig}e Umsetzung ein großer Vorteil bei vielen
+   Arbeitsplätzen.
+ \item Mit \textbf{fundierten Kenntnisse}n in einer Programmiersprache fällt es recht leicht 
+ weitere Programmiersprachen zu erlernen.
+\end{enumerate}
+\end{samepage}
+
+\fbox {\begin{minipage} {0.95\textwidth}
+ \underline {\textbf {Warnung} :} Das Programm auf dem Computer wird
+ \textbf{genau das} ausf"uhren, was im Programmcode beschrieben ist!
+\end{minipage}}
+
+Typischer Anf"angerkommentar:
+%%\begin{minipage}[t] {0.55\textwidth}
+ \textit{Aber das habe ich doch ganz anders gemeint.}
+%%\end{minipage}
+
+\fbox {\begin{minipage} {0.95\textwidth}
+ \underline {\textbf {Merke} :} Computer sind strohdumm!
+ Erst die (korrekte und zuverl"assige) Software nutzt die
+ M"oglichkeiten der Hardware.
+\end{minipage}}
+
+\paragraph{Warum denn C++, es gibt doch die viel bessere Programmiersprache XYZ!}
+Der Streit über die beste, oder die bessere Programmiersprache ist
+so alt wie es Programmiersprachen gibt. Folgende Gründe sprechen gegenwärtig für C++:
+\begin{itemize}
+	\item C++ erlaubt sowohl \textbf{strukturiert}e, als auch \textbf{objektorientiert}e Programmierung.
+	\item Strukturierte Programmierung ist die Basis jeder Programmierung im
+	 wissenschaftlich-technischen Bereich.
+	\item Sie können in C++ reine C-Programme schreiben wie auch rein objektorientiert programmieren,
+	d.h., es ist eine sehr gute Trainingsplattform.
+	\item C++ erlaubt ein höheres \textbf{Abstraktionsniveau} beim Programmieren, d.h.,
+	 ich muß mich nicht um jedes (fehleranfällige) informatische Detail kümmern.
+	 Andererseits kann ich genau dies tun, falls nötig.
+	\item C++ ist eine Compilersprache, keine Interpretersprache, und damit können
+	die resultierenden Programme schnell sein.
+	\item Die \ghref{http://gcc.gnu.org/}{Gnu}-Compiler für C++ sind für
+	  alle gängigen (und mehr) Betriebssysteme,
+	 insbesondere Linux, Windows, Mac-OS, \textbf{kostenlos} verfügbar.
+	 Desgleichen gibt es gute, kostenlose Programmierentwicklungsumgebungen (IDE)
+	 wie \ghref{http://www.codeblocks.org/}{CodeBlocks} auf diesen. \\
+	 Die \ghref{https://clang.llvm.org/}{clang}-Compiler sind ebenfalls sehr zu empfehlen.
+	\item Seit ca.\  20 Jahren ist C++ meist unter den Top-5 im Programmiersprachenranking
+	vertreten, siehe  verschiedene Rankings wie
+	\ghref{http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html}{TIOBE Index} oder
+	\ghref{http://pypl.github.io/PYPL.html}{PYPL}.
+    Die Programmiertechniken der anderen Spitzensprachen lassen sich mit C++ ebenfalls realisieren.
+    \item C++ mit seinen Bibliotheken ist sehr gut dokumentiert, siehe
+    \ghref{http://www.cplusplus.com}{cplusplus.com}, \ghref{http://en.cppreference.com/w/}{cppreference.com} und 
+    natürlich \ghref{https://stackoverflow.com/}{stackoverflow} für schwierigen Fälle.
+    \item C++ wird weiterentwickelt, der neue
+    \ghref{http://en.wikipedia.org/wiki/C++11}{C++11, C++14, C++17} Standard ist in den
+    Compilern umgesetzt und C++20 ist in Arbeit. 
+    Wir werden die Möglichkeiten des Standards C++11 und C++-17 an passender Stelle benutzen.
+\end{itemize}
+%
+%
+%
+%\pagebreak[4]
+\newpage
+\section{Das ``Hello World'' - Programm in C++}
+\label{p:1.2}
+%
+Wir beginnen mit dem einfachen ``Hello World''-Programm, welches
+nur den String ``Hello World'' in einem Terminalfenster ausgeben wird. Damit läßt sich
+schon überprüfen, ob der Compiler und die IDE korrekt arbeiten
+(und Sie diese bedienen können).
+%
+%\includecode[linerange={12-17,30-31}]{HelloWorld.cpp}{Quelltext von Hello World}
+\includecode[firstline=12]{HelloWorld.cpp}{Quelltext von Hello World}
+%
+Der simple Code im Listing~\ref{lst:HelloWorld.cpp} enthält schon einige
+grundlegende Notwendigkeiten eines C++-Programmes:
+%
+\begin{itemize}
+  \item Kommentare bis zum Zeilenende werden mit \verb| // | eingeleitet.\index{Kommentar!C++}
+  \\
+  Der C-Kommentar \verb|/*    */| kann auch in C++ verwendet werden.\index{Kommentar!C}
+  \item Jedes Programm benötigt eine Funktion \verb|main()|, genannt Hauptprogramm\index{main()}.
+  \begin{itemize}
+	  \item \verb|int main()|  deklariert (ankündigen) das Hauptprogramm in Zeile~4.
+	  \item Die geschweiften Klammern \verb|{ }| in Zeilen~5 und~8 begrenzen den
+	  Funktionskörper der Funktion \verb|main|.
+	  \item In Zeile 7 wird der Ausdruck\index{Ausdruck} \verb| return 0 |
+	  durch den Strichpunkt \verb| ; | zu einer Anweisung\index{Anweisung}
+	  im Programm. Diese spezielle Anweisung beendet das Hauptprogramm
+	  mit dem Rückgabewert 0.
+  \end{itemize}
+  \item Die Ausgabe in Zeile~6 benutzt die I/O-Bibliotheken von C++.
+  \begin{itemize}
+    \item \verb|cout | ist ein Bezeichner für die Ausgabe im Terminal.
+    \item \verb|<< |  leitet den nachfolgenden String auf den Ausgabestrom (\verb|cout|) um.
+      Dies kann wiederholt in einer Anweisung geschehen.
+    \item \verb|endl |  ist der Bezeichner für eine neue Zeile im Ausgabestrom.
+    \item Die Preprocessor-Anweisung (beginnt mit \verb|#|) in Zeile~1 inkludiert
+      das, vom Compiler mitgelieferte, Headerfile\index{Headerfile} \emph{iostream}
+      in den Quelltext. Erst dadurch können Bezeichner wie \verb|cout | und
+       \verb|endl | der I/O-Bibliothek benutzt werden.
+    \item Ohne Zeile~2 müssen der Ausgabestrom etc.\   über die explizite Angabe
+    des Namensraumes \verb|std| angegeben werden, also als \verb| std::cout |.
+    Mit Zeile~2 wird automatisch der Namensraum \verb|std| berücksichtigt wodurch
+    auch \verb|cout|  identifiziert wird.
+  \end{itemize}
+\end{itemize}
+%
+
+\underline{Quelltext eingeben und compilieren, Programm ausf"uhren}:
+\begin{enumerate}
+ \item Quellfile editieren. \index{Quellfile!editieren} \\
+       \texttt{LINUX> geany HelloWorld.cpp}
+ \item Quellfile compilieren. \index{Quellfile!compilieren}\index{Compilieren!g++} \\
+	\texttt{LINUX> g++ HelloWorld.cpp}
+ \item Programm ausf"uhren. \index{Programm!ausf\"uhren} \\
+	\texttt{LINUX> a.out} \qquad oder \\
+	\texttt{LINUX> ./a.out} \qquad oder \\
+	\texttt{WIN98> ./a.exe}
+\end{enumerate}
+%
+%
+\underline{Tip zum Programmieren}: \\
+ Es gibt (fast) immer mehr als eine M"oglichkeit, eine Idee im
+ Computerprogramm zu realisieren. \\
+ $\Longrightarrow$ Finden Sie Ihren eigenen Programmierstil
+ 	und verbessern Sie ihn laufend.
+%
+%
+%
+\newpage
+\section{Interne Details beim Programmieren}
+\label{p:1.3}
+%
+Der leicht ge"anderte Aufruf zum Compilieren	\\
+\texttt{LINUX> g++ -v HelloWorld.cpp}		\\
+erzeugt eine längere Bildschirmausgabe, welche mehrere
+Phasen des Compilierens anzeigt.
+Im Folgenden einige Tips, wie man sich diese einzelnen Phasen
+anschauen kann, um den Ablauf besser zu verstehen:
+%
+\begin{enumerate}
+  \renewcommand {\labelenumi}{\alph{enumi})}
+  \item \emph{Preprocessing}: \index{Preprocessing}
+  	Headerfiles\index{Headerfile}
+	(\textit{*.h}, \textit{*} und \textit{*.hpp}) werden zum
+	Quellfile hinzugef"ugt (+ Makrodefinitionen, bedingte Compilierung) \\
+	\texttt{LINUX> g++ -E HelloWorld.cpp > HelloWorld.ii} \\
+	Der Zusatz \quad\texttt{> HelloWorld.ii}\quad lenkt die Bildschirmausgabe
+	in das File \textit{HelloWorld.ii}. Diese Datei \textit{HelloWorld.ii}
+	kann mit einem Editor angesehen werden und ist ein langes C++
+	Quelltextfile.
+  \item "Ubersetzen in \emph{Assemblercode}: \index{Assembler}
+  	Hier wird ein Quelltextfile in der
+	(prozessorspezifischen) Programmiersprache Assembler erzeugt. \\
+	\texttt{LINUX> g++ -S HelloWorld.cpp} \\
+	Das entstandene File \textit{HelloWorld.s} kann mit dem
+	Editor angesehen werden.
+ \item \emph{Objektcode} erzeugen: \index{Objektcode}
+ 	Nunmehr wird ein File erzeugt, welches die direkten Steuerbefehle,
+	d.h. Zahlen f"ur den Prozessor beinhaltet. \\
+	\texttt{LINUX> g++ -c HelloWorld.cpp} \\
+	Das File \textit{HelloWorld.o} kann nicht mehr im normalen
+	Texteditor angesehen werden sondern mit \\
+	\texttt{LINUX> xxd HelloWorld.o}
+ \item \emph{Linken}: \index{Linken}\index{Objektcode}\index{Bibliothek}
+ 	Verbinden aller Objektfiles und notwendigen Bibliotheken
+	zum ausf"uhrbaren Programm \textit{a.out}\enspace. \\
+	\texttt{LINUX> g++ HelloWorld.o}
+\end{enumerate}
+%
+%
+%
+\section{Bezeichnungen in der Vorlesung}
+\label{p:1.4}
+%
+\begin{itemize}
+ \item Kommandos in einer Befehlszeile unter LINUX:\index{Compilieren!g++}\\
+ 	\texttt{LINUX> g++ [-o myprog] file\_name.cpp} \\
+	Die eckigen Klammern \verb| [  ] | markieren optionale
+	Teile in Kommandos, Befehlen oder Definitionen.
+	Jeder Filename besteht aus dem frei w"ahlbaren Basisnamen
+	(\textit{file\_name}) und dem Suffix (\textit{.cpp}) welcher
+	den Filetyp kennzeichnet.
+ \item Einige Filetypen nach dem Suffix: \index{Suffix}
+
+  \nopagebreak
+  \begin{tabular}{l@{\qquad}p{0.6\textwidth}}
+  	Suffix 		& Filetyp \\ \hline
+	%\textit{.c}	& C-Quelltextfile \index{Quellfile}\\
+	%\textit{.h}	& C-Headerfile (auch C++), Quellfile mit vordefinierten
+				%Programmbausteinen \index{Headerfile}\\
+	\textit{.cpp}
+			& C++ -Quelltextfile\\
+	\textit{.h} %,\textit{.hpp} [\textit{.hh}]
+			& C++ -Headerfile\\
+	\textit{.o}	& Objektfile \index{Objektfile}\\
+	\textit{.a}	& Bibliotheksfile (Library) \index{Bibliothek} \\
+        \textit{.exe}	& ausf"uhrbares Programm (unter Windows)
+  \end{tabular}
+  \item Ein Angabe wie \qquad
+  	$\cdots$ \verb| < typ > | $\cdots$
+	\qquad bedeutet, da{\ss}  dieser Platzhalter durch
+	einen Ausdruck des entsprechenden Typs ersetzt werden mu\ss.
+\end{itemize}
+%
+%
+%
+\newpage
+\section{Integrierte Entwicklungsumgebungen}
+\label{p:1.5}
+%
+Obwohl nicht unbedingt daf"ur n"otig, werden in der Programmierung h"aufig IDEs
+(Integrated Development Environments) benutzt, welche Editor, Compiler, Linker und
+Debugger - oft auch weitere Tools enthalten.
+In der LV benutzen wir freie \ghref{http://gcc.gnu.org/}{Compiler} und
+\ghref{http://www.gnu.org/}{-entwicklungstools},
+insbesondere die Compiler basieren auf dem GNU-Projekt und funktionieren
+unabhängig von Betriebssystem und Prozessortyp. Damit ist der von Ihnen geschriebene Code
+portabel und läuft auch auf einem Supercomputer
+(allerdings nutzt er diesen nicht wirklich aus, dazu sind weitere LVs n"otig).
+Grundlage des Kurses sind die g++-Compiler ab Version 4.7.1, da diese auch den neuen C++11-Standard unterstützen.
+Gegebenenfalls muß der Code mit der zusätzlichen Option \verb| -std=c++11 | übersetzt werden.
+
+Wir werden unter Windows die IDE \ghref{http://www.codeblocks.org/}{\textbf{Code::Blocks}}
+Version 16.01 [Stand: Feb.~2016]
+benutzen welche auf den GNU-Compileren und -Werkzeugen basiert.
+Dies erlaubt die Programmierung unter Windows ohne die Portabilit"at zu verlieren, da diese IDE
+auch unter LINUX verf"ugbar ist.
+Sie k"onnen diese Software auch einfach privat installieren,
+siehe \ghref{http://www.codeblocks.org/downloads/26\#windows}{Download}
+(nehmen Sie \texttt{codeblocks-16.01mingw-setup.exe}) und das
+\ghref{http://www.codeblocks.org/user-manual}{Manual}.
+Installieren Sie in jedem Fall \textbf{vorher} das Softwaredokumentationstool
+\ghref{http://www.doxygen.org}{doxygen} (und \ghref{http://cppcheck.sourceforge.net/}{cppcheck}),
+da es nur dann automatisch in die IDE eingebunden wird.
+
+Da die Entwicklungsumgebung alles vereinfachen soll, ist vor dem ersten Hello-World-Programm
+etwas mehr Arbeit zu investieren.
+\begin{enumerate}
+ \item \texttt{Code::Blocks} aufrufen: \\
+   auf dem \textbf{Desktop} das Icon \textbf{Code::Blocks} anklicken.
+ \item In \texttt{Code::Blocks} ein neues \emph{Projekt} anlegen: \\
+   \textbf{File $\longrightarrow$ New $\longrightarrow$ Project}
+   \begin{enumerate}
+     \item Im sich "offnenden Fenster das Icon  \textbf{Console Application} anklicken und
+        dann auf \textbf{Go} klicken.
+     \item Bei der Auswahl der Programmiersprache \textbf{C++} anklicken und dann \textbf{Next}.
+     \item Den \textbf{Projektitel} angeben - hier bitte das Namensschema \emph{bsp\_nr} mit
+          \emph{nr} als Nummer der abzugebenden "Ubungsaufgabe einhalten. \\
+          Den \textbf{Folder} (das Verzeichnis) ausw"ahlen in welchem das Projekt gespeichert
+          werden soll. Darin wird dann automatisch ein Unterverzeichnis mit dem Projektnamen angelegt.
+          \\  \textbf{Next} klicken.
+     \item Die \emph{Debug} und die \emph{Release configuration} aktivieren.
+     %Bei den \textbf{Compiler} und \textbf{configuration} angeben und darauf achten, da"s
+           %das Projekt als \textbf{C++-Projekt} markiert ist.
+           Auf \textbf{Finish} klicken.
+     \item Im Workspace erscheint das neue Projekt \emph{bsp\_1} welches in seinen
+          \emph{Sources} das File \emph{main.cpp} enth"alt.
+           Auf dieses File klicken.
+     \item Im Editor sehen Sie nun folgenden Programmtext: \\
+\begin{minipage}{0.5\textwidth}
+%
+{\scriptsize
+\begin{boxedverbatim}
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    cout << "Hello world!" << endl;
+    return 0;
+}
+\end{boxedverbatim}
+}
+%
+\end{minipage}
+  \item Compilieren und Linken: \textbf{Build $\longrightarrow$ Build}
+  \item Programm ausführen: \textbf{Build $\longrightarrow$ Run}
+  \item Speichern dieser Datei: \textbf{File $\longrightarrow$ Save}
+   \end{enumerate}
+\end{enumerate}
+
+\newpage
+\section{Erste Schritte mit Variablen}
+\label{p:1.6}
+%
+Wir beginnen mit dem einfachen ``Hello World''-Programm, welches
+nur den String ``Hello World'' in einem Terminalfenster ausgibt.
+Damit läßt sich schon überprüfen, ob der Compiler und die IDE korrekt arbeiten
+(und Sie dies bedienen können).
+Anschließend arbeiten wir mit ein paar einfachen Variablen.
+%
+%\includecode[linerange={12-17,30-31}]{HelloWorld_2.cpp}{Erweitertes ``Hello World''}
+\includecode[firstline=2]{HelloWorld_2.cpp}{Erweitertes ``Hello World''}
+%
+Obiger Code enthält bekannte Teile aus dem Listing~\ref{lst:HelloWorld.cpp}, wir werden
+kurz die neuen Zeilen erläutern:
+\begin{itemize}
+	\item[{[2]}] Die Deklarationen für den Datentyp (die Klasse) \texttt{std::string}
+	  werden inkludiert. In Zeile~3 wird der Namensraum für \verb|std| freigegeben.
+	\item[{[8]}] Ein \ghref{http://de.wikipedia.org/wiki/Integer_(Datentyp)\#Maximaler_Wertebereich_von_Integer}
+	{ganzzahlige Variable}~\texttt{i} wird deklariert und darf damit in
+	  den nachfolgenden Zeilen des Gültigkeitsbereichs zwischen \verb| { |
+	  und  \verb| } | verwendet werden, also bis zur Zeile~22. Die Variable~\texttt{i}
+	  kann ganzzahlige Werte aus $[-2^{-31},2^{-31}-1]$ annehmen.
+    \item[{[10]}] Die Variable~\texttt{i} wird über den Terminal (Tastatureingabe)
+     eingelesen. \verb| cin | und \verb| >> | sind Eingabestrom und -operator analog
+     zur Ausgabe mit \verb| cout | und \verb| << |.
+    \item[{[12]}] Die Variable~\texttt{i} wird gemeinsam mit einem beschreibenden String
+     (Zeichenkette) ausgegeben.
+    \item[{[14]}] Deklaration der Gleikommazahlen einfacher Genauigkeit
+     (engl.: \ghref{http://de.wikipedia.org/wiki/IEEE_754\#Zahlenformate_und_andere_Festlegungen_des_IEEE-754-Standards}{single precision})
+    \texttt{a} und \texttt{b}.
+    \item[{[16]}] Einlesen von Werten für \texttt{a} und \texttt{b}. Ausgabe der
+     Variablenwerte in Zeile~17.
+    \item[{[19]}] Deklaration der Gleikommavariablen~\texttt{c}  und gleichzeitige Definition
+    (Zuweisen eines Wertes) aus den Variablen \texttt{a} und \texttt{b}.
+      Hierbei ist \verb| = | der Zuweisungsoperator und \verb| + | der Additionsoperator
+      für Gleitkommazahlen.\index{Operator!Zuweisungs-}\index{Operator!Additions-}
+    \item[{[20]}] Deklaration und gleichzeitige Definition eines konstanten (\texttt{const}) Strings~\texttt{ss}. Das Schlüsselwort legt fest, daß der \texttt{ss} zugewiesene Wert nicht mehr
+      verändert werden kann.
+    \item[{[21]}] Gemeinsame Ausgabe des konstanten Strings und der Gleikommavariablen.
+    \item Mit \verb|{ }|  eingeschlossene Bereiche eines Quelltextes
+	  definieren die Grenzen eines Gültigkeitsbereiches (scope)\index{Block}\index{scope}
+	  von darin definierten Variablen.
+\end{itemize}
+
+Damit haben wir eine Grundlage, um uns in die Programmierung mit C++
+schrittweise einzuarbeiten.

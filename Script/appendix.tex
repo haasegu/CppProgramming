@@ -1,0 +1,134 @@
+\chapter{N"utzliche Webseiten}
+\label{sec:appendix}
+%
+Die folgenden Webseiten fand ich sehr n"utzlich:
+\begin{itemize}
+ \item Zahldarstellung und Wertebereich bei
+    \htmladdnormallinkfoot{Integer}{http://de.wikipedia.org/wiki/Integer_(Datentyp)}-Zahlen.
+ \item Zahldarstellung und Wertebereich bei
+    \htmladdnormallinkfoot{Gleitkommazahlen}{http://de.wikipedia.org/wiki/IEEE_754}.
+ \item Ein sehr anschauliches,
+ \htmladdnormallinkfoot{deutschsprachiges Lehrbuch}{http://willemer.de/informatik/cpp}
+   von Arnold Willemer mit seinem Crash-Kurse: \\
+   \htmladdnormallinkfoot{\emph{Von Null auf C++ auf unter 40 Seiten}}{http://willemer.de/informatik/cpp/crash.htm}
+
+ \item Ebenfalls eine sch"one, umfassende und trotzdem relativ kurze Einf"uhrung in
+       \htmladdnormallinkfoot{C++}{http://www.cpp-tutor.de/cpp/intro/toc.htm}
+       von Wolfgang Schr"oder.
+ \item Sehr gutes Lehrbuch zur
+       \htmladdnormallinkfoot{STL}{http://www.ubreymann.de/publ.html}
+        und
+         \htmladdnormallinkfoot{"Ubersicht der STL-Container und  Algorithmen}{http://www.ubreymann.de/publ.html}
+        von Ulrich Breymann
+       (nichtgewerbliche Nutzung ist kostenlos),
+       ebenso eine gute Erl"auterung der STL in
+       \htmladdnormallinkfoot{English}{http://www.sgi.com/tech/stl}
+\end{itemize}
+
+Zum Nachschlagen von Funktionen/Methoden, sowie zum Beantworten von
+wiederkehrenden Fragen:
+\begin{itemize}
+  \item Beschreibung der C++-\htmladdnormallinkfoot{Bibliotheken}{http://www.cplusplus.com/reference/}
+ in englisch.
+  \item Weiteres \htmladdnormallinkfoot{Tutorial}{http://www.cprogramming.com/tutorial.html}, 
+   welches auch C und C++11 enth\"alt.
+   \item Zum Nachschlagen in \htmladdnormallinkfoot{Deutsch}{http://www.cppreference.com/wiki/de/start} und 
+   \htmladdnormallinkfoot{Englisch}{http://en.cppreference.com/w/cpp}
+ \item Frequently Asked Questions
+ \htmladdnormallinkfoot{(FAQs)}{http://parashift.com/c++-faq-lite/}
+ in englisch.
+\end{itemize}
+
+Zur generellen (Weiter-)Entwicklung von C++
+\begin{itemize}
+  \item Der Standard C++11 r"aumte mit einigen Mankos von C++ auf, 
+  siehe~\cite{Grimm:2011:CLP,Will:2012:CPT}. 
+  Diskussionsforen und Online-Tutorials dazu sind unter
+  \htmladdnormallinkfoot{Solarian Programmer}{http://solarianprogrammer.com/} verfügbar, 
+  auch der \htmladdnormallinkfoot{Wikipediaeintrag}{http://en.wikipedia.org/wiki/C++11} ist sehr hilfreich.
+%   [iX 6/2007, p.60--66]
+  \item Der C++-17 Standard ist mittlerweile auf allen Compilern verfügbar. 
+  Was finde ich davon nützlich:
+  \begin{itemize}
+  \item Execution Policies: Nutzung aller Cores bei vielen STL-Algorithmen, 
+  das ist Beschleunigung zum Nulltarif.
+  \begin{verbatim}
+        #include <algorithm>
+        #include <execution>          // execution policy
+        #include <vector>
+        ...
+        vector<T> v{.....};
+        sort(std::execution::par_unseq, v.begin(), v.end());
+  \end{verbatim}
+  \item Type Traits: Überprüfung/Vergleich von Eigenschaften der Template-Datentypen
+  \item Static Assert: Überprüfung von Template-Eigenschaften zur Compilezeit.
+  \begin{verbatim}
+        #include <type_traits>   // std::is_floating_point<T>()
+        template <class T>
+        class Komplex
+        {
+            static_assert(std::is_floating_point<T>(),
+                "Vector elements have to be floating point numbers.");
+            ...
+        };
+  \end{verbatim}
+  \item \texttt{constexpr}\index{constexpr} erlaubt die statische (Compiler!) Auswertung von 
+  Ausdrücken und Funktionen. 
+  Damit lassen sich, z.B., 
+  \ghref{https://onecompiler.com/cpp/3wdmzd9js}{Fibonacci-Zahlen vom Compiler} 
+  berechnen. \\
+  \item Die Kombination aus \texttt{constexpr} und \texttt{type\_traits}-Tests 
+  erlaubt eine Kompilierung in Abhängigkeit vom Template-Parameter, welche ohne 
+  \texttt{constexpr} in einem Fehler endet.\bspfile{../SS24/demo_union/main.cpp}
+  \small{
+   \begin{verbatim}
+    #include <type_traits>        // is_same
+    template <typename T>
+    ostream& printCvector(ostream& s, const T cv[], int N)
+    {
+        for (int k=0; k<N; ++k)
+        {
+            if constexpr (is_same<T,bool>::value)
+            {
+                s << boolalpha << cv[k] << "  ";  // bool
+            }
+            else if constexpr (is_same_v<T,signed char> || is_same_v<T,unsigned char>)
+            {
+                s << +cv[k] << "  ";              // signed char
+            }
+            else
+            {
+                s << cv[k] << "  ";               // all other types
+            }
+        }
+        return s;
+    }
+  \end{verbatim} 
+  }
+  \end{itemize}
+  \item Teilweise ist der C++20 Standard verfügbar. Ich benutze:
+  \begin{itemize}
+    \item Concepts
+    \item \verb|ssize(v)| vorzeichenbehaftete Anzahl von Elementen im Container.
+  \end{itemize}
+  \item C++23: Recht esoterische Erweiterungen.
+\end{itemize}
+
+Ranking von Programmiersprachen:
+\begin{itemize}
+  \item Monatliche "Ubersicht von
+         \htmladdnormallinkfoot{Tiobe Software}{https://www.tiobe.com/tiobe-index}.
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+%  \htmladdnormallinkfoot{}{\url{}}

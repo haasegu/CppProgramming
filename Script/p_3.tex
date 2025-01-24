@@ -1,0 +1,498 @@
+\chapter[Operatoren]{Ausdr"ucke, Operatoren und mathematische Funktionen}
+\label{p:3}
+%
+\begin{itemize}
+ \item \textbf{Ausdr"ucke} bestehen aus Operanden und Operatoren.\index{Ausdruck}
+ \item \textbf{} sind Variablen, Konstanten oder wieder Ausdr"ucke.\index{Operanden}
+ \item \textbf{Operatoren} f"uhren Aktionen mit Operanden aus.\index{Operator}
+\end{itemize}
+%
+%
+\section{Zuweisungsoperator}
+\label{p:3.1}
+%
+Der Zuweisungsoperator
+\verb| <operand_A> = <operand_B>| weist dem linken Operanden, welcher eine
+Variable sein mu"s, den Wert des rechten Operanden zu.
+
+Zum Beispiel ist im Ergebnis der Anweisungsfolge
+\includecode[linerange={10-10,12-15,30-30}]{Ex310.cpp}{Anweisungsfolge}
+%
+der Wert von \verb|x| gleich 0 und der Wert von \verb|y| gleich 4.
+Hierbei sind \verb|x|, \verb|y|,  \verb|0|, \verb|x+4|
+Operanden, wobei letzterer gleichzeitig ein Ausdruck, bestehend
+aus den Operanden \verb|x|, \verb|4| und dem Operator \verb|+|, ist.
+Sowohl \verb|x = 0| als auch \verb|y = x + 4| sind Ausdr"ucke.
+Erst das abschlie{\ss}ende Semikolon \verb| ; | wandelt diese Ausdr"ucke
+in auszuf"uhrende Anweisungen!
+
+Es k"onnen auch Mehrfachzuweisungen auftreten.
+Die folgenden drei Zuweisungsgruppen sind "aquivalent.
+\includecode[linerange={10-11,20-22,30-30},label=Ex310_b.cpp]{Ex310.cpp}{Äquivalente Zuweisungen}
+%
+\section{Arithmetische Operatoren}
+\label{p:3.2}
+%
+\subsection{Un"are Operatoren}
+\label{p:3.2.1}
+%
+Bei un"aren Operatoren tritt nur ein Operand auf.
+
+%
+\begin{tabular} {l@{\quad}p{0.6\textwidth}@{\quad}l}
+ Operator & Beschreibung & Beispiel \\ \hline
+ \verb|-|	& Negation & \verb|-a|
+\end{tabular}
+%
+%
+\subsection{Bin"are Operatoren}
+\label{p:3.2.2}
+%
+Bei bin"aren Operatoren treten zwei Operanden auf.
+Der Ergebnistyp der Operation h"angt von den Operanden ab.
+\index{Operator!arithmetischer}
+%
+
+\noindent
+\begin{tabular} {l@{\quad}p{0.6\textwidth}@{\quad}l}
+ Operator & Beschreibung & Beispiel \\ \hline
+ \verb|+| & Addition & \verb|b + a| \\
+ \verb|-| & Subtraktion & \verb|b - a| \\
+ \verb|*| & Multiplikation & \verb|b * a| \\
+ \verb|/| & Division (! bei Integer-Werten !)& \verb|b / a| \\
+ \texttt{\%} & Rest bei ganzzahliger Division& \texttt{b \% a}
+\end{tabular}
+
+Die Division von Integerzahlen berechnet den ganzzahligen Anteil
+der Division, d.h., \verb| 8 / 3 | liefert \verb| 2 | als Ergebnis.
+Falls aber der Wert \verb| 2.666666 | herauskommen soll, mu{\ss}
+mindestens einer der Operatoren in eine Gleitkommazahl umgewandelt werden,
+wie im Listing~\ref{lst:Ex320.cpp} zu sehen ist.\index{Gleitkommazahl}
+%
+\includecode[linerange={10-20,61-61}]{Ex320.cpp}{Fallen und Typumwandlung (Casting) bei Integeroperationen}
+
+\textbf{Achtung:} Der Modulo einer negativen Zahl wird in~C++ nicht so berechnet, wie man
+es seitens der Algebra erwarten w"urde, z.B.,
+\verb| -13 % 4 | liefert~\verb| -1 | statt~\verb| 3 |.
+
+Bzgl. der Vorrangregeln f"ur Operatoren sei auf die Literatur verwiesen,
+die alte Regel ``\textit{Punktrechnung geht vor Strichrechnung}'' gilt
+auch in C/C++. Analog werden Ausdr"ucke in runden Klammern
+\verb| ( <ausdruck> ) | zuerst berechnet.
+\includecode[linerange={10-10,30-58,61-61},label=Ex320_b.cpp]{Ex320.cpp}{Integeroperationen}
+%
+%
+\section{Vergleichsoperatoren}
+\label{p:3.3}
+%
+Vergleichsoperatoren sind bin"are Operatoren. Der Ergebniswert ist
+immer ein Boolean- bzw. Integerwert, wobei \texttt{false} dem Wert \verb|0| zugeordnet ist und
+\texttt{true} einen Wert ungleich \verb|0| entspricht.
+Zeile~6 im nächsten Listing
+%Listing~\ref{lst:Ex330.cpp}
+dokumentiert die Ausgabe von Text statt 0/1 bei
+bei der Ausgabe solcher Booleanwerte.
+\index{Operator!Vergleichsoperator}\index{false}\index{true}
+
+\begin{tabular} {l@{\quad}p{0.6\textwidth}@{\quad}l}
+ Operator & Beschreibung & Beispiel \\ \hline
+ \verb|>| & gr"o{\ss}er & \verb|b > a| \\
+ \verb|>=| & gr"o{\ss}er oder gleich & \verb|b >= 3.14| \\
+ \verb|<| & kleiner & \verb|a < b/3| \\
+ \verb|<=| & kleiner oder gleich & \verb|b*a <= c| \\
+ \verb|==| & gleich (! bei Gleitkommazahlen!)& \verb|a == b| \\
+ \verb|!=| & ungleich (! bei Gleitkommazahlen!)& \verb|a != 3.14|
+\end{tabular}\index{Gleitkommazahl}
+%
+% \includecode[linerange={10-16,44-44}]{Ex330.cpp}{Vergleichsoperatoren und Ausgabe von \texttt{boolean}}
+\includecode[linerange={11-16}]{Ex330.cpp}{Vergleichsoperatoren und Ausgabe von \texttt{boolean}}
+%
+Ein \textbf{typischer Fehler} tritt beim Test auf Gleichheit auf, indem
+statt des Vergleichsoperators \verb|==| der Zuweisungsoperator\index{Zuweisungsoperator}
+\verb|=| geschrieben wird. Der Compiler akzeptiert den
+Quelltext, compilerabh"angig werden Warnungen ausgegeben [\verb| g++ -Wall ... |],
+siehe \S\ref{sec:11.5}.
+%
+% \includecode[linerange={10-10,18-18,27-44},label=Ex330_b.cpp]{Ex330.cpp}{Typischer Fehler bei Test auf Gleichheit}
+\includecode[linerange={18-18,27-43},label=Ex330_b.cpp]{Ex330.cpp}{Typischer Fehler bei Test auf Gleichheit}
+
+Im inkorrekten Code tritt der unerw"unschte Nebeneffekt auf,
+da{\ss} der Wert der Variablen \verb|i| im Test ge"andert wird,
+w"ahrend folgender, korrekter Code keinerlei Nebeneffekte aufweist.
+\enlargethispage{1ex}
+%
+\section{Logische Operatoren}
+\label{p:3.4}
+%
+Es gibt nur einen un"aren logischen Operator:\index{Operator!logischer}\\[0.5ex]
+%
+\begin{tabular} {l@{\quad}p{0.35\textwidth}@{\quad}l}
+ Operator & Beschreibung & Beispiel \\ \hline
+ \verb|!|	& logische Negation & \verb|! (3>4)       // TRUE|
+\end{tabular}\\[0.5ex]
+%
+und zwei bin"are logische Operatoren:\\[0.5ex]
+%
+%
+\begin{tabular} {l@{\quad}p{0.35\textwidth}@{\quad}l}
+ Operator & Beschreibung & Beispiel \\ \hline
+ \verb|&&| & logisches UND  & \verb|(3>4) && (3<=4)   // FALSE| \\
+ \verb!||! & logisches ODER & \verb!(3>4) || (3<=4)   // TRUE!
+\end{tabular}
+\\[0.5ex]
+%\enlargethispage{0.64cm}
+Die Wahrheitswertetafeln f"ur das logische UND und das logische ODER
+sind aus der Algebra bekannt (ansonsten, siehe Literatur).
+%
+\includecode[linerange={6-23}]{Ex340.cpp}{Verknüpfung logischer Tests}
+%
+%
+%
+\section{Bitorientierte Operatoren}
+\label{p:3.5}
+%
+Ein Bit ist die kleinste Informationseinheit mit genau
+zwei m"oglichen Zust"anden:\index{Operator!bitorientierter}\index{Bit}
+$$
+\begin{cases} \text{bit gel"oscht} \\ \text{bit gesetzt} \end{cases}
+\;\equiv\;
+\begin{cases} 0 \\ L \end{cases}
+\;\equiv\;
+\begin{cases} 0 \\ 1 \end{cases}
+\;\equiv\;
+\begin{cases} \texttt{false} \\ \texttt{true} \end{cases}
+\index{false}\index{true}
+$$
+Ein Byte besteht aus 8~Bit und damit ist eine \verb| short int | Zahl
+16~Bit lang.\index{Byte}
+
+Als Operatoren in Bitoperationen treten normalerweise Integer-Ausdr"ucke auf.
+%
+\subsection{Un"are bitorientierte Operatoren}
+\label{p:3.5.1}
+%
+\begin{tabular} {l@{\quad}p{0.67\textwidth}@{\quad}l}
+ Operator & Beschreibung & Beispiel \\ \hline
+ \verb|~|	& Bin"arkomplement, bitweise Negation des Operanden
+ 		& \verb|~k|
+\end{tabular}
+%
+% \newpage
+%
+%
+\subsection{Bin"are bitorientierte Operatoren}
+\label{p:3.5.2}
+%
+\begin{tabular} {l@{\quad}p{0.45\textwidth}@{\quad}l}
+ Operator & Beschreibung & Beispiel \\ \hline
+ \verb|&| & bitweises UND  der Operanden & \verb|k & l|  \\
+ \verb!|! & bitweises ODER & \verb!k | l! \\
+ \verb|^| & bitweises exklusives ODER & \verb|k ^ l| \\
+ \verb|<<| & Linksverschiebung der Bits von \texttt{<op1>}
+ 	um \texttt{<op2>} Stellen & \verb|k << 2      // = k*4| \\
+ \verb|>>| & Rechtsverschiebung der Bits von \texttt{<op1>}
+ 	um \texttt{<op2>} Stellen & \verb|k >> 2      // = k/4|
+\end{tabular}
+
+Wahrheitswertetafel:
+\begin{tabular}[t]{c|c||c|c|c}
+  \verb|x| & \verb|y| & \verb|x & y| & \verb!x | y! & \verb|x ^ y| \\ \hline
+  0 & 0 & 0 & 0 & 0 \\
+  0 & L & 0 & L & L \\
+  L & 0 & 0 & L & L \\
+  L & L & L & L & 0
+\end{tabular}\index{Wahrheitswertetafel}
+
+%\pagebreak[4]
+Diese Operatoren seien an den folgenden Beispielen demonstriert:
+%
+\includecode[linerange={9-21,34-35}]{Ex350.cpp}{Bitoperationen}
+%
+%\vfill
+%\pagebreak[4]
+Die Bitoperationen sind n"utzlich beim Test, ob eine gerade oder ungerade
+Integerzahl vorliegt. Das niederwertigste Bit kann bei Integerzahlen
+zur Unterscheidung \glqq{}gerade/ungerade Zahl\grqq{} genutzt werden (siehe auch die
+Bitdarstellung der Zahlen 5 und 6 im obigen Code). Wenn man daher
+dieses Bit mit einem gesetzten Bit "uber die ODER-Operation verkn"upft, so
+bleibt das niederwertigste Bit bei ungeraden Zahlen unver"andert.
+Dies wird im nachfolgenden Code ausgenutzt.
+%
+\pagebreak[1]
+%\includecode[linerange={9-21,34-35}]{Ex351.cpp}{Bitoperationen}
+\includecode[firstline=6]{Ex351.cpp}{Test auf ungerade Zahl (Bitoperationen)}
+%
+%
+\section{Operationen mit vordefinierten Funktionen}
+\label{p:3.6}
+\subsection{Mathematische Funktionen}
+\label{p:3.6.1}
+%
+Im Headerfile \textit{cmath} werden \ghref{https://en.cppreference.com/w/cpp/header/cmath}{mathematische Funktionen} bereitgestellt. 
+Die Nutzung des Namespaces \verb|std| ist empfehlenswert , also \verb|std::exp()| oder gloabl mit \verb|using namespoace std;|.
+
+\begin{table}[htb]
+\begin{tabular} {l@{\quad}p{0.6\textwidth}}
+ Funktion/Konstante & Beschreibung \\ \hline
+ \verb|sqrt(x)|  & Quadratwurzel von $x$: $\sqrt[2]{x}$ ($x\ge0$)  \\
+ \verb|cbrt(x)|  & Kubicwurzel von $x$: $\sqrt[3]{x}$  \\
+ \verb|exp(x)|   & $e^x$  \\
+ \verb|log(x)|   & nat"urlicher Logarithmus von $x$: $\log_{e} x$ ($x>0$) \\
+ \verb|pow(x,y)| & Potenzieren ($x>0$ falls $y$ nicht ganzzahlig)\\
+ \verb|abs(x)|  & Absolutbetrag von $x$: $|x|$ \\
+ \verb|fmod(x,y)|  & realzahliger Rest von $x/y$ ($y \neq 0$)\\
+ \verb|ceil(x)|  & n"achste ganze Zahl $\ge x$\\
+ \verb|floor(x)| & n"achste ganze Zahl $\le x$\\
+ \verb|round(x)| & gerundete Zahl\\
+ \verb|sin(x)|, \verb|cos(x)|, \verb|tan(x)|
+                 & trigonometrische Funktionen \\
+ \verb|asin(x)|, \verb|acos(x)| & trig.\   Umkehrfunktionen ($x \in [-1,1]$)\\
+ \verb|atan(x)|  & trig.\   Umkehrfunktion \\ \hline
+ \verb|M_E|      & Eulersche Zahl $e$ \\
+ \verb|M_PI|     & $\pi${} \\
+ \verb|std::numbers::pi|   & $\pi${} \quad (ab C++20)
+\end{tabular}\label{tab:math}
+\index{cmath}\index{cmath!sqrt()}\index{cmath!exp()}\index{cmath!log()}
+\index{cmath!pow()}
+\index{cmath!abs()}\index{cmath!fmod()}\index{cmath!ceil()}
+\index{cmath!floor()}\index{cmath!sin()}
+\index{cmath!tan()}\index{cmath!cos()}\index{cmath!asin()}\index{cmath!acos()}
+\index{cmath!atan()}\index{cmath!M\_E}\index{cmath!M\_PI}
+\index{Konstante!mathematische}
+ \caption{Eine kleine Auswahl mathematischer Funktionen\label{tab:mathfunc}}
+\end{table}
+Falls unter Windows die Konstante \verb|M_PI| vom  Compiler nicht erkannt wird, dann vor der Zeile \verb|#include <cmath>| die Zeile 
+\verb|#undef __STRICT_ANSI__| einfügen. Alternativ kann auch die Compileroption 
+\verb|-U__STRICT_ANSI__| verwendet werden.
+
+%Das Runden einer reellen Zahl \verb| x | wird mit \verb|std::round(x)| aus dem Headder cmath e
+%erreicht man durch \verb| ceil(x-0.5) |
+%(ohne Beachtung der Rundungsregeln bei z.B., $4.5$) oder nutzt gleich \verb|round(x)|
+%aus dem C99-Standard~\cite[pp.801]{Wolf:2006:CAZ}.
+Mit dem Header \verb|<numbers>| werden ab C++20 gängige 
+\ghref{https://en.cppreference.com/w/cpp/header/numbers}{mathematische Konstanten} 
+über den Namensraum \verb|std::numbers::|
+sauber eingeführt und können typsicher verwendet werden.
+\index{pi}\index{C++20}
+\begin{lstlisting}[caption=Konstanten in C++20,label=lst:3_6_1,basicstyle=\scriptsize]{}
+#include <numbers>    // pi, pi_v<T>  in C++20
+{
+   float alpha  = 123.4;                                    // Gradmass
+   float angle1 = alpha/180.0f*std::numbers::pi_v<float>;   // Radiant
+   float angle2 = alpha/180.0f*std::numbers::pi;            // Casting von double
+}
+\end{lstlisting}
+
+
+% \pagebreak
+F"ur die Zul"assigkeit der Operationen, d.h., den Definitionsbereich der
+Argumente, ist der Programmierer verantwortlich. Ansonsten werden
+Programmabbr"uche oder unsinnige Ergebnisse produziert.
+\includecode[firstline=6]{Ex361.cpp}{Mathematische Funktionen}
+%
+
+\begin{minipage}{0.99\textwidth}
+Die Funktionen aus \textit{cmath} werden in einer speziellen mathematischen
+Bibliothek gespeichert, {soda\ss} der Befehl zum Compilieren und
+\underline{Linken} diese
+Bibliothek \textit{libm.a} ber"ucksichtigen {mu\ss}, d.h.
+\index{Compilieren}\index{Linken}\index{Bibliothek}
+\nopagebreak
+\\
+\nopagebreak
+\texttt{LINUX> g++ Ex361.cpp [-lm]}
+\end{minipage}
+%
+%
+\ifcteil
+%\pagebreak
+\subsection{\mbox{}$^{*}$Funktionen für C-Strings}
+\label{p:3.6.2}
+%
+Im Headerfile \textit{cstring} enthält Definitionen der
+folgenden Funktionen f"ur Strings:
+%\exfile{Ex362.cpp}
+%
+\begin{table}[htb]
+\begin{tabular} {l@{\quad}p{0.7\textwidth}}
+ Funktion & Beschreibung \\ \hline
+ \verb|strcat(s1,s2)|  & Anh"angen von \verb|s2| an \verb|s1|  \\
+ \verb|strcmp(s1,s2)|  & Lexikographischer Vergleich der Strings
+ 			\verb|s1| und \verb|s2|  \\
+ \verb|strcpy(s1,s2)|  & Kopiert \verb|s2| auf \verb|s1| \\
+ \verb|strlen(s)|      & Anzahl der Zeichen in String \verb|s|
+ 		( = \verb|sizeof(s1)-1| )\\
+ \verb|strchr(s,c)|    & Sucht Character \verb|c| in String \verb|s|
+\end{tabular}
+\index{cstring}\index{cstring!strcat()}\index{cstring!strcmp()}
+\index{cstring!strcpy()}\index{cstring!strlen()}\index{cstring!strchr()}
+ \caption{Auswahl klassische Funktionen f"ur Strings\label{tab:strings}}
+\end{table}
+%
+\includecode[firstline=6]{Ex362.cpp}{Benutzung von C-Strings}
+%
+Details "uber diese Funktionen (und weitere) k"onnen mittels \\
+\verb|LINUX> man 3 string| \\
+\verb|LINUX> man strcmp|   \\
+erhalten werden.
+%\pagebreak{}
+\fi
+%
+%
+%
+\subsection{Funktionen f"ur die Klasse \texttt{string} (C++-Strings)}
+\label{p:3.6.3}
+%
+C++ bietet eine komfortablere M"oglichkeit zur Zeichenkettenverarbeitung
+"uber die Klasse \texttt{string}, welche im Headerfile \textit{string}
+deklariert ist. 
+\ifcteil
+Das Programm in \S\ref{p:3.6.2} kann dann wir folgt geschrieben werden.
+\fi
+\includecode[firstline=6]{Ex363.cpp}{Benutzung von C++-Strings}
+%
+%
+\section{Inkrement- und Dekrementoperatoren}
+\label{p:3.7}
+\subsection{Pr"afixnotation}
+\label{p:3.7.1}
+%
+\begin{minipage}[t] {0.95\textwidth}
+\begin{boxedverbatim}
+++<lvalue>               // <lvalue> = <lvalue> + 1
+--<lvalue>               // <lvalue> = <lvalue> - 1
+\end{boxedverbatim}
+\end{minipage}
+%
+\begin{lstlisting}[caption=Präfixnotation,label=lst:3_7_1,basicstyle=\scriptsize]{}
+{
+  int i=3, j;
+   ++i;             // i = 4
+
+   j = ++i;         // i = 5, j = 5
+                    // above prefix notation is equivalent to
+   i = i + 1;
+   j = i;
+}
+\end{lstlisting}
+%
+\subsection{Postfixnotation}
+\label{p:3.7.2}
+%
+\begin{minipage}[t] {0.95\textwidth}
+\begin{boxedverbatim}
+<lvalue>++               // <lvalue> = <lvalue> + 1
+<lvalue>--               // <lvalue> = <lvalue> - 1
+\end{boxedverbatim}
+\end{minipage}
+%
+\begin{lstlisting}[caption=Postfixnotation,label=lst:3_7_2,basicstyle=\scriptsize]{}
+{
+   int i=3, j;
+   i++;             // i = 4
+   j = i++;         // i = 5, j = 4
+                    // above postfix notation is equivalent to
+   j = i;
+   i = i + 1;
+}
+\end{lstlisting}
+%
+Pr"a- und Postfixnotation sollten sparsam verwendet werden.
+Meist benutzt man die Pr"afixnotation f"ur die Indexvariablen in Zyklen (\S~\ref{p:4}),
+da die entsprechende Postfixnotation eine zus"atzliche Kopieroperation
+beinhaltet und damit aufwändiger (teurer) ist.
+
+%
+%
+%
+\section{Zusammengesetzte Zuweisungen}
+\label{p:3.8}
+%
+Wertzuweisungen der Form \\
+\centerline{\texttt{
+<lvalue> = <lvalue> <operator> <ausdruck>
+}}
+k"onnen zu \\
+\centerline{\texttt{
+<lvalue> <operator>= <ausdruck>
+}}
+verk"urzt werden. \\
+Hierbei ist
+{\texttt{<operator>} $\in$ \verb!{+,-,*,/,%,&,|,^,<<,>>}!} aus
+\S~\ref{p:3.2} und \S~\ref{p:3.5}\enspace.{}
+%
+\begin{lstlisting}[caption=Kombination von Operatoren mit einer Zuweisung,label=lst:3_8,basicstyle=\scriptsize]{}
+{
+  int   i,j,w;
+  float x,y;
+
+  i  += j            // i = i+j
+  w >>= 1;           // w = w >> 1 (= w/2)
+  x  *= y;           // x = x*y
+}
+\end{lstlisting}
+%
+%
+%
+\section{Weitere n"utzliche Konstanten}
+\label{p:3.9}
+%
+F"ur systemabh"angige Zahlenbereiche, Genauigkeiten usw.\   ist
+das Headerfile \emph{limits} in C++ recht hilfreich.
+%
+\includecode[firstline=1]{Ex390.cpp}{Zahlbereichskonstanten in C++}
+%
+Die Nutzung der Templateklasse \texttt{numeric\_limits} erfordert (zumindest theoretisch)
+Kenntnisse von Namensbereichen, Klassen und Templates.
+Daher ist Listing~\ref{lst:Ex390.cpp} hier nur als kurzes Kochrezept angegeben.
+F"ur weitere Methoden (Funktionen) siehe \cite[p.710]{KirchPrinz:2002:OOP}
+und \cite[\S13.5]{KuhlinsSchader:2002:DCS} und \cite[\S7.3.4]{Wolf:2006:CAZ}.
+%
+%
+%F"ur systemabh"angige Zahlbereiche, Genauigkeiten usw. ist die
+%Auswahl der folgenden Konstanten aus C recht hilfreich.
+%\begin{table}[htb]
+%\begin{tabular} {l@{\quad}p{0.7\textwidth}}
+	%Funktion & Beschreibung \\ \hline
+	%\verb|FLT_DIG|  & Anzahl g"ultiger Dezimalstellen f"ur \verb|float|  \\
+	%\verb|FLT_MIN|  & Kleinste, darstellbare positive Zahl  \\
+	%\verb|FLT_MAX|  & Gr"o"ste, darstellbare positive Zahl\\
+	%\verb|FLT_EPSILON|      & Kleinste positive Zahl mit $1.0+\varepsilon \neq 1.0$ \\
+				%&	(Stellenausl"oschung)\\
+	%\verb|DBL_|    & wie oben f"ur \verb|double| \\
+	%\verb|LDBL_|    & wie oben f"ur \verb|long double|
+ %\end{tabular}
+%\index{float.hpp}\index{float.hpp!FLT\_DIG}\index{float.hpp!FLT\_MIN}
+%\index{float.hpp!FLT\_MAX}\index{float.hpp!FLT\_EPSILON}
+ %\caption{Einige, wenige Konstanten aus \textit{float.hpp} \label{tab:floath}}
+%\end{table}
+
+%\begin{table}[htb]
+%\begin{tabular} {l@{\quad}p{0.7\textwidth}}
+ %Funktion & Beschreibung \\ \hline
+ %\verb|INT_MIN|  & Kleinste, darstellbare Integerzahl  \\
+ %\verb|INT_MAX|  & Gr"o"ste, darstellbare positive Integerzahl\\
+ %\verb|SHRT_|   & wie oben f"ur \verb|short int| \\
+ %\verb|LONG_|   & wie oben f"ur \verb|long int| \\
+ %\verb|LLONG_|   & wie oben f"ur \verb|long long int|
+%\end{tabular}
+%\index{limits.hpp}\index{limits.hpp!INT\_MIN}\index{limits.hpp!INT\_MAX}
+ %\caption{Einige, wenige Konstanten aus \textit{limits.hpp}\label{tab:limitsh}}
+%\end{table}
+%
+%Weitere Konstanten k"onnen unter den g"angigen Linuxdistributionen direkt in den
+%Files
+%\textit{/usr/lib/gcc-lib/i686-pc-linux-gnu/3.2.3/include/float.hpp} und \textit{/usr/include/limits.hpp}
+%nachgeschaut werden.
+%Die entspechenden Headerfiles k"onnen auch mit dem Befehl
+%\\
+%\verb|LINUX> find /usr -name float.hpp -print|
+%\\
+%gesucht werden.
+%\index{find!Unix-Befehl}
+
+
+
+
+
+

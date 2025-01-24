@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+#  Konvertierung von Zeichenketten
+#******************************************************************************
+
+echo
+echo '     section --> chapter, etc.'
+echo
+
+if [ $# -eq 0 ]
+  then  echo "     Aufruf :   konvert filename[n]"
+        echo 
+        exit 1
+fi
+
+for i in `ls $@`
+  do  echo " " >> $i  
+      sed -f ./konvert.sed $i >$i.temp
+      echo " ==> "$i
+      if [ -s $i.temp ] 
+         then mv $i.temp $i
+      fi
+  done
+
+echo
+exit 0

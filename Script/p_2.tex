@@ -1,0 +1,433 @@
+\chapter{Variablen und Datentypen}
+\label{p:2}
+%
+\section{Variablen}
+\label{p:2.1}
+Jedes sinnvolle Programm bearbeitet Daten in irgendeiner Form.
+Die Speicherung dieser Daten erfolgt in Variablen.\index{Variable|(}
+
+Allgemeine Form der Variablenvereinbarung: \\
+\centerline {\texttt {
+  <typ> <bezeichner1> [, bezeichner2] ;
+}}
+
+\noindent
+Die Variable
+\begin{minipage}[t] {0.8\textwidth}
+ \begin{enumerate}
+   \renewcommand {\labelenumi}{\roman{enumi})}
+   \item ist eine symbolische Repr"asentation (Bezeichner/Name) f"ur
+   	den Speicherplatz von Daten.
+   \item  wird beschrieben durch Typ und
+   	Speicherklasse.\index{Variable!Typ}\index{Variable!Speicherklasse}.
+   	Der Datentyp \texttt{<typ>} einer Variablen bestimmt die zulässigen Werte
+   dieser Variablen.
+   \item Die Inhalte der Variablen, d.h., die im Speicherplatz befindlichen
+   	Daten, "andern sich w"ahrend des Programmablaufes.
+ \end{enumerate}
+\end{minipage}
+
+%
+\subsection{Einfache Datentypen}
+\label{p:2.2}
+%
+Daten im Computer basieren auf dem binären Zahlensystem von
+Gottfried Wilhelm Leibniz\footnote{Gottfried Wilhelm Leibniz,
+\textborn 1.7.1646 in Leipzig, \textdied 14.11.1716 in Hannover}
+worin alle ganzen Zahlen durch die Summation von
+mit~0 oder~1 gewichteten Zweierpotenzen dargestellt werden können. So wird die Zahl
+117 im Dezimalsystem durch
+$$ 117_{(10)} =
+01110101_{(2)} = 0 \cdot 2^{7} + 1 \cdot 2^{6} + 1 \cdot 2^{5} +
+ 1 \cdot 2^{4} + 0 \cdot 2^{3} + 1 \cdot 2^{2} + 0 \cdot 2^{1} + 1 \cdot 2^{0}$$
+binär dargestellt.
+Die grundlegende Informationseinheit im Computer ist das \emph{Bit} welches
+genau einen der zwei Zustände~1 oder~0 annehmen kann
+(ja/nein, true/false). Somit werden in obiger Binärendarstellung von 117
+genau 8~Bit benötigt. Diese 8~Bit stellen die kleinste Grundeinheit des
+Datenzugriffs bei heutigen Computern dar und werden als ein \emph{Byte} bezeichnet.
+\index{bit}\index{Byte}
+
+%
+Aufbauend auf der Speichereinheit Byte sind die in Tabelle~\ref{tab:2.1.1}
+dargestellten, \ghref{https://en.cppreference.com/w/cpp/language/types}{grundlegenden Datentypen} in C++ vorhanden.
+%
+\begin{table}[htb]
+	\label{tab:2.1.1}
+\mbox{}\hfill
+\begin{tabular}{l@{\quad}c@{\quad}l@{\quad}p{0.3\textwidth}}
+    \hline\hline
+ Typ		& \hspace{-6ex}Speicherbedarf& Inhalt	& mögliche Werte \\
+ 		& \hspace{-6ex}in Byte	&		&	\\  \hline\hline
+ \texttt{byte}	& 1		& Byte & $0x00000000 \ldots 0x11111111$
+	\\ \hline 
+ \texttt{char}	& 1		& ASCII-Zeichen & 'H', 'e', '$\backslash$n'
+	\\
+ \texttt{wchar\_t}	& 2$|$4 & Unicode (Win$|$Unix) & Ä. ß, $\gamma$, $\Omega$, $\daleth$, $\aleph$
+	\\    
+     \hline
+ \texttt{bool}	& 1		& Booleanvariable & \verb|false|, \verb|true|\quad [erst ab C90]
+	\\ \hline
+%
+ \texttt{signed char} & 1		&	&  $[-128, 127]$ ; -117, 67 \\
+ \texttt{unsigned char} & 1		&	&    $[0, 255]$ ;  139, 67\\
+ \texttt{short} [\texttt{int}] 	& 2		& 	& $[-2^{15},2^{15}-1]$ ; -32767 \\
+ \texttt{unsigned short} [\texttt{int}] & 2		& 	& $[0,2^{16}-1]$ ;  40000\\
+ \texttt{int}	& 4		&	Ganze Zahlen	&  $[-2^{31},2^{31}-1]$ \\
+ \texttt{unsigned} [\texttt{int}]	& 4		&	(integer)	&  $[0,2^{32}-1]$ \\
+ \texttt{long}  [\texttt{int}]  	& 4		&	& wie \texttt{int} \\
+ \texttt{unsigned long}  [\texttt{int}] 	& 4		&		& wie \texttt{unsigned int} \\
+ \texttt{long long}  [\texttt{int}]  		& 8		&		&  $[-2^{63},2^{63}-1]$  \\
+ \texttt{unsigned long long}  [\texttt{int}]& 8		&		& $[0,2^{64}-1]$ \\
+ \texttt{size\_t}  & 		&	implementierungsabhängig	&  \texttt{unsigned long long int}
+ \\ \hline
+%
+ \texttt{float} & 4		& Gleitkommazahlen& 1.1, -1.56e-32 \\
+ \texttt{double}& 8		& (floating point numbers)		& 1.1, -1.56e-132, 5.68e+287
+ 	\\ \hline\hline
+\end{tabular}
+\hfill\mbox{}
+	\caption{Speicherbedarf grundlegender Datentypen [Stand 03/2019]}
+\end{table}
+\index{char}\index{bool}\index{int}\index{float}\index{double}
+%
+\begin{itemize}
+ \item Standardcharacterdaten speichern in einem Byte (=~8~bit) genau ein
+  \ghref{http://de.wikipedia.org/wiki/Ascii\#ASCII-Tabelle}{ASCII}- oder Sonderzeichen, d.h.,
+  die kodierten Buchstaben, Ziffern und Sonderzeichen werden durch eine ganze Zahl aus $[0,255=2^{8}-1]$
+  (\texttt{unsigned char}) dargestellt. 
+ \item Der Speicherbedarf von ganzzahligen Datentypen (\texttt{short int}, \texttt{int},
+ \texttt{long int}, \texttt{long long int} )\index{Integer}
+ 	kann von Compiler und Betriebssystem (16/32/64 bit) abh"angen.
+	Es empfiehlt sich daher, die einschl"agigen Compilerhinweise zu lesen
+	bzw.\  mit dem \texttt{sizeof}-Operator mittels
+	\texttt{sizeof(<typ>)} oder \texttt{sizeof(<variable>)}\index{sizeof()}
+	die tats"achliche Anzahl der ben"otigten Bytes zu ermitteln.
+	Siehe dazu auch das Listing~\ref{lst:DataTypes.cpp}.
+ \item Wir werden meist den Grundtyp \texttt{int} f"ur
+ 	den entsprechenden Teilbereich der ganze Zahlen und
+ 	\texttt{unsigned int} f"ur nat"urliche Zahlen verwenden.
+	Die Kennzeichnung \texttt{unsigned} sowie das ungebräuchliche \texttt{signed} kann auch in
+	Verbindung mit anderen Integertypen verwendet werden.
+    Falls der gewählte Datentyp stets genau 16 bit beinhalten soll, dann können 
+    \ghref{https://en.cppreference.com/w/cpp/types/integer}{Fixed Integer Types} wie \verb|int16_t| benutzt werden.
+ \item Floating point numbers sind im Standard \ghref{https://de.wikipedia.org/wiki/IEEE_754}{IEEE 754} definiert.
+ Die Anzahl der Mantissenbits (\texttt{float}: 23; \texttt{double}: 52) bestimmt deren relative Genauigkeit,
+  d.h., das Maschinen-$\varepsilon$, welches die kleinste Zahl des Datentyps darstellt
+  für die $1+\varepsilon > 1$ noch gilt
+  (\texttt{float}: $2^{-(23+1)}$; \texttt{double}: $2^{-(52+1)}$).
+  Siehe dazu auch das \ghref{https://de.wikipedia.org/wiki/Gleitkommazahl\#Hidden_bit}{hidden bit}.
+\end{itemize}
+\includecode[linerange={4-8,15-15,65-66,75-76}]{DataTypes.cpp}{Abfrage der Speichergröße von Datentypen}
+%
+%
+%
+\subsection{Bezeichner von Variablen}
+\label{p:2.1.2}
+%
+Die Variablenbezeichner müssen gewissen Regeln folgen (\ghref{http://de.wikipedia.org/wiki/C_(Programmiersprache)\#Deklarationen}{wiki}):
+\begin{itemize}
+	\item Das erste Zeichen eines Bezeichners einer Variablen muss ein Buchstabe oder Unterstrich sein.
+	\item Die folgenden Zeichen dürfen nur die Buchstaben A–Z und a–z, Ziffern und der Unterstrich sein.
+	\item Ein Bezeichner darf kein Schlüsselwort der Sprache – zum Beispiel if, void und auto – sein.
+ \item C/C++ unterscheidet zwischen Gro\ss - und Kleinschreibung, d.h.,
+ 	\texttt{ToteHosen} und \texttt{toteHosen} sind unterschiedliche
+	Bezeichner!
+	\bspfile{Ex210.cpp}
+ %\item Laut originalem C-Standard sind die ersten 8 Zeichen eines
+ 	%Variablenbezeichners
+ 	%signifikant, d.h., \texttt{a2345678A} und \texttt{a2345678B}
+	%w"urden nicht mehr als verschiedene Bezeichner wahrgenommen.
+	%Mittlerweile sehen Compiler mehr Zeichen als signifikant an
+	%(C9X Standard: 63 Zeichen).
+\end{itemize}
+%
+\begin{table}[hbt]
+	\label{tab:2.1.2}
+\mbox{}\hfill
+\begin{tabular}{l@{$\;\;$}||@{$\;\;$}r@{\qquad\qquad}p{0.3\textwidth}}
+  G"ultig & Ung"ultig & Grund \\ \hline
+  \texttt{i} \\
+  \texttt{j} \\
+  \texttt{ijl} \\
+  \texttt{i3}	& \texttt{3i}	& 3 ist kein Buchstabe \\
+  \texttt{\_3a}	& \texttt{\_3*a} & * ist Operatorzeichen \\
+  \texttt{Drei\_mal\_a} & \texttt{b-a} & - ist Operatorzeichen \\
+  \texttt{auto1} & \texttt{auto} & \texttt{auto} ist Schl"usselwort
+\end{tabular}
+\hfill\mbox{}
+\caption{Einge erlaubte und nicht erlaubte Variablenbezeichner}
+\end{table}
+%
+\index{Variable|)}
+%
+%
+%
+\subsection{G"ultigkeit von Bezeichnern}
+\label{p:2.1.3}
+%
+Die Bezeichner von Variablen, Konstanten etc. sind im Regelfall
+lokal, d.h., ein Bezeichner ist nur innerhalb seines, von \verb|{ }|
+begrenzten Blockes von Codezeilen gültig, in welchem dieser Bezeichner
+deklariert wurde. Daher nennt man diesen Block den
+Gültigkeitsbereich (scope)\index{Block}\index{scope}
+dieser Variablen.
+Siehe dazu Listing~\ref{lst:HelloWorld.cpp} und ~\S\ref{p:4.2}.
+%
+%
+\subsection{Konstante mit Variablennamen}
+\label{p:2.2.6}
+%
+\index{Konstante|(}%
+Wird eine Variablenvereinbarung zus"atzlich mit dem
+Schl"usselwort \texttt{const} gekennzeichnet, so kann diese
+Variable nur im Vereinbarungsteil initialisiert werden und danach nie
+wieder, d.h., sie wirkt als eine Konstante.
+\includecode[firstline=6]{Ex226.cpp}{Definition und Deklaration von Konstanten und Variablen}
+%
+Nach der Deklaration in Zeile~6 ist die Variable~\texttt{i} noch nicht mit einem Wert belegt,
+d.h., sie hat einen undefinierten Status.
+In Zeile~7 würde der Wert von~\texttt{i} zufällig sein, je nachdem was gerade
+in den reservierten 4~Byte als Bitmuster im Computerspeicher steht.
+Damit wäre das Ergebnis einer Berechung mit~\texttt{i} nicht vorhersagbar
+(nicht deterministisch) und damit wertlos.
+
+Also sollte~\texttt{i} gleich bei der Deklaration auch definiert (initialisiert) werden.
+In C++ kann man ausnutzen, daß Deklarationsteil und Implementierungsteil gemischt werden können.
+Dies wird im Listing~\ref{lst:Ex226_b.cpp} ausgenutzt, sodaß die Variable~\texttt{i}
+erst in Zeile~4 deklariert wird, wo dieser auch gleich ein sinnvoller
+Wert zugewiesen werden kann.
+%
+\includecode[linerange={11-13,15-16}]{Ex226_b.cpp}{Variablen erst bei Gebrauch deklarieren}
+\index{Konstante|)}
+%
+%
+\section{Literale Konstanten}
+\label{p:2.22}
+%
+Die meisten Programme, auch \textit{HelloWorld.cpp}, verwenden
+im Programmverlauf unver"anderliche Werte, sogenannte Literale und Konstanten.
+\index{Literale|(}
+Literale Konstanten sind Werte ohne Variablenbezug welche in Ausdrücken explizit angegeben werden und zusätzliche
+Typinformationen enthalten können.
+%Konstanten sind namentlich gekennzeichnete Daten deren Werte nach der Deklaration und ihrer gleichzeitigen
+%Definition/Initialisierung nicht mehr verändert werden.
+%
+\subsection{Integerliterale}
+\label{p:2.22.1}
+%
+Dezimalliterale (Basis 10): \hfill
+\begin{minipage}[t] {0.5\textwidth}
+\begin{verbatim}
+   100        // int;     100
+   512L       // long;    512
+   128053     // long; 128053
+\end{verbatim}
+\end{minipage}
+
+Oktalliterale (Basis 8): \hfill
+\begin{minipage}[t] {0.5\textwidth}
+\begin{verbatim}
+   020        // int;      16
+   01000L     // long;    512
+   0177       // int;     127
+\end{verbatim}
+\end{minipage}
+
+Hexadezimalliterale (Basis 16): \hfill
+\begin{minipage}[t] {0.5\textwidth}
+\begin{verbatim}
+   0x15       // int;      21
+   0x200      // int;     512
+   0x1ffffl   // long; 131071
+\end{verbatim}
+\end{minipage}\index{Literale!Integer}
+%
+%
+\subsection{Gleitkommaliterale}
+\label{p:2.22.2}
+%
+Gleitkommaliterale werden als \texttt{double} interpretiert solange
+dies nicht anderweitig gekennzeichnet ist.
+\index{Literale!Gleitkommazahl}\index{Gleitkommazahl}
+\\
+Einige Beispiele im folgenden:
+\begin{minipage}[t] {0.6\textwidth}
+\begin{verbatim}
+   17631.0e-78
+   1E+10              //   double: 10000000000
+   1.                 //   double: 1
+   .78                //   double: 0.78
+   0.78
+   -.2e-3             //   double: -0.0002
+   -3.25f             //   single: -3.25
+\end{verbatim}
+\end{minipage}
+%
+%
+\subsection{Zeichenliterale (Characterliterale)}
+\label{p:2.22.3}
+%
+Die Characterliterale beinhaltet das Zeichen zwischen den zwei Apostrophen
+\texttt{'} :
+\begin{minipage}[t] {0.9\textwidth}
+\begin{verbatim}
+   'a', 'A', '@', '1' //  ASCII-Zeichen
+   ' '                //    Leerzeichen
+   '_'                //    Unterstreichung/Underscore
+   '\''               //    Prime-Zeichen '
+   '\\'               //    Backslash-Zeichen  \
+   '\n'               //  neue Zeile
+   '\0'               //  Nullzeichen NUL
+\end{verbatim}
+\end{minipage}\index{Literale!Character}\index{Ausgabe!neue Zeile}
+%
+%
+\subsection{Zeichenkettenkonstanten (Stringkonstanten)}
+\label{p:2.22.4}
+%
+Die Zeichenkette beinhaltet die Zeichen zwischen den beiden
+Anführungszeichen \texttt{"} :
+\begin{minipage}[t] {0.8\textwidth}
+\begin{verbatim}
+   "Hello World\n"    //    \n is C-Stil fuer neue Zeile (C++: endl)
+   ""                 //    leere Zeichenkette
+   "A"                //    String "A"
+\end{verbatim}
+\end{minipage}\index{Konstante!String}
+
+Jede Zeichenkette wird automatisch mit dem
+(Character-) Zeichen \verb|'\0'| abgeschlossen
+(\textit{``Hey, hier h"ort der String auf!''}).
+Daher ist \verb|'A'| ungleich \verb|"A"|, welches
+sich aus den Zeichen  \verb|'A'| und \verb|'\0'|
+zusammensetzt und somit 2~Byte zur Speicherung ben"otigt.
+\includecode[firstline=4]{Ex224.cpp}{Länge von String und Character}
+%
+\index{Literale|)}
+%
+%
+\section{Einige h"ohere Datentypen in C++}
+\label{p:2.3}
+%
+Die Standardbibliothek und
+die \textbf{S}tandard \textbf{T}emplate \textbf{L}ibrary (STL) stellen eine gro"se Auswahl
+an komfortablen h"oheren Datenkonstrukten (genauer: \emph{Klassen} und \emph{Container}) zur Verf"ugung, welche
+das Programmieren vereinfachen.
+Die intensive Anwendung der Container f"ur eigene Datenstrukturen (und \emph{Klassen})
+erfordert Kenntnisse in Klassenprogrammierung, Vererbung und  Templates, welche wir erst später behandeln werden.
+Um aber schon mit diesen höheren Datentypen arbeiten zu können,  erfolgt hier ein kurze Einführung
+in \texttt{string}, \texttt{complex},
+\texttt{vector} und \texttt{valarray}.
+Vertiefend und weiterf"uhrend seien dazu u.a.
+\cite{KirchPrinz:2002:OOP, KuhlinsSchader:2002:DCS, SatirBrown:1995:PCP}
+empfohlen.
+%
+
+\subsection{Die Klasse string}
+\label{p:2.3.1}
+Diese Standardklasse \texttt{string}~\cite[\S~18]{KirchPrinz:2002:OOP}
+erlaubt eine komfortable Zeichenkettenverarbeitung
+\includecode[firstline=4]{demoString.cpp}{Erste Schritte mit \texttt{string}}
+%
+Die Konvertierung von Zahlen in Strings und umgekehrt wird \ghref{http://www.cplusplus.com/articles/D9j2Nwbp/}{hier} erläutert und ist noch komfortabler mit
+  \texttt{to\_string} und \texttt{stof}.
+%
+%\newpage
+
+\subsection{Die Klasse complex}
+\label{p:2.3.2}
+Die Standardklasse \texttt{complex<T>}~\cite[p.~677]{KirchPrinz:2002:OOP}
+erlaubt die Verwendung komplexer Zahlen \bspfile{demoComplex.cpp} in der gewohnten Weise.
+Bei der Variablendeklaration mu"s der Datentyp der Komponenten der komplexen Zahl in
+Dreiecksklammern angegeben werden. Hier machen eigentlich nur \verb|<double>| oder
+\verb|<float>| einen Sinn.
+%
+\includecode[firstline=2]{demoComplex.cpp}{Erste Schritte mit \texttt{complex}}
+%
+
+\subsection{Die Klasse vector}
+\label{p:2.3.4}
+Die Containerklasse \texttt{vector<T>}~\cite[\S~5.1]{KuhlinsSchader:2002:DCS}
+erlaubt die Verwendung von Vektoren \bspfile{demoVector.cpp} in vielf"altiger Weise, insbesondere
+bei dynamisch ver"anderlichen Vektoren.
+Bei der Variablendeklaration mu"s der Datentyp der Komponenten in
+Dreiecksklammern angegeben werden. Wir werden meist \verb|<double>|,
+\verb|<float>| oder \verb|<int>| verwenden, obwohl alle (korrekt implementierten) Klassen
+hierf"ur benutzt werden d"urfen.
+Die Klasse  \texttt{vector<T>} enh"alt keine Vektorarithmetik.
+%
+\subsubsection{Statischer Vektor}
+Nachfolgender Code demonstriert den Einsatz eines statischen Vektors, d.h.,
+die Anzahl der Vektorelemente is a~priori bekannt.
+Mit \texttt{resize(\emph{laenge})} kann diese Anzahl der Elemente auf einen neuen Wert
+ge"andert werden (dies ist eigentlich schon dynamisch). Die neuen Elemente m"ussen danach noch
+mit Werten initialisiert werden.
+%
+\includecode[firstline=4]{demoVector.cpp}{Erste Schritte mit \texttt{vector} als statischem Vektor}
+%
+
+\subsubsection{Dynamischer Vektor}
+Obiger Code behandelt Vektoren konstanter L"ange. Wenn die Anzahl der Vektorelemente a~priori unbekannt ist,
+dann kann ein vorhandener Vektor durch Benutzung der Methode \texttt{push\_back(\emph{value})} um ein
+weiteres Element mit dem Wert~\emph{value} verl"angert werden.
+%
+\includecode[firstline=2]{demoVector_dynamisch.cpp}{Erste Schritte mit \texttt{vector} als dynamischem Vektor}
+%
+
+\subsubsection{Ausgabe eines Vektor}
+Leider k"onnen die Vektoren aus den vorherigen Beispielen nicht einfach mittels
+\verb|cout << bb| ausgegeben werden. Ein solcher Versuch f"uhrt zu sehr kryptischen Fehlermeldungen
+des Compilers. Es gibt drei prinzipielle M"oglichkeiten zur Ausgabe der Elemente eines
+Vektor \verb|vector<int> bb|~:
+\begin{enumerate}
+  \item durch Ausgabe in einem \textrm{for}-Loop (konventionell),
+  \item durch Kopieren auf den Ausgabestream (benutzt Algorithmus \texttt{copy} aus der STL),
+  \item durch Definition einer Funktion f"ur den Ausgabeoperator \verb|<<| (Operator"uberladung).
+\end{enumerate}
+Alle 3 M"oglichkeiten werden in nachfolgendem Code demonstriert wobei jeweils exakt dieselbe Ausgabe
+erzielt wird. Der Sprung auf die n"achste Ausgabezeile (\verb|cout << endl| nach jeder Variante)
+wurde weggelassen.%\exfile{Ex234\_b.cpp}
+Die Methoden \verb|begin()| und \verb|end()| zeigen auf das erste Elemente und das
+hinterletzte Element (Diese beiden Methoden liefern Iteratoren zur"uck).
+\includecode[firstline=2]{Ex234_b.cpp}{Ausgabe eines \texttt{vector}}
+%
+
+\subsection{\mbox{}$^{*}$Die Klasse valarray}
+\label{p:2.3.3}
+Die (nicht Standard) Klasse \texttt{valarray<T>}~\cite[p.~687]{KirchPrinz:2002:OOP}
+erlaubt die Verwendung numerischer Vektoren \bspfile{demoValarray.cpp} wie sie von
+\textsc{MatLab} bekannt sind. Insbesondere sind Vektorarithmetik und mathematische Funktionen vorhanden.
+Bei der Variablendeklaration mu"s der Datentyp der Komponenten in
+Dreiecksklammern angegeben werden. Wir werden \verb|<double>|,
+\verb|<float>| oder \verb|<int>| verwenden.
+%
+\includecode[firstline=2]{demoValarray.cpp}{Vektorarithmetik mit \texttt{valarray}}
+%
+%Die Template-Klasse \texttt{valarray<T>} ist nicht in allen STL-Distributionen vorhanden.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,162 @@
+\babel@toc {austrian}{}
+\contentsline {chapter}{\numberline {1}Ein Schnelleinstieg}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Was ist ein Programm und was n\IeC {\"u}tzt es \emph {mir}?}{1}{section.1.1}
+\contentsline {paragraph}{Warum denn C++, es gibt doch die viel bessere Programmiersprache XYZ!}{2}{section*.2}
+\contentsline {section}{\numberline {1.2}Das ``Hello World'' - Programm in C++}{4}{section.1.2}
+\contentsline {section}{\numberline {1.3}Interne Details beim Programmieren}{6}{section.1.3}
+\contentsline {section}{\numberline {1.4}Bezeichnungen in der Vorlesung}{6}{section.1.4}
+\contentsline {section}{\numberline {1.5}Integrierte Entwicklungsumgebungen}{8}{section.1.5}
+\contentsline {section}{\numberline {1.6}Erste Schritte mit Variablen}{10}{section.1.6}
+\contentsline {chapter}{\numberline {2}Variablen und Datentypen}{13}{chapter.2}
+\contentsline {section}{\numberline {2.1}Variablen}{13}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Einfache Datentypen}{14}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Bezeichner von Variablen}{15}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}G"ultigkeit von Bezeichnern}{16}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}Konstante mit Variablennamen}{16}{subsection.2.1.4}
+\contentsline {section}{\numberline {2.2}Literale Konstanten}{17}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Integerliterale}{17}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Gleitkommaliterale}{18}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}Zeichenliterale (Characterliterale)}{18}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.4}Zeichenkettenkonstanten (Stringkonstanten)}{18}{subsection.2.2.4}
+\contentsline {section}{\numberline {2.3}Einige h"ohere Datentypen in C++}{19}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Die Klasse string}{19}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Die Klasse complex}{20}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Die Klasse vector}{20}{subsection.2.3.3}
+\contentsline {subsubsection}{Statischer Vektor}{21}{section*.3}
+\contentsline {subsubsection}{Dynamischer Vektor}{21}{section*.4}
+\contentsline {subsubsection}{Ausgabe eines Vektor}{22}{section*.5}
+\contentsline {subsection}{\numberline {2.3.4}\unhbox \voidb@x \hbox {}$^{*}$Die Klasse valarray}{23}{subsection.2.3.4}
+\contentsline {chapter}{\numberline {3}Operatoren}{25}{chapter.3}
+\contentsline {section}{\numberline {3.1}Zuweisungsoperator}{25}{section.3.1}
+\contentsline {section}{\numberline {3.2}Arithmetische Operatoren}{26}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Un"are Operatoren}{26}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Bin"are Operatoren}{26}{subsection.3.2.2}
+\contentsline {section}{\numberline {3.3}Vergleichsoperatoren}{28}{section.3.3}
+\contentsline {section}{\numberline {3.4}Logische Operatoren}{29}{section.3.4}
+\contentsline {section}{\numberline {3.5}Bitorientierte Operatoren}{29}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Un"are bitorientierte Operatoren}{30}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}Bin"are bitorientierte Operatoren}{30}{subsection.3.5.2}
+\contentsline {section}{\numberline {3.6}Operationen mit vordefinierten Funktionen}{31}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Mathematische Funktionen}{31}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}Funktionen f"ur die Klasse \texttt {string} (C++-Strings)}{33}{subsection.3.6.2}
+\contentsline {section}{\numberline {3.7}Inkrement- und Dekrementoperatoren}{33}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}Pr"afixnotation}{33}{subsection.3.7.1}
+\contentsline {subsection}{\numberline {3.7.2}Postfixnotation}{34}{subsection.3.7.2}
+\contentsline {section}{\numberline {3.8}Zusammengesetzte Zuweisungen}{34}{section.3.8}
+\contentsline {section}{\numberline {3.9}Weitere n"utzliche Konstanten}{35}{section.3.9}
+\contentsline {chapter}{\numberline {4}Kontrollstrukturen}{37}{chapter.4}
+\contentsline {section}{\numberline {4.1}Einfache Anweisung}{37}{section.4.1}
+\contentsline {section}{\numberline {4.2}Block}{37}{section.4.2}
+\contentsline {section}{\numberline {4.3}Verzweigungen}{39}{section.4.3}
+\contentsline {section}{\numberline {4.4}Der Z"ahlzyklus}{47}{section.4.4}
+\contentsline {section}{\numberline {4.5}Abweisender Zyklus}{53}{section.4.5}
+\contentsline {section}{\numberline {4.6}Nichtabweisender Zyklus}{53}{section.4.6}
+\contentsline {section}{\numberline {4.7}Mehrwegauswahl (\texttt {switch}-Anweisung)}{56}{section.4.7}
+\contentsline {section}{\numberline {4.8}Unbedingte Steuerungs"ubergabe}{58}{section.4.8}
+\contentsline {chapter}{\numberline {5}Strukturierte Datentypen}{59}{chapter.5}
+\contentsline {section}{\numberline {5.1}Felder}{60}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Dynamischer C++-Vektor}{60}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}Statischer C++-Vektor}{62}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}Beispiele zu C++-Vektoren}{63}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}Mehrdimensionale Felder in C++}{66}{subsection.5.1.4}
+\contentsline {section}{\numberline {5.2}Liste}{68}{section.5.2}
+\contentsline {section}{\numberline {5.3}Strukturen als einfache Klassen}{69}{section.5.3}
+\contentsline {section}{\numberline {5.4}\unhbox \voidb@x \hbox {}$^{*}$Union}{72}{section.5.4}
+\contentsline {section}{\numberline {5.5}\unhbox \voidb@x \hbox {}$^{*}$Aufz\IeC {\"a}hlungstyp}{73}{section.5.5}
+\contentsline {section}{\numberline {5.6}\unhbox \voidb@x \hbox {}$^{*}$Allgemeine Typvereinbarungen}{73}{section.5.6}
+\contentsline {chapter}{\numberline {6}Referenzen und Pointer}{75}{chapter.6}
+\contentsline {section}{\numberline {6.1}Pointer (Zeiger)}{75}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}Deklaration von Zeigern}{75}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}Zeigeroperatoren}{76}{subsection.6.1.2}
+\contentsline {subsection}{\numberline {6.1.3}Zeiger und Felder - Zeigerarithmetik}{77}{subsection.6.1.3}
+\contentsline {section}{\numberline {6.2}Iteratoren}{79}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Iteratorenzugriff auf \texttt {array}}{79}{subsection.6.2.1}
+\contentsline {section}{\numberline {6.3}Referenzen}{80}{section.6.3}
+\contentsline {chapter}{\numberline {7}Funktionen}{83}{chapter.7}
+\contentsline {section}{\numberline {7.1}Definition und Deklaration}{83}{section.7.1}
+\contentsline {section}{\numberline {7.2}Parameter"ubergabe}{86}{section.7.2}
+\contentsline {section}{\numberline {7.3}R"uckgabewerte von Funktionen}{87}{section.7.3}
+\contentsline {section}{\numberline {7.4}Vektoren als Parameter}{89}{section.7.4}
+\contentsline {section}{\numberline {7.5}Deklarationen und Headerfiles, Bibliotheken}{92}{section.7.5}
+\contentsline {subsection}{\numberline {7.5.1}Beispiel: \texttt {printvec}}{92}{subsection.7.5.1}
+\contentsline {subsection}{\numberline {7.5.2}Beispiel: \texttt {student}}{94}{subsection.7.5.2}
+\contentsline {subsection}{\numberline {7.5.3}Eine einfache Bibliothek am Beispiel \texttt {student}}{96}{subsection.7.5.3}
+\contentsline {section}{\numberline {7.6}Das Hauptprogramm}{97}{section.7.6}
+\contentsline {section}{\numberline {7.7}Rekursive Funktionen}{98}{section.7.7}
+\contentsline {section}{\numberline {7.8}Ein gr"o"seres Beispiel: Bisektion}{99}{section.7.8}
+\contentsline {chapter}{\numberline {8}Input und Output mit Files und Terminal}{105}{chapter.8}
+\contentsline {section}{\numberline {8.1}Kopieren von Files}{105}{section.8.1}
+\contentsline {section}{\numberline {8.2}Dateneingabe und -ausgabe via File}{106}{section.8.2}
+\contentsline {section}{\numberline {8.3}Umschalten der Ein-/Ausgabe}{107}{section.8.3}
+\contentsline {section}{\numberline {8.4}Ausgabeformatierung}{108}{section.8.4}
+\contentsline {section}{\numberline {8.5}Abgesicherte Eingabe}{110}{section.8.5}
+\contentsline {chapter}{\numberline {9}Erste Schritte mit Klassen}{111}{chapter.9}
+\contentsline {section}{\numberline {9.1}Unsere Klasse \texttt {Komplex}}{112}{section.9.1}
+\contentsline {section}{\numberline {9.2}Konstruktoren}{114}{section.9.2}
+\contentsline {subsection}{\numberline {9.2.1}Standardkonstruktor}{115}{subsection.9.2.1}
+\contentsline {subsection}{\numberline {9.2.2}Parameterkonstruktor}{115}{subsection.9.2.2}
+\contentsline {subsection}{\numberline {9.2.3}Kopierkonstruktor}{116}{subsection.9.2.3}
+\contentsline {section}{\numberline {9.3}Der Destruktor}{117}{section.9.3}
+\contentsline {section}{\numberline {9.4}Der Zuweisungsoperator}{118}{section.9.4}
+\contentsline {section}{\numberline {9.5}Compilergenerierte Methoden}{118}{section.9.5}
+\contentsline {section}{\numberline {9.6}Zugriffsmethoden}{119}{section.9.6}
+\contentsline {section}{\numberline {9.7}Der Additionsoperator}{120}{section.9.7}
+\contentsline {section}{\numberline {9.8}Der Ausgabeoperator}{122}{section.9.8}
+\contentsline {chapter}{\numberline {10}Templates}{123}{chapter.10}
+\contentsline {section}{\numberline {10.1}Template-Funktionen}{123}{section.10.1}
+\contentsline {subsection}{\numberline {10.1.1}Implementierung eines Funktions-Templates}{124}{subsection.10.1.1}
+\contentsline {subsection}{\numberline {10.1.2}Implizite und explizite Templateargumente}{127}{subsection.10.1.2}
+\contentsline {subsection}{\numberline {10.1.3}Spezialisierung}{128}{subsection.10.1.3}
+\contentsline {section}{\numberline {10.2}Template-Klassen}{129}{section.10.2}
+\contentsline {subsection}{\numberline {10.2.1}Ein Klassen-Template f"ur \texttt {Komplex}}{129}{subsection.10.2.1}
+\contentsline {subsection}{\numberline {10.2.2}Mehrere Parameter}{131}{subsection.10.2.2}
+\contentsline {subsection}{\numberline {10.2.3}Umwandlung einer Klasse in eine Template-Klasse}{132}{subsection.10.2.3}
+\contentsline {subsection}{\numberline {10.2.4}Template-Klasse und \texttt {friend}-Funktionen}{132}{subsection.10.2.4}
+\contentsline {chapter}{\numberline {11}Einf\IeC {\"u}hrung in die STL}{133}{chapter.11}
+\contentsline {section}{\numberline {11.1}Was ist neu?}{133}{section.11.1}
+\contentsline {section}{\numberline {11.2}Wie benutze ich \texttt {max\_element} ?}{135}{section.11.2}
+\contentsline {subsection}{\numberline {11.2.1}Container mit Standarddatentypen}{136}{subsection.11.2.1}
+\contentsline {paragraph}{Nutzung des Standardvergleichsoperators}{136}{section*.6}
+\contentsline {paragraph}{Nutzung einer Vergleichsfunktion}{136}{section*.7}
+\contentsline {paragraph}{Nutzung eines Funktors}{137}{section*.8}
+\contentsline {paragraph}{Nutzung einer Lambda-Funktion}{137}{section*.9}
+\contentsline {subsection}{\numberline {11.2.2}Container mit Elementen der eigenen Klasse}{138}{subsection.11.2.2}
+\contentsline {paragraph}{Nutzung des Standardvergleichsoperators}{138}{section*.10}
+\contentsline {paragraph}{Nutzung einer Vergleichsfunktion}{139}{section*.11}
+\contentsline {section}{\numberline {11.3}Einige Grundaufgaben und deren L\IeC {\"o}sung mit der STL}{140}{section.11.3}
+\contentsline {subsection}{\numberline {11.3.1}Kopieren von Daten}{141}{subsection.11.3.1}
+\contentsline {subsection}{\numberline {11.3.2}Aufsteigendes Sortieren von Daten}{141}{subsection.11.3.2}
+\contentsline {subsection}{\numberline {11.3.3}Mehrfache Elemente entfernen}{141}{subsection.11.3.3}
+\contentsline {subsection}{\numberline {11.3.4}Kopieren von Elementen welche einem Kriterium nicht entsprechen}{142}{subsection.11.3.4}
+\contentsline {subsection}{\numberline {11.3.5}Absteigendes Sortieren von Elementen}{142}{subsection.11.3.5}
+\contentsline {subsection}{\numberline {11.3.6}Z\IeC {\"a}hlen bestimmter Elemente}{143}{subsection.11.3.6}
+\contentsline {subsection}{\numberline {11.3.7}Sortieren mit zus\IeC {\"a}tzlichem Permutationsvektor}{143}{subsection.11.3.7}
+\contentsline {subsection}{\numberline {11.3.8}Allgemeine Bemerkungen zur STL}{144}{subsection.11.3.8}
+\contentsline {chapter}{\numberline {12}Klassenhierarchien}{145}{chapter.12}
+\contentsline {section}{\numberline {12.1}Ableitungen von Klassen}{145}{section.12.1}
+\contentsline {subsection}{\numberline {12.1.1}Design einer Klassenhierarchie}{146}{subsection.12.1.1}
+\contentsline {subsection}{\numberline {12.1.2}Die Basisklasse}{147}{subsection.12.1.2}
+\contentsline {subsection}{\numberline {12.1.3}Die abgeleiteten Klassen}{148}{subsection.12.1.3}
+\contentsline {section}{\numberline {12.2}Polymorphismus}{151}{section.12.2}
+\contentsline {subsection}{\numberline {12.2.1}Nutzung virtueller Methoden}{151}{subsection.12.2.1}
+\contentsline {subsection}{\numberline {12.2.2}Rein virtuelle Methoden}{153}{subsection.12.2.2}
+\contentsline {subsection}{\numberline {12.2.3}Dynamische Bindung - Polymorphismus}{154}{subsection.12.2.3}
+\contentsline {subsection}{\numberline {12.2.4}Nochmals zu Copy-Konstruktor und Zuweisungsoperator}{157}{subsection.12.2.4}
+\contentsline {section}{\numberline {12.3}Anwendung der STL auf polymorphe Klassen}{158}{section.12.3}
+\contentsline {subsection}{\numberline {12.3.1}Container mit Basisklassenpointern}{158}{subsection.12.3.1}
+\contentsline {subsection}{\numberline {12.3.2}Sortieren eines polymorphen Containers}{160}{subsection.12.3.2}
+\contentsline {subsection}{\numberline {12.3.3}Summation eines polymorphen Containers}{161}{subsection.12.3.3}
+\contentsline {section}{\numberline {12.4}Casting in der Klassenhierarchie$\unhbox \voidb@x \hbox {}^\ast $}{162}{section.12.4}
+\contentsline {subsection}{\numberline {12.4.1}Implizites Casting}{163}{subsection.12.4.1}
+\contentsline {subsection}{\numberline {12.4.2}Casting von Klassenpointern und -referenzen}{163}{subsection.12.4.2}
+\contentsline {subsection}{\numberline {12.4.3}Dynamisches C++-Casting von Pointern}{164}{subsection.12.4.3}
+\contentsline {subsection}{\numberline {12.4.4}Dynamisches C++-Casting von Referenzen}{165}{subsection.12.4.4}
+\contentsline {subsection}{\numberline {12.4.5}Unsicheres statisches C-Casting von Klassenpointern}{166}{subsection.12.4.5}
+\contentsline {subsection}{\numberline {12.4.6}Einige Bemerkungen zum Casting}{168}{subsection.12.4.6}
+\contentsline {chapter}{\numberline {13}Tips und Tricks}{169}{chapter.13}
+\contentsline {section}{\numberline {13.1}Pr"aprozessorbefehle}{169}{section.13.1}
+\contentsline {section}{\numberline {13.2}Zeitmessung im Programm}{170}{section.13.2}
+\contentsline {section}{\numberline {13.3}Profiling}{172}{section.13.3}
+\contentsline {section}{\numberline {13.4}Debugging}{172}{section.13.4}
+\contentsline {section}{\numberline {13.5}Einige Compileroptionen}{173}{section.13.5}
+\contentsline {chapter}{\numberline {14}N"utzliche Webseiten}{175}{chapter.14}

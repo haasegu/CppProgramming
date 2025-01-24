@@ -1,0 +1,276 @@
+%!PS-Adobe-3.0 EPSF-2.0
+%%Title: t(x)=1-x^2
+%%Creator: Maple 
+%%Pages:  1
+%%BoundingBox: 110 136 496 655 
+%%DocumentNeededResources: font Helvetica
+%%EndComments
+20 dict begin
+gsave
+/drawborder false def
+/m {moveto} def
+/l {lineto} def
+/C {setrgbcolor} def
+/Y /setcmykcolor where { %%ifelse Use built-in operator
+       /setcmykcolor get
+   }{ %%ifelse Emulate setcmykcolor with setrgbcolor
+       { %%def
+           1 sub 3 { %%repeat
+               3 index add neg dup 0 lt { pop 0 } if 3 1 roll
+           } repeat setrgbcolor
+       } bind
+   } ifelse def
+/G {setgray} def
+/S {stroke} def
+/NP {newpath} def
+%%%%This draws a filled polygon and avoids bugs/features
+%%%%   of some postscript interpreters
+%%%%GHOSTSCRIPT: has a bug in reversepath - removing
+%%%%the call to reversepath is a sufficient work around
+/P {gsave fill grestore reversepath stroke} def
+%%%%This function is needed for drawing text.  It takes two arguments: a
+%%%%string and a rotation. It outputs width and height.
+/stringbbox {
+    gsave NP 0 0 m    % Set origin for easy calculations.
+    dup rotate exch   % Set orientation, and put string on top.
+    false charpath flattenpath
+    0 exch sub rotate % Undo rotation.
+    pathbbox 4 2 roll pop pop  % Get dimens. of our string.
+    1.1 mul cvi exch 1.1 mul cvi exch % Pad some.
+    grestore} def
+/thin 3 def
+/medium 7 def
+/thick 16 def
+/boundarythick 20 def % thichess of bounding box
+%%IncludeResource: font Helvetica
+72.000000 72.000000 translate
+/defaultTitleFont {/Helvetica findfont 219 scalefont setfont} def
+/defaultFont {/Helvetica findfont 154 scalefont setfont} def
+0.0936 0.0936 scale
+1 setlinejoin
+1 setlinecap
+0.0 setgray
+/inch {72 mul} def
+/fheight 0.35 inch neg def
+defaultFont
+    0 G
+medium setlinewidth
+[] 0 setdash   0.3 G
+NP 4413 1090 m 4500 795 l
+S
+NP 4332 1357 m 4413 1090 l
+S
+NP 4247 1628 m 4332 1357 l
+S
+NP 4168 1874 m 4247 1628 l
+S
+NP 4079 2141 m 4168 1874 l
+S
+NP 4002 2367 m 4079 2141 l
+S
+NP 3918 2604 m 4002 2367 l
+S
+NP 3833 2836 m 3918 2604 l
+S
+NP 3750 3054 m 3833 2836 l
+S
+NP 3664 3273 m 3750 3054 l
+S
+NP 3582 3473 m 3664 3273 l
+S
+NP 3498 3670 m 3582 3473 l
+S
+NP 3417 3851 m 3498 3670 l
+S
+NP 3331 4036 m 3417 3851 l
+S
+NP 3253 4197 m 3331 4036 l
+S
+NP 3167 4366 m 3253 4197 l
+S
+NP 3086 4518 m 3167 4366 l
+S
+NP 2996 4677 m 3086 4518 l
+S
+NP 2915 4812 m 2996 4677 l
+S
+NP 2831 4945 m 2915 4812 l
+S
+NP 2745 5071 m 2831 4945 l
+S
+NP 2662 5186 m 2745 5071 l
+S
+NP 2586 5285 m 2662 5186 l
+S
+NP 2498 5391 m 2586 5285 l
+S
+NP 2413 5484 m 2498 5391 l
+S
+NP 2334 5563 m 2413 5484 l
+S
+NP 2248 5641 m 2334 5563 l
+S
+NP 2166 5708 m 2248 5641 l
+S
+NP 2080 5769 m 2166 5708 l
+S
+NP 2001 5818 m 2080 5769 l
+S
+NP 1912 5865 m 2001 5818 l
+S
+NP 1836 5898 m 1912 5865 l
+S
+NP 1746 5928 m 1836 5898 l
+S
+NP 1670 5946 m 1746 5928 l
+S
+NP 1587 5958 m 1670 5946 l
+S
+NP 1500 5963 m 1587 5958 l
+S
+NP 1414 5958 m 1500 5963 l
+S
+NP 1337 5947 m 1414 5958 l
+S
+NP 1250 5927 m 1337 5947 l
+S
+NP 1165 5899 m 1250 5927 l
+S
+NP 1081 5862 m 1165 5899 l
+S
+NP 998 5818 m 1081 5862 l
+S
+NP 919 5769 m 998 5818 l
+S
+NP 834 5708 m 919 5769 l
+S
+NP 748 5638 m 834 5708 l
+S
+NP 663 5560 m 748 5638 l
+S
+NP 587 5484 m 663 5560 l
+S
+NP 500 5388 m 587 5484 l
+S
+    0 G
+(t\(x\)=1-x^2) dup 0 stringbbox 6230 exch sub exch 2 idiv 2500 exch sub exch m show
+medium setlinewidth
+NP 1500 692 m 1500 6068 l
+S
+thin setlinewidth
+NP 1449 795 m 1500 795 l
+S
+NP 1474 1025 m 1500 1025 l
+S
+NP 1474 1254 m 1500 1254 l
+S
+NP 1474 1484 m 1500 1484 l
+S
+NP 1474 1714 m 1500 1714 l
+S
+NP 1449 1943 m 1500 1943 l
+S
+NP 1474 2173 m 1500 2173 l
+S
+NP 1474 2403 m 1500 2403 l
+S
+NP 1474 2632 m 1500 2632 l
+S
+NP 1474 2862 m 1500 2862 l
+S
+NP 1449 3092 m 1500 3092 l
+S
+NP 1474 3321 m 1500 3321 l
+S
+NP 1474 3551 m 1500 3551 l
+S
+NP 1474 3781 m 1500 3781 l
+S
+NP 1474 4010 m 1500 4010 l
+S
+NP 1449 4240 m 1500 4240 l
+S
+NP 1474 4470 m 1500 4470 l
+S
+NP 1474 4699 m 1500 4699 l
+S
+NP 1474 4929 m 1500 4929 l
+S
+NP 1474 5159 m 1500 5159 l
+S
+NP 1449 5388 m 1500 5388 l
+S
+NP 1474 5618 m 1500 5618 l
+S
+NP 1474 5848 m 1500 5848 l
+S
+medium setlinewidth
+NP 500 5388 m 4500 5388 l
+S
+thin setlinewidth
+NP 500 5442 m 500 5388 l
+S
+NP 699 5408 m 699 5388 l
+S
+NP 899 5408 m 899 5388 l
+S
+NP 1100 5408 m 1100 5388 l
+S
+NP 1300 5408 m 1300 5388 l
+S
+NP 1700 5408 m 1700 5388 l
+S
+NP 1900 5408 m 1900 5388 l
+S
+NP 2100 5408 m 2100 5388 l
+S
+NP 2300 5408 m 2300 5388 l
+S
+NP 2500 5442 m 2500 5388 l
+S
+NP 2700 5408 m 2700 5388 l
+S
+NP 2900 5408 m 2900 5388 l
+S
+NP 3100 5408 m 3100 5388 l
+S
+NP 3300 5408 m 3300 5388 l
+S
+NP 3500 5442 m 3500 5388 l
+S
+NP 3700 5408 m 3700 5388 l
+S
+NP 3900 5408 m 3900 5388 l
+S
+NP 4100 5408 m 4100 5388 l
+S
+NP 4300 5408 m 4300 5388 l
+S
+NP 4500 5442 m 4500 5388 l
+S
+medium setlinewidth
+(\2618) dup 0 stringbbox 2 idiv 795 exch sub exch 1427 exch sub exch m show
+(\2616) dup 0 stringbbox 2 idiv 1943 exch sub exch 1427 exch sub exch m show
+(\2614) dup 0 stringbbox 2 idiv 3092 exch sub exch 1427 exch sub exch m show
+(\2612) dup 0 stringbbox 2 idiv 4240 exch sub exch 1427 exch sub exch m show
+(\2611) dup 0 stringbbox pop 5465 exch 2 idiv 500 exch sub exch m show
+(1) dup 0 stringbbox pop 5465 exch 2 idiv 2500 exch sub exch m show
+(2) dup 0 stringbbox pop 5465 exch 2 idiv 3500 exch sub exch m show
+(3) dup 0 stringbbox pop 5465 exch 2 idiv 4500 exch sub exch m show
+(x) dup 0 stringbbox pop 5603 exch 2 idiv 3000 exch sub exch m show
+boundarythick setlinewidth
+% The following draws a box around the plot,
+% if the variable drawborder is true
+drawborder { 
+/bd boundarythick 2 idiv def
+[] 0 setdash 
+NP bd bd m bd 6923 bd sub l 
+5000 bd sub 6923 bd sub l 
+5000 bd sub bd l 
+bd bd l S
+} if % end of if to draw the border
+
+showpage
+grestore
+end
+%%EOF

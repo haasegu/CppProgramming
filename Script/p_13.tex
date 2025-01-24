@@ -1,0 +1,290 @@
+\chapter{Tips und Tricks}
+\label{p:13}
+%
+%
+
+%
+%
+\section{Pr"aprozessorbefehle}
+\label{p:13.1}
+%
+%
+Wir kennen bereits die Pr"aprozessoranweisung
+\index{Pr\"aprozessor}\index{Compilieren!bedingtes}\index{\#include} 
+\\[0.5ex]
+\verb|#include <cmath>|
+\\[0.5ex]
+welche vor dem eigentlichen Compilieren den Inhalt des Files 
+\textit{cmath} an der entsprechenden Stelle im Quellfile einf"ugt. 
+Analog k"onnen bestimmte Teile des Quelltextes beim Compilieren 
+eingebunden oder ignoriert werden, je nach Abh"angigkeit des 
+Tests %(analog einer Alternative wie in \S\ref{sec:4.3}) 
+welcher mit einer Pr"aprozessorvariablen durchgef"uhrt wird. 
+\bspfile{preproc.cpp}
+
+Variablen des Pr"aprozessors werden mittels
+\index{\#define} 
+\\[0.5ex]
+\verb|#define MY_DEBUG|
+\\[0.5ex]
+definiert und wir k"onnen auch testen, ob sie definiert sind:
+\index{\#ifdef}
+\\[0.5ex]
+\verb|#ifdef MY_DEBUG|	\\
+\verb|  cout << "Im Debug-Modus" << endl;|	\\
+\verb|#endif|
+\\[0.5ex]
+Analog kann mit 
+\index{\#ifndef}
+\\[0.5ex]
+\verb|#ifndef MY_DEBUG|	\\
+\verb|#define MY_DEBUG|	\\
+\verb|#endif|
+\\[0.5ex] 
+zun"achst getestet werden, ob die Variable \verb|MY_DEBUG| 
+bereits definiert wurde. Falls nicht, dann wird sie eben jetzt 
+definiert. 
+\\ 
+Obige Technik wird/wurde h"aufig im Header Guarding benutzt um zu verhindern, da"s 
+die Deklarationen eines Headerfiles mehrfach in denselben 
+Quelltext eingebunden werden. 
+Dieses Header Guarding wurde in C++11 durch die Pragma-Direktive 
+\verb|#pragma once| abgelöst.
+
+Einer Pr"aprozessorvariablen kann auch ein Wert zugewiesen werden 
+\\[0.5ex]
+\verb|#define SEE_PI 5|
+\\[0.5ex]
+welcher anschlie"send in Pr"aprozessortests (oder im Programm 
+als Konstante) benutzt werden kann:
+\index{\#if} 
+\\[0.5ex]
+\verb|#if (SEE_PI==5)|	\\
+\verb|  cout << " PI = " << M_PI << endl;|	\\
+\verb|#else|	\\
+\verb|// leer oder Anweisungen|	\\
+\verb|#endif|
+\\[0.5ex] 
+Eine weitere Anwendung besteht in der Zuweisung eines Wertes zu einer 
+Pr"aprozessorvariablen, falls diese noch nicht definiert wurde.
+\\[0.5ex]
+\verb|#ifndef M_PI|	\\
+\verb|#define M_PI 3.14159|	\\
+\verb|#endif|
+
+Es können auch Präprozessor-Makros mit Parametern definiert werden
+allerdings ist es weniger fehleranfällig vorhandene Funktionen zu nutzen oder 
+eine kurze Templatefunktion in C++ zu schreiben.
+Der Autor fand ein sinnvolles, nicht als C++-Funktion realisierbares, Makro\bspfile{preproc.cpp}
+\\[0.5ex]
+\verb|#define what_is(x) cerr << #x << " is " << (x) << endl;|
+\\[0.5ex]
+welches beim Aufruf \verb|what_is(N)| sowohl den Variablennamen als auch dessen Wert ausgibt.
+%
+%Desweiteren k"onnen Makros mit Parametern definiert 
+%\\[0.5ex]
+%\verb|#define MAX(x,y) (x>y ? x : y)|
+%\\[0.5ex]
+%und im Quelltext verwendet werden. 
+%\\[0.5ex]
+%\verb|  cout << MAX(1.456 , a) << endl;|
+%\\[0.5ex]
+\\
+Mehr "uber Pr"aprozessorbefehle ist u.a.\  in 
+\cite{Gode:1998:ANK} und \cite[\S A.11]{Stroustrup:2000:CPP} 
+zu finden. 
+%
+%
+\section{Zeitmessung im Programm}
+\label{p:13.2}
+%
+Zum Umfang von C++ geh"oren einige Funktionen, welche es erlauben 
+die Laufzeit bestimmter Programmabschnitte (oder des gesamten Codes) 
+zu ermitteln. Die alte C-Funktion \texttt{clock()}\index{clock()} sollte nicht mehr verwendet werden
+da diese auf Multi-Core-CPUs nicht die WallClockTime misst. 
+%Die entsprechenden Deklarationen werden im Headerfile 
+%\textit{ctime} bereitgestellt.\index{ctime!clock()}\index{ctime!CLOCKS\_PER\_SEC}\index{Zeitmessung}
+%Die Zeitmessung mit \texttt{clock()} ist nur für sequentielle Programme hilfreich, 
+Stattdessen sollten Klassen und Methoden \index{system\_clock} 
+aus dem Header \verb|<chrono>|\index{chrono} verwendet werden.
+
+%
+%\includecode[linerange={15-19,25-25,42-43,51-51,66-67,74-75}]{Ex1121.cpp}
+\includecode[linerange={10-10,16-21,38-39,49-49,66-66,71-72}]{Ex1121.cpp}
+{Laufzeitmessung mit \emph{chrono}}
+%
+Es k"onnen beliebig viele Zeitmessungen im Programm erfolgen 
+(irgendwann verlangsamen diese aber ihrerseits das Programm!). 
+Jede dieser Zeitmessungen ben"otigt einen Start und ein Ende, 
+allerdings k"onnen die Zeiten verschiedener Messungen 
+akkumuliert werden (einfach addieren).
+
+Im File \textit{Ex1121.cpp} \bspfile{Ex1121.cpp} 
+wird der Funktionswert eines Polynoms vom Grade~20 
+an der Stelle~$x$ d.h., 
+$s = \sum_{k=0}^{20} a_k \cdot x^k$, berechnet. 
+%Die 21~Koeffizienten $a_k$ und der Wert~$x$ werden im File 
+%\textit{input.1121} bereitgestellt. 
+Der Funktionswert wird auf zwei, mathematisch identische, Weisen im Programm berechnet. 
+Variante~1 benutzt die Funktion \verb|pow|, w"ahrend 
+Variante~2 den Wert von $x^k$ durch fortw"ahrende Multiplikation berechnet 
+(\ghref{https://baptiste-wicht.com/posts/2017/09/cpp11-performance-tip-when-to-use-std-pow.html}{Implementierungsvergleich 2017} und 
+\ghref{https://stackoverflow.com/questions/2940367/what-is-more-efficient-using-pow-to-square-or-just-multiply-it-with-itself}{2021}).  
+\index{pow}
+
+Das unterschiedliche Laufzeitverhalten (Ursache~!?)
+kann nunmehr durch 
+Zeitmessung belegt werden und durch fortschreitende Aktivierung 
+von Compileroptionen (\ghref{https://kristerw.github.io/2021/10/19/fast-math/}{\texttt{-ffast-math}}) 
+zur Pro\-gramm\-op\-ti\-mie\-rung etwas verbessert werden, z.B. 
+\\[0.5ex]
+\verb|LINUX>  g++ Ex1121.cpp|	\\
+\verb|LINUX>  g++ -O Ex1121.cpp|	\\
+\verb|LINUX>  g++ -O3 Ex1121.cpp|	\\
+\verb|LINUX>  g++ -O3 -ffast-math Ex1121.cpp|	
+\\[0.5ex]
+Der Programmstart erfolgt jeweils mittels 
+\\[0.5ex]
+\verb|LINUX>  a.out|
+%\verb|LINUX>  a.out < input.1121|
+%
+%
+
+Kleine, selbst geschriebene Funktionen können diese Laufzeitstoppung 
+analog \texttt{tic()} und \texttt{toc()} in Matlanb gestalten.
+Hierzu das Headerfile \emph{timing.h} \bspfile{utils/timing.h} lokal herunterladen 
+und wie folgt in den eigenen Code inkludieren.
+
+\includecode[linerange={10-10,16-17,34-35,45-45,62-62,67-68}]{Ex1121_mod.cpp}{Laufzeitmessung mit \emph{timings.h}}
+%
+%
+\section{Profiling}
+\label{p:13.3}
+%
+Nat"urlich k"onnte man in einem Programm die Zeitmessung in jede 
+Funktion schreiben um das Laufzeitverhalten der Funktionen und Methoden 
+zu ermitteln. 
+Dies ist aber nicht n"otig, da viele Entwicklungsumgebungen 
+bereits Werkzeuge zur Leistungsanalyse (performance analysis), 
+dem\index{Profiling} \textbf{Profiling} bereitstellen. 
+Darin wird mindestens die in den Funktionen verbrachte Zeit und die 
+Anzahl der Funktionsaufrufe (oft graphisch) ausgegeben. 
+Manchmal l"a"st sich dies bis auf einzelne Quelltextzeilen aufl"osen. 
+Neben den professionellen (und kostenpflichtigen) Profiler- und 
+Debuggingwerkzeugen sind unter LINUX/UNIX  auch 
+einfache (und kostenlose) Kommandos daf"ur verf"ugbar.
+\index{Compilieren!g++} 
+\\[0.5ex]
+\verb|LINUX>  g++ -pg Jacobi.cpp matvec.cpp|	\\
+\verb|LINUX>  a.out|	\\
+\verb|LINUX>  gprof -b a.out > out|	\\
+\verb|LINUX>  less out|	
+\\[0.5ex]
+Der Compilerschalter \verb|-pg| bringt einige Zusatzfunktionen im 
+Programm unter, soda"s nach dem Programmlauf das Laufzeitverhalten 
+durch \verb|gprof| analysiert werden kann. 
+Der letzte Befehl (kann auch ein Editor sein) 
+zeigt die umgeleitetete Ausgabe dieser Analyse auf dem Bildschirm an. 
+%
+%
+\section{Debugging}
+\label{sec:11.4}
+%
+Oft ist es notwendig den Programmablauf schrittweise zu verfolgen und sich 
+gegebenenfalls Variablenwerte etc.\  zu Kontrollzwecken ausgeben zu lassen. 
+Neben der stets funktionierenden, jedoch nervt"otenden, Methode
+\index{Debugging} 
+
+\verb| ...|	\\
+\verb| cout << "AA " << variable << endl; |	\\
+\verb| ...|	\\
+\verb| cout << "BB " << variable << endl; |	\\
+\verb| ...|
+
+sind oft professionelle Debuggingwerkzeuge verf"ugbar. 
+Hier sei wiederum ein (kostenfreies) Programm unter LINUX vorgestellt. 
+\index{Compilieren!g++}
+\\[0.5ex]
+\verb|LINUX>  g++ -g Ex1121.cpp|	\\
+\verb|LINUX>  ddd a.out &|	
+\\[0.5ex]
+Die Handhabung der verschiedenen Debugger unterscheidet sich sehr stark. 
+Beim ddd-Debugger kann mit \verb|set args < input.1121| das 
+Eingabefile angegeben werden und mit \verb|run| wird 
+der Testlauf gestartet, welcher an vorher gesetzten Break-Punkten 
+angehalten wird. Dort kann dann in aller Ruhe das Programm anhand des 
+Quellcodes schrittweise verfolgt werden. 
+ 
+%
+%
+\section{Einige Compileroptionen}
+\label{sec:11.5}
+%
+Nachfolgende Compileroptionen beziehen sich auf den GNU-Compiler g++, jedoch 
+sind die Optionen bei anderen Compilern teilweise identisch oder "ahnlich.
+\begin{itemize}
+ \item Debugging und Warnungen, welche viel Debuggingarbeit ersparen: \\
+ 	\texttt{g++ -g -Wall -Wextra -pedantic -Wswitch-default -Wmissing-declarations -Wfloat-equal -Wundef -Wredundant-decls -Wuninitialized -Winit-self -Wshadow -Wparentheses -Wunreachable-code}
+ \item Zus"atzliche Optionen f"ur Klassenhierarchien nach \cite{Meyers:1998:ECP,Meyers:1997:MEC}:
+ 	\texttt{-Weffc++ -Woverloaded-virtual}
+ \item Standardoptimierung:
+ 	\texttt{g++ -O}
+ \item Bessere Optimierung:
+ 	\texttt{-Ofast}
+ \item Den \texttt{assert()}-Test ausschalten:
+     \texttt{-DNDEBUG}
+\end{itemize}
+ 
+ 
+%
+%
+\section{Numerik in C++}
+\label{sec:11.6}
+%
+Die \ghref{https://en.cppreference.com/w/cpp/numeric}{numerische Bibliothek} von C++ wird 
+kontinuierliche erweitert. 
+Für uns von Interesse sind 
+\begin{itemize}
+ \item die üblichen \ghref{https://en.cppreference.com/w/cpp/numeric/math}{mathematischen Funktionen} inkl.\  der $\Gamma$-Funktion;
+ \item \ghref{https://en.cppreference.com/w/cpp/numeric/special_functions}{spezielle} math. Funktionen, wie der Bessel-Funktion; 
+ \item die gelisteten \emph{Numeric Operations} der STL, wie \texttt{accumulate} oder \texttt{inner\_product};
+ \item Bitmanipulationen;
+ \item die Möglichkeit, über die \ghref{https://en.cppreference.com/w/cpp/numeric/fenv}{Floating-point} environment auch einige 
+ Execptions bei Berechnungen abzufragen 
+ (Overflow, \ghref{https://en.cppreference.com/w/cpp/numeric/fenv/FE_exceptions}{DivisionByZero}, etc.);
+ \item ein für Numerik optimierter Vektor \ghref{https://en.cppreference.com/w/cpp/numeric/valarray}{\texttt{valarray}}.
+\end{itemize}
+%
+
+Daneben gibt es die \ghref{https://www.boost.org/}{\emph{boost-Library}}
+mit einer überwältigenden \ghref{https://www.boost.org/doc/libs/}{Funktionalität}.
+Die Boost ist auch ein Experimentierfeld für Datenstrukuren und Algorithmen welche bei Bedarf in den C++-Standard übernommen werden. 
+\\
+So sind in \ghref{https://www.boost.org/doc/libs/1_76_0/libs/graph/doc/index.html}{\emph{graph}} Datenstrukturen und viele 
+Graphalgorithmen enthalten, neben weiteren mathemtischen Bibliotheken.
+
+Für klassische lineare Algebra sei auf die Bibliotheken 
+\ghref{http://www.netlib.org/blas/}{BLAS} (die optimierte OpenBLAS) und 
+\ghref{https://www.netlib.org/lapack/}{LAPACK} mit den entsprechenden C/C++-Interfaces verwiesen.
+
+%
+%\pagebreak
+%
+\section{Zufallszahlen}
+\label{sec:13.7}
+Zur Zufallszahlengenerierung sind neben den alten C-Funktionen in \verb|<cstdlib>| in C++ 
+viele Zufallszahlengeneratoren in  \ghref{https://en.cppreference.com/w/cpp/header/random}{\texttt{<random>}} verfügbar.\index{random}
+
+Examplarisch\bspfile{random/main.cpp} demonstrieren wir die Generierung von LOOPS gleichverteilter ganzzahliger (Pseudo)-Zufallszahlen 
+aus einem Intervall [ANF, ENDE] auf drei verschiedene Arten unter Nutzung von  
+\ghref{https://en.cppreference.com/w/cpp/numeric/random/rand}{\texttt{rand()}},
+\ghref{http://www.cplusplus.com/reference/random/linear_congruential_engine/operator()}{\texttt{minstd\_rand0}}, 
+\ghref{https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution}{\texttt{uniform\_int\_distribution}}.
+
+
+%\paragraph{Zufallszahlen C-like}
+\includecode[linerange={4-5,29-29,31-40}]{random/main.cpp}{Zufallszahlen C-like}
+\includecode[linerange={5-5,7-7,42-42,47-56}]{random/main.cpp}{Zufallszahlen C++}
+\includecode[linerange={7-7,58-58,62-73}]{random/main.cpp}{komfortable Zufallszahlen in C++}
+
+ 

@@ -1,0 +1,291 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\section{Casting in der Klassenhierarchie$\mbox{}^\ast$}
+\label{sec:A4}
+{\Large\bf   Nimm den neuen Code !!}
+Castings (Konvertierungen) waren bislang stillschweigend in unseren Programmen
+enthalten, wie in
+\begin{lstlisting}[caption={Implizites Casting bei einfachen Datentypen.},label=lst:casting_implizit_1,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+float salesPerson::payment() const
+{
+ double  dd = 15.373;
+ int     ii = 5, kk;
+
+ dd = ii;
+ kk = dd;
+}
+\end{lstlisting}
+
+%
+Das erste Casting (\texttt{int} $\longrightarrow$ \texttt{double}) ist
+problemlos, da die Nachkommastellen der Gleitkommazahl mit Nullen gef"ullt werden.
+Im Gegensatz dazu gehen  bei dem zweiten Casting
+(\texttt{double} $\longrightarrow$ \texttt{int})
+s"amtliche Nachkommastellen verloren und bei ensprechenden Optionen (\verb|-Wall|)
+gibt der Compiler eine Warnung aus. Beide Castings sind versteckt im Code
+enthalten, daher nennt man sie \emph{implizit}\index{Casting!implizit}.
+Mit einem \emph{explizit}en Casting\index{Casting!explizit}
+(Cast-operator)\index{cast} der zweiten Zuweisung \\
+\verb|  kk = (int)dd;   // C-Casting | \\ oder \\
+\verb|  kk = static_cast<int>(dd);   // C++-Casting | \\
+l"a"st sich die Warnung (beim \verb|g++|) abschalten.
+%
+%
+\subsection{Implizites Casting}
+\label{sec:A4.1}
+%
+Bei Klassen gibt es eine implizite Typkonvertierung nur in
+Richtung abgeleitete Klasse zu Basisklasse vor dem Hintergrund, da"s
+eine abgeleitete Klasse ein \emph{spezieller Typ} der Basisklasse ist
+(also gemeinhin mehr Member/Eigenschafter beinhaltet als diese).
+Alle Member der Basisklasse sind automatisch in der abgeleiteten Klasse enthalten, aber nicht umgekehrt.
+Das folgende Beispiel 
+% \exfile{A3/a3\_2.cpp} 
+Die Abbilldung der Klassenhierarchie auf Seite~\pageref{class_hierarchy} 
+veranschaulicht diesen Mechanismus des \emph{Upcasting}\index{Upcasting} und \emph{Downcasting}\index{Downcasting} gemeinsam mit nachfolgendem Beispiel.
+
+\begin{lstlisting}[caption={Casting bei Klassen.},label=lst:casting_klassen_1,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+...
+ Worker aWage;
+ salesPerson  aSale("Buddy Holly");
+
+  aWage = aSale;       //   erlaubtes Upcasting
+  aWage.payment();     //    (aber Provision ist futsch)
+
+  salesPerson aSale2;
+//  aSale2 = aWage;    //   nicht erlaubtes Downcasting
+...
+\end{lstlisting}
+
+%
+In Zeile 6 sind Name, Stundenlohn und Stundenanzahl (Members) des Angestellten \texttt{aWage}
+als entsprechende Eintr"age des Verk"aufers \texttt{aSale} vorhanden.
+Die Verkaufsprovison (spezielles Member) wird dabei nicht "ubernommen da diese in der Klasse Worker nicht vorkommt.
+Umgekehrt m"u"ste der Compiler eine unkommentierte Zeile~10 ablehnen, denn
+woher soll er (implizit!!) eine vern"unftige Verkaufsprovision aus den
+vorhandenen Daten des Angestellten ableiten
+(die Klasse \texttt{Worker} besitzt weniger Member  als \texttt{salesPerson})?
+N"aheres zu Konvertierungskonstruktoren und -funktionen zwischen Klassen steht in
+\cite[\S9 und \S19]{KirchPrinz:2002:OOP}\index{Casting},
+\cite[\S9.4.4]{Schmaranz:2002:SCP},
+\cite[\S16.5]{SchaderKuhlins:1998:PCP}.
+%
+%
+\subsection{Casting von Klassenpointern}
+\label{sec:A4.2}
+%
+Die demonstrierte, implizite Typkonvertierung erlaubt uns, da"s ein mit einer
+Basisklasse typisierter Pointer sowohl auf Instanzen der Basisklasse als auch auf
+Instanzen davon abgeleiteter Klassen zeigt.
+
+Dies, und mi"sbr"auchliche Benutzung
+demonstrieren wir wiederum an einem
+% Beispiel\exfile{A3/a3\_2.cpp}:\label{code:a3_2}
+% v_9b_cast/main.cpp
+\begin{lstlisting}[caption={Casting bei Klassenpointern.},label=lst:casting_klassen_2,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+//				a3_2.cpp
+...
+ salesPerson  aSale("Buddy Holly");
+...
+ salesPerson *salePtr;		//	nun das ganze mit Pointern
+ Worker *wagePtr;
+
+ salePtr = & aSale;
+ wagePtr = & aSale;		//	Basisklassenpointer
+
+ salePtr->setSales(1000);	// salesPerson :: setSales
+//  wagePtr->setSales(1000);	// WagePerson  :: setSales  gibt es nicht !!
+
+ salePtr->payment();		// salesPerson ::payment
+ wagePtr->payment();		// Worker::payment
+
+//	und nun schmutzig mit Pointern
+  cout << endl << "         schmutzig mit Pointern" << endl;
+
+  //salePtr = wagePrt;			// geht nicht
+  salePtr = (salesPerson *) wagePtr;	// expizite Typkonvertierung, gefaehrlich !!
+  salePtr->payment();
+
+//	und nun  g a n z  schmutzig mit Pointern
+  cout << endl << "         g a n z   schmutzig mit Pointern" << endl;
+
+  Employee *empPtr = &simple;	// --> einfacher Employee
+  salesPerson *sale_Ptr;
+
+  sale_Ptr = (salesPerson *)empPtr;	// erlaubt, aber inkorrekt
+  sale_Ptr->setComission(0.06);		// nunmehr erlaubt, aber katastrophal
+  sale_Ptr->payment();
+...
+\end{lstlisting}
+%
+%  dynamic_cast mit Pointer:  http://en.cppreference.com/w/cpp/language/dynamic_cast
+%
+% dynamic_cast  mit Referenz:  http://www.cplusplus.com/reference/typeinfo/bad_cast/
+%  
+% Upcasting :http://www.bogotobogo.com/cplusplus/upcasting_downcasting.php
+
+%
+Wie in Zeile 12 zu sehen ist, k"onnen nur die Methoden der Klasse aufgerufen werden,
+f"ur welche der Pointer typisiert ist - obwohl er auf eine Instanz zeigt, f"ur
+welche die Methode \verb|setSales| deklariert ist.
+Heikel (und verboten geh"ort) ist die  Pointerkonvertierung
+in Zeile~21 da die Berechnungsmethode in Zeile~22 auf nicht vorhandene Member
+zugreifen k"onnte. Hier funktioniert es nur deshalb, da \verb|wagePtr| auf eine
+Instanz der Klasse \verb|salesPerson| verweist (Zeile~9).
+
+Die Katastrophe tritt dann aber in den Zeilen 30-32 ein, da hier
+wirklich auf nicht vorhandene Member zugegriffen wird.
+Im g"unstigsten Fall ist die Berechnung in Zeile~32 falsch, wenn man Pech hat,
+dann st"urzt das Programm unkontrolliert ab.
+
+Solche Pointerkonvertierungen von Basisklasse zu abgeleiteter Klasse
+sind unn"otig, gef"ahrlich und zeugen von einem schlechten Klassendesign.
+
+Wenn man schon Pointer (oder Referenzen) auf Klassen casten muß, dann sollte man 
+\verb| dynamic_cast<class*>(class_ptr); |\index{Cast!dynamic\_cast}  benutzen, 
+welches zur Laufzeit die Zulässigkeit des Castings prüft und bei Mißerfolg einen 
+Nullpointer zurückgibt (oder eine \texttt{bad\_cast}-Exception wirft).
+%
+%
+\subsection{Nutzung von Basisklassenpointern}
+\label{sec:A4.3}
+%
+Nat"urlich stellt sich die Frage, wozu man Basisklasenpointer gebrauchen kann.
+Eine Teilantwort ist, da"s es damit z.B., m"oglich ist alle verschiedenen
+Angestellten (\texttt{Employee}) in einem Array zu speichern und
+dann Aktionen nur noch auf die einzelnen Feldelemente anzuwenden.
+Dieser Ansatz wird in im nachfolgenden Beispiel
+demonstriert.
+% \exfile{A3/a3\_3.cpp}:
+\begin{lstlisting}[caption={Nutzung von Klassenpointern.},label=lst:casting_klassen_3,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+//		a3_3.cpp
+#include <iostream>
+#include "employ.hpp"
+using namespace std;
+
+int main()
+{
+ Employee  simple("Josef Gruber");
+
+ Worker hilf("Heiko");
+ hilf.setWage(20); hilf.setHours(7.8);
+
+ salesPerson emp("Gundolf Haase");
+ emp.setWage(hilf.getWage());  emp.setHours(hilf.getHours());
+ emp.setComission(0.05); emp.setSales(10000.0);
+
+ Manager man("Max Planck");
+ man.setSalary(1000.0);
+
+ const int N=4;
+ Employee* liste[N];		// array von Pointern auf Employee
+ int i;
+
+ liste[0] = &simple;
+ liste[1] = &hilf;
+ liste[2] = &emp;
+ liste[3] = &man;
+
+ cout << endl << "   Nur die Namen ausgeben" << endl;
+ for (i=0; i<N; i++)
+  {
+    liste[i]->info();
+  }
+
+ cout << endl << endl << "   Name und (spezifisches) Gehalt klappen nicht" << endl;
+ for (i=0; i<N; i++)
+  {
+    liste[i]->payment();	//	==> Ausweg: Virtuelle Methoden
+  }
+
+ return 0;
+}
+\end{lstlisting}
+% \label{code:a3_3}
+Die Namensausgabe in Zeile 32 funktioniert so wie geplant, jedoch
+wird in Zeile 38 stets die Methode
+\verb|Employee :: payment()| aufgerufen, welche jedoch keine
+geeignete Gehaltsberechnungsroutine zur Verf"ugung hat.
+Die Definition einer Methode \texttt{payment()} f"ur die Basisklasse
+\texttt{Employee} l"ost das Problem auch nicht,
+da in Zeile 38 die verschiedenen Besch"aftigungsverh"altnisse
+\emph{a priori} nicht bekannt sind.
+Aber gerade diese Unterschiede sind das Spezielle in den abgeleiteten Klassen.
+
+Nat"urlich bietet C++ einen Ausweg aus dem Dilemma - die \emph{virtuellen Methoden}
+mit ihren \emph{dynamischen Bindungen}.
+\index{Methoden!virtuell}\index{dynamische Bindung}
+%
+%
+\subsection{Einige Bemerkungen zum Casting}
+\label{sec:A4.4}
+An Stelle des C-Casts \verb|(Typ) Ausdruck| wie in \verb|(double) idx|
+sollte man die vier in C++ enthaltenen Casts benutzen, welche ein spezifischeres
+Casting erlauben, leichter im Programmcode auffindbar sind und es dem
+Compiler auch erlauben, bestimmte Casts abzulehnen.\index{Cast!C-Cast}
+%
+\begin{itemize}
+ \item \verb|static_cast<Typ>(Ausdruck)|\index{Cast!static\_cast}
+ ersetzt das bekannte C-Cast, also w"urde obiges Beispiel zu
+ \verb|static_cast<double>(idx)|
+%
+ \item \verb|const_cast<Typ>(Ausdruck)|\index{Cast!const\_cast} erlaubt die
+ Beseitigung der Konstantheit eines Objektes. Eine Anwendung daf"ur ist der
+ Aufruf einer Funktion, welche nichtkonstante Objekte in der
+ Parameterliste erwartet, diese aber nicht ver"andert.
+ (Das Interface dieser Funktion ist schlecht designed)
+\begin{verbatim}
+void Print(Studenten&);
+...
+int main()
+{
+ const Studenten arni("Arni","Schwarz",89989, 787);
+ Print(const_cast<Studenten>(arni));
+}
+\end{verbatim}
+Vorsicht vor Mi"sbrauch wie in folgendem Code, in welchem eine Konstante pl"otzlich einen
+anderen Wert hat.
+% \begin{verbatim}
+% void printInt(const int& v)
+% {
+%   cout << v << endl;
+% }
+%
+% int main () {
+%
+%   const int a = 5;
+%   int& j = const_cast<int&>(a);
+%   j = -3;
+%   cout << " a = " << a << "  i = "<< j << endl;
+%   cout << " a = "; printInt(a);
+%   cout << " i = "; printInt(j);
+%
+%   return 0;
+% }
+% \end{verbatim}
+% %
+ \item \verb|dynamic_cast<Typ>(Ausdruck)|\index{Cast!dynamic\_cast} dient
+ der sicheren Umformung von Pointern und Referenzen
+ in einer Vererbungshierarchie und zwar nach unten
+ (abgeleitete Klasse) oder zwischen benachbarten Typen.
+ So w"are das exakte Casting in Zeile~21 des Codes auf Seite~\pageref{code:a3_2}:
+ \verb|salePtr = dynamic_cast<salesPerson*>(wagePtr);|~.
+ Falls das Casting (zur Laufzeit!!) nicht erfolgreich ist wird ein Nullzeiger
+ zur"uckgegeben bzw. eine Exception ausgeworfen bei Referenzen.
+%
+ \item \verb|reinterpret_cast<Typ>(Ausdruck)|\index{Cast!reinterpret\_cast}
+ wird f"ur Umwandlungen benutzt deren Ergebnis fast immer implementationsabh"angig ist.
+ Meist wird es zur Umwandlung von Funktionspointern benutzt.
+\end{itemize}
+%
+Obige Erl"auterungen und weitere Beispiele zu diesen Casts sind in
+\cite[\S1.2]{Meyers:1997:MEC}
+zu finden. Mehr Beispiele und Bemerkungen zur Typ"uberpr"ufung der Casts,
+siehe
+\cite[p.246f]{Schmaranz:2002:SCP}.
+
+

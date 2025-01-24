@@ -1,0 +1,229 @@
+\documentclass[a4paper,landscape]{book}
+\textheight15cm
+\textwidth25cm
+\evensidemargin0cm
+\oddsidemargin0cm
+\topmargin-1cm
+% \marginparsep0cm
+\marginparwidth2.5cm
+%\documentclass{report}
+%\documentclass{article}
+%\documentclass[draft]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[austrian]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{amscd}
+%\usepackage{showkeys}
+\usepackage{textcomp}
+% \usepackage{html}
+\usepackage{hyperref}
+%\usepackage{htmllist}
+%\usepackage[dvips]{epsfig,color}   % Achtung:  kap512a.pstex_t, aber verursacht Probleme mit includegraphics
+\usepackage{color}
+\usepackage{rotating}              %  sidewaystable
+\usepackage{moreverb}
+\usepackage{graphicx}
+\graphicspath{{./GIF}}
+\usepackage{epstopdf}
+%\crop
+\sloppy{}
+%
+\newcommand\ghref[2]{%
+\protect\href{#1}{#2}%
+\footnote{\nolinkurl{#1}}%
+}
+%
+%----------  mit den alten C-Teilen ?
+\newif\ifcteil
+\cteiltrue
+\cteilfalse
+%------------------------------------
+%
+%-------------------------------------------------------------
+%	Allow graphics in zipped format
+%-------------------------------------------------------------
+%\DeclareGraphicsRule{.eps.gz}{eps}{.eps.bb}{`gzcat #1}
+% \DeclareGraphicsRule{.eps.gz}{eps}{.eps.bb}{`gunzip #1`|}
+\DeclareGraphicsRule{.eps.gz}{eps}{.eps.bb}{`gunzip #1`|}
+
+%
+\parskip1.5ex
+\parindent0ex
+\topsep30ex
+\setcounter{tocdepth}{2}
+\flushbottom
+%
+\protect\newcommand {\code}[1]
+ {\protect\begin{minipage}[t] {0.5\textwidth}#1\protect\end{minipage}}
+%
+% \newcommand {\exfile}[1]
+%  {\latexhtml {\marginpar{\htmladdnormallink{\fbox{#1}}{../../Examples/#1}}}
+%              {(siehe \htmladdnormallinkfoot{\textit{#1}}{../../Examples/#1})}
+%  }
+
+\protect\renewcommand {\htmladdnormallink}[2] {\href{#2}{#1}}
+\protect\renewcommand {\htmladdnormallinkfoot}[2] {#1\footnote{\url{#2}}}
+
+% \newcommand {\exfile}[1]
+% %  {\latexhtml {\marginpar{\href{../../Examples/#1}{\fbox{#1}}}}
+% %              {(siehe \href{../../Examples/#1}{\textit{#1}})}
+% %              {\marginpar{\href{../../Examples/#1}{\fbox{#1}}}}
+%              {\marginpar{\href{http://imsc.uni-graz.at/haasegu/Lectures/Kurs-C/Examples/#1}{\fbox{#1}}}}
+%              %{\marginpar{\href{http://imsc.uni-graz.at/haasegu/Lectures/Kurs-C/Beispiele/#1}{\fbox{#1}}}}
+% %  }
+% %  {\latexhtml {\marginpar{\fbox{#1}}}
+% %              {(siehe \htmladdnormallinkfoot{\textit{#1}}{../../Examples/#1})}
+% %  }
+\newcommand {\itt} [1] {\texttt{#1}}
+\newcommand {\ibf} [1] {\textbf{#1}}
+%
+%%%%%1%%%%%%%%%%%%%%%  Settings for listing  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings}
+%
+\definecolor{listinggray}{gray}{0.9}
+\lstset{language=c++}
+%\lstset{backgroundcolor=listinggray}
+\lstset{backgroundcolor=\color{listinggray}}
+% \lstset{linewidth=90mm}
+%\lstset{linewidth=110mm}
+\lstset{linewidth=0.95\textwidth}
+\lstset{frameround=tttt}
+%\lstset{frameround=trbl}
+%\lstset{frame=trBL}
+\lstset{frame=TRbl}
+\lstset{frame=shadowbox,rulesepcolor=\color{blue}}
+%\lstset{labelstep=1}
+% \lstset{keywordstyle=\color{red}\bfseries\underbar}
+%\lstset{basicstyle=\scriptsize}
+\lstset{basicstyle=\small}
+\lstset{showspaces=false,showstringspaces=false,numberbychapter=true}
+\lstset{gobble=0}
+\lstset{breaklines=true,breakatwhitespace=true,breakindent=20pt,breakautoindent=true}
+%
+%seee: http://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
+%\newcommand{\includecode}[2][c]{\lstinputlisting[caption=#2, escapechar=, style=custom#1]{#2}}
+%% ...
+%\includecode{sched.c}
+%\includecode[asm]{sched.s}
+% https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
+%
+% http://tex.stackexchange.com/questions/73231/avoid-page-breaks-in-lstlistings
+\usepackage{float}
+%
+\newcommand{\includecode}[3][firstline=1]
+{%
+  \lstinputlisting[basicstyle=\scriptsize,
+  %\lstinputlisting[float,floatplacement=htb,basicstyle=\scriptsize,
+   emptylines=0,
+   numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt,
+   %caption=#3 (\href{http://imsc.uni-graz.at/haasegu/Lectures/Kurs-C/Examples/#2}{\nolinkurl{#2}}),
+   %caption=#3 (\href{http://imsc.uni-graz.at/haasegu/Lectures/Kurs-C/Beispiele/#2}{\nolinkurl{#2}}),
+    caption=#3,
+  label=lst:#2,
+   #1
+   ]
+   {../Beispiele/#2}%
+   \marginpar{\href{http://imsc.uni-graz.at/haasegu/Lectures/Kurs-C/Beispiele/#2}{\fbox{\scriptsize\nolinkurl{#2}}}}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%http://tex.stackexchange.com/questions/10141/how-to-prevent-lstlisting-from-splitting-code-between-pages
+
+%\usepackage{float}
+%% Snippet Listings
+%\lstnewenvironment{snippet}[1][]
+    %{\lstset{float=htpb,#1}}
+    %{}
+
+
+%%%%%1%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand {\bspfile}[1]
+   {\marginpar{\href{http://imsc.uni-graz.at/haasegu/Lectures/Kurs-C/Beispiele/#1}
+   {\fbox{\scriptsize\nolinkurl{#1}}}}%
+   }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+\usepackage{makeidx}
+\makeindex
+%\includeonly{kap12}
+%\includeonly{kap1,kap2,kap3,kap4,kap5,kap6,kap7,appendix}
+
+%\includeonly{p_4}
+%\includeonly{p_1,p_2,p_3,p_4}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title{Einf"uhrung in die Programmierung mit C++}
+\author{Gundolf Haase}
+\date{{\normalsize Graz, SS 2021, \today }
+% 	  \\[2ex]\vfill \mbox{} \hrulefill \mbox{} \S\ref{p:11} und \S\ref{p:12} wurden aktualisiert \mbox{} \hrulefill \mbox{} \vfill
+     }
+\maketitle
+	\thispagestyle{empty}
+	\cleardoublepage
+		\setcounter{page}{0}
+		\pagenumbering{roman}
+\tableofcontents
+	\cleardoublepage
+		\setcounter{page}{0}
+		\pagenumbering{arabic}
+
+
+%\include{p_1.tex}
+%\include{p_2.tex}
+%\include{p_3.tex}
+%\include{p_4.tex}
+
+\input{p_1.tex}
+\input{p_2.tex}
+\input{p_3.tex}
+\input{p_4.tex}
+\input{p_5.tex}
+\input{p_6.tex}
+\input{p_7.tex}
+\input{p_8.tex}
+\input{p_9.tex}
+\input{p_10.tex}
+\input{p_11.tex}
+\input{p_12.tex}
+\input{p_13.tex}
+
+\input{appendix.tex}
+
+\nocite{Breymann:2017:DCP,Fibelkorn:2007:SKP}
+\nocite{Filipek:2018:SKP}
+\nocite{Galowicz:2017:CPS,Gode:1998:ANK,Gottschling:2019:FMC,Grimm:2011:CLP,HuntThomas:2003:DPP}
+\nocite{KirchPrinz:2002:OOP,Louis:2006:CPE,Meyers:1998:ECP,Meyers:1997:MEC,Meyers:2015:EMP}
+\nocite{OramTalbott:1993:MPM,PombergerDobler:2008:AUD}
+\nocite{SchaderKuhlins:1998:PCP,SpillnerBreymann:2016:LTP,Strasser:2003:PMS,Stroustrup:2000:CPP,Stroustrup:2010:EPC}
+\nocite{Will:2012:CPT,Will:2018:CPT}
+
+
+
+%\nocite{Breymann:2017:DCP,Capper:2001:CSE,ClaussFischer:1988:PMA,Davis:1997:CD,Erlenkoetter:1999:CPA,Fibelkorn:2007:SKP}
+%\nocite{Galowicz:2017:CPS,Gode:1998:ANK,Grimm:2011:CLP,Herrmann:1997:CNW,Herrmann:2001:EPC,HuntThomas:2003:DPP,Josuttis:1994:OPC}
+%\nocite{KirchPrinz:2002:AOP,KirchPrinz:2003:CCP,Louis:2006:CPE,Meyers:1998:ECP,Meyers:1997:MEC,Meyers:2015:EMP}
+%\nocite{Microsoft:1993:REC,OramTalbott:1993:MPM,PombergerDobler:2008:AUD,SatirBrown:1995:PCP}
+%\nocite{SchaderKuhlins:1998:PCP,SpillnerBreymann:2016:LTP,Strasser:2003:PMS,Stroustrup:2000:CPP,Stroustrup:2010:EPC}
+%\nocite{Will:2012:CPT,Will:2018:CPT}
+
+\bibliographystyle{alpha}
+\bibliography{kurs}
+
+\lstlistoflistings
+
+\printindex
+\end{document}
+
+
+
+
+######################################
+Dr.Dobbs: Lambda-Funktionen un deren Einsatz (parameter via value/reference; Scope of variables )
+\ghref{http://www.drdobbs.com/cpp/lambdas-in-c11/240168241?elq=010160016f9c4f83852f4a19aeeda9a4}{Lambdas in C++11}
+Dr.Dobbs: Exception-Handling in Konstruktoren
+\ghref{http://www.drdobbs.com/cpp/understanding-c-function-try-blocks/240168262?elq=010160016f9c4f83852f4a19aeeda9a4}
+{Understanding C++ Function Try Blocks}
+
+

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+
+FILES=" p26 p27 p29 p31a p31bb p32 p34 p35 p36a p36b p39 p40 p41a p41b \
+	p49a p49b p65 p69 p71 p85 p88 p99" 
+	
+
+for i in ${FILES}
+  do  echo " --> " $i
+    convert $i.jpg $i.pdf
+#     convert $i.jpg $i.eps
+  done

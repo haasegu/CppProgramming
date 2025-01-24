@@ -1,0 +1,577 @@
+\chapter{Templates}
+\label{p:10}
+Der englische  Begriff \emph {template} bedeutet auf deutsch \emph{Schablone}.
+Eine Schablone wird bei der Produktherstellung dazu verwendet die gleiche Form immer wieder herzustellen
+(oder zumindest anzureißen), gleich ob das Material nun Metall, Karton oder Holz ist.
+
+Unser Produkt sind Funktionen und Klassen mit den Datentypen als Material.
+%
+\section{Template-Funktionen}
+\label{p:10.1}
+% V_14/v_8b
+
+%
+In irgendeinem Stadium der Implementierung stellt man pl"otzlich fest, da"s
+die gleichen Funktionen f"ur verschiedene Datentypen gebraucht werden. In nachfolgendem,
+einfachen Beispiel sind dies das Maximium zweier Zahlen und das Maximum eines Vektors.
+%
+%\exfile{A7/fkt.hpp}.
+\begin{lstlisting}[caption={Header:Funktion f\"ur jeden Datentyp einzeln.},label=lst:fkt_no_template_h,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+{
+    int    mymax (const int    a, const int    b);
+    float  mymax (const float  a, const float  b);
+    double mymax (const double a, const double b);
+
+    int    mymax_elem(const vector<int>&    x);
+    float  mymax_elem(const vector<float>&  x);
+    double mymax_elem(const vector<double>& x);
+}
+\end{lstlisting}
+%
+
+Die Implementierungen beider Funktionsgruppen unterscheiden sich
+nur im jeweiligen Datentyp, die Struktur der Implementierung ist ansonsten
+komplett identisch.
+%\exfile{A7/fkt.cpp}.
+\begin{lstlisting}[caption={Source:Funktion für jeden Datentyp einzeln.},label=lst:fkt_no_template_s,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+     int    mymax (const int a, const int b)
+     {
+        return  a > b  ?  a  : b;
+     }
+
+     float  mymax (const float a, const float b)
+     {
+        return  a > b  ?  a  : b;
+     }
+
+     double mymax (const double a, const double b)
+     {
+        return  a > b  ?  a  : b;
+     }
+
+     float  max_elem(const vector<float>&  x)
+     {
+      const int=x.size();
+      assert(n>0);                  // --> richtiges Exeption-handling muss rein
+
+      float vmax = x[0];
+      for (int i=1; i<n; i++)
+       {
+         vmax = mymax(vmax,x[i]);   // Nutze die Funktion mymax
+       }
+
+      return vmax;
+     }
+//       usw.
+     ...
+\end{lstlisting}
+%%
+Neben dem unguten Gef"uhl, sich ungeschickt anzustellen, m"ussen algorithmische
+Verbesserungen in jeder Funktion einer Funktionsgruppe implementiert werden.
+Die ist wiederum fehleranf"allig und der Gesamtcode schwerer zu warten.
+
+\subsection{Implementierung eines Funktions-Templates}
+\label{p:10.1.1}
+C++ bietet die M"oglichkeit, mit Hilfe von \emph{Templates}\index{Template} (engl.: Schablonen)
+eine parametrisierte Familie verwandter Funktionen zu definieren.
+Ein Funktions-Template\index{Template!Funktions-} legt die Anweisungen
+einer Funktion fest, wobei statt eines konkreten Typs ein Parameter verwendet wird
+\cite[p.365]{KirchPrinz:2002:OOP}.
+Vorteile dieser Templates sind:
+\begin{itemize}
+ \item Ein Funktionen-Template mu"s nur einmal kodiert werden.
+ \item Einzelne Funktionen zu einem konkreten Parameter werden anhand des Templates
+ 	automatisch erzeugt.
+ \item Typunabh"angige Bestandteile (der Algorithmus) k"onnen ausgetestet werden und
+ 	funktionieren dann f"ur die anderen Parametertypen.
+ \item Es besteht immer noch die M"oglichkeit, f"ur bestimmte Typen spezielle L"osungen
+ 	anzugeben.
+\end{itemize}
+
+Einem Funktions-Template wird das Pr"afix
+\\[0.5ex]
+\verb|template <class T>|
+\\[0.5ex]
+vorangestellt. Der Parameter \verb| T | ist hierbei der Typname welcher in der nachfolgenden
+Definition benutzt wird.
+Dabei schlie"st das Schl"usselwort \verb|class| auch einfache Datentypen wie
+\verb|int| oder \verb|double| ein.
+
+Unsere Funktionsfamilien werden nunmehr mit Templates so definiert und in ein File \emph{tfkt.tpp}
+geschrieben.
+%\exfile{A7/tfkt.cpp}.\label{code:A7tfkt.cpp}
+%
+\begin{lstlisting}[caption={Source: Templatefunktion.},label=lst:fkt_template_s,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+{
+//				tfkt.tpp
+#include <vector>
+#include <cassert>
+using namespace std;
+//#include "tfkt.hpp"
+
+template <class T>
+T  mymax (const T  a,const T  b)
+ {
+  return  a > b  ?  a  : b;
+ }
+
+template <class T>
+T  max_elem(const vector<T>&  x)
+ {
+  const int=x.size();
+  assert(n>0);		// --> richtiges Exeption-handling muss rein
+  T vmax = x[0];
+  for (int i=1; i<n; i++)
+   {
+     vmax = mymax(vmax,x[i]);
+   }
+
+  return vmax;
+ }
+}
+\end{lstlisting}
+%
+Die Deklaration ist dann im Headerfile \emph{tfkt.h}
+%\exfile{A7/tfkt.hpp}.
+\begin{lstlisting}[caption={Header: Templatefunktion.},label=lst:fkt_template_h,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+#ifndef FILE_TFKT
+#define FILE_TFKT
+#include <vector>
+using namespace std;
+
+    template <class T>
+    T  mymax (const T  a, const T  b);
+
+    template <class T>
+    T  max_elem(const const vector<T>&  x);
+
+#include "tfkt.tpp"                   // Include the sources in case of templates!!
+#endif
+\end{lstlisting}
+%
+Da in der STL eine Funktionsfamilie \verb|max| bereits vorhanden ist, hei"st unsere
+Funktionsfamilie \verb|mymax|. Ansonsten ergebens sich Zweideutigkeiten bei der
+Auswahl der richtigen Funktion.
+
+Die Anwendung unserer Funktionstemplates im
+Hauptprogramm
+%\exfile{A7/main.cpp}
+\label{code:A7main.cpp}
+ist relativ einfach.
+
+\begin{lstlisting}[caption={Templatefunktion anwenden.},label=lst:fkt_template_main,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+#include <iostream>
+#include <vector>
+#include "tfkt.hpp"                // Header mit Templates und deren Sources
+using namespace std;
+
+int main()
+{
+ const int N = 10;
+ vector<int>    ia(N);
+ vector<float>  fa(N);
+ vector<double> da(N);
+
+ for (int i=0; i<N; i++)           // Vektoren initialisieren
+  { ia[i] = i;
+    fa[i] = i/(i+1.0f);
+    da[i] = i/(i+1.0);
+  }
+
+ int    im = max_elem(ia);         // int
+ cout << "   int-Feld(max):  " << im << endl;
+
+ float  fm = max_elem(fa);         // float
+ cout << " float-Feld(max):  " << fm << endl;
+
+ double dm = max_elem(da);         // double
+ cout << "double-Feld(max):  " << dm << endl;
+
+ return 0;
+}
+\end{lstlisting}
+
+Ein Funktions-Template kann auch mit mehreren Typparametern definiert werden.
+%			Energienorm fr Vektor ||v||_A
+%caption={Templatefunktion anwenden.},label=lst:fkt_template_main,
+\begin{lstlisting}[
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+    template<class A, class B>
+    B& func(const int n, const A mm, vector<B>& v)
+    {
+    ...
+    }
+\end{lstlisting}
+%
+%\subsection{Das Schl"usselwort \texttt{export}}
+%\label{sec:A7.3}
+%%
+%Zeile~13 im File \textit{tfkt.hpp} inkludiert ungew"ohnlicherweise die
+%Definitionen unserer Funktions-Templates. Kommentiert man diese Zeilen aus,
+%so kann der \verb|g++|-Compiler (und "ahnlich der \verb|icc|) zwar
+%compileren, jedoch nicht linken.\index{export}
+%\begin{verbatim}
+%LINUX> g++ -c tfkt.cpp
+%LINUX> g++ -c main.cpp
+%LINUX> g++ -o main main.o tfkt.o
+
+%main.o(.text+0x78): In function `main':
+%: undefined reference to `int max_elem<int>(int, int const*)'
+%main.o(.text+0xc6): In function `main':
+%: undefined reference to `float max_elem<float>(int, float const*)'
+%main.o(.text+0x11a): In function `main':
+%: undefined reference to `double max_elem<double>(int, double const*)'
+%main.o(.text+0x17a): In function `main':
+%: undefined reference to `float max<float>(float&, float&)'
+%\end{verbatim}
+%Der Grund daf"ur ist, da"s der Compiler den Code nur dann
+%compilieren kann, wenn er ihn vollst"andig sieht. Beim Compilieren von
+%\textit{tfkt.cpp} konnte er noch nicht wissen, f"ur welchen Typ die Funktionen
+%definiert werden sollen und beim Compilieren von \textit{main.cpp} ist die
+%Implementierung der Funktions-Templates unbekannt. Es wurde also "uberhaupt keine
+%Funktionen \verb|max| oder \verb|max_elem| compiliert. Aus diesem Grunde ist die
+%Includedeklaration in Zeile~13 des Files \textit{tfkt.hpp} notwendig.
+
+%W"unschenswert w"are nat"urlich auch  bei Templates eine saubere Trennung
+%zwischen Header- und Quelltextfile, bei dem ein Funktions-Template trotzdem
+%global verf"ugbar ist.
+%Laut C++-Standard wird genau dies durch das Schl"usselwort \verb|export|
+%bewirkt~\cite[p.248f]{Yang:2001:COO}.
+%Soweit die Theorie - in der Praxis erh"alt man
+%allerdings die Compilerwarnung\\
+%\verb|tfkt.cpp:11: warning: keyword `export' not implemented, and will be ignored|
+%\\
+%d.h., diese w"unschenswerte Funktionalit"at von C++ ist derzeit noch nicht verf"ugbar
+%(J"anner 2008, nach meinem Wissen).
+%Da diese Funktionalit"at aber fr"uher oder sp"ater verf"ugbar sein wird, sollte man
+%erstmal die Quelltextfiles in die Headerfiles inkludieren und
+%entsprechende Funktions-Templates jetzt schon mit \verb|export| im
+%Quelltextfile kennzeichnen
+%(Zeilen 5 und 11 im Code auf Seite~\pageref{code:A7tfkt.cpp}).
+%Falls das \verb|export|- Schl"usselwort eines Tages korrekt unterst"utzt wird, dann
+%braucht man nur im Headerfile das Inkludieren des Quelltextfiles
+%auszukommentieren \cite[p.447f]{Schmaranz:2002:SCP}.
+%%
+%
+\subsection{Implizite und explizite Templateargumente}
+\label{p:10.1.2}
+%
+Im Hauptprogramm auf Seite~\pageref{code:A7main.cpp} wurde das richtige
+Templateargument \verb| T | , und damit die konkrete Funktion,
+anhand der Funktionsparameter bestimmt.
+Falls dies nicht eindeutig ist, bzw. das Templateargument nicht in der
+Parameterliste der Funktion vorkommt, dann mu"s das Templateargument
+beim Funktionsaufruf explizit angegeben werden. Das folgene Codefragment
+demonstriert implizite und explizite Templateargumente in den Zeilen~12 und~16.
+
+\begin{lstlisting}[caption={Templatefunktion anwenden.},label=lst:fkt_template_main_2,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+#include <iostream>
+#include <vector>
+#include "tfkt.hpp"                // Header mit Templates und deren Sources
+using namespace std;
+
+int main()
+{
+ const int N = 10;
+ vector<double> da(N);
+ ....                              // Vektoren initialisieren
+
+ double dm = max_elem(da);         // double, implicit instantiation
+
+ float  a=5.455, fm;
+ double b=-3.344;
+ fm = mymax<float>(a,b);           // float,  explicit instantiation
+
+ return 0;
+}
+\end{lstlisting}
+
+
+Weitere Hinweise zu Typanpassungen bei Funktions-Templates sind in
+\cite[p.371, p.377]{KirchPrinz:2002:OOP} zu finden.
+Die implizite Typanpassung kann (auch zu Debuggingzwecken) beim \verb|g++| mittels der Option
+\verb|-fno-implicit-templates| unterbunden werden.
+%
+%
+\subsection{Spezialisierung}
+\label{p:10.1.3}
+%
+So sch"on unsere allgemeinen Funktions-Templates sind, sie sind
+nicht f"ur alle denkbaren Typen einsetzbar:
+\begin{itemize}
+ \item Das Funktions-Template enth"alt Anweisungen, die f"ur bestimmte Typen
+ 	nicht ausgef"uhrt werden k"onnen.
+ \item Die allgemeine L"osung, die das Template bereitstellt, liefert kein
+ 	sinnvolles Ergebnis.
+ \item F"ur bestimmte Typen gibt es bessere (schnellere, speicherschonendere) L"osungen.
+\end{itemize}
+F"ur solche F"alle l"a"st sich z.B., f"ur unsere Funktion \verb|mymax| eine
+Spezialisierung\index{Spezialisierung} f"ur C++-Strings implementieren.
+
+
+Folgender Code
+%\index{A7/main2.cpp}
+funktioniert mit unserer Templatefunktion \verb|mymax<T>| auch ohne Spezialisierung,
+da \verb|operator>| f"ur die Klasse \verb|string| implementiert ist und einen lexikographischen
+Vergleich durchf"uhrt.
+\begin{lstlisting}[caption={Templatefunktion ohne Spezialisierung anwenden.},label=lst:fkt_template_spec_1,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+#include <iostream>
+#include <vector>
+#include <string>
+#include "tfkt.hpp"                // Header mit Templates und deren Sources
+using namespace std;
+
+int main()
+{
+  const int N = 10;
+  vector<string> da(N);
+  ....                             // Vektor of strings initialisieren
+
+  max_str = mymax(name1,name2);	   // lexicographic comparison
+  cout << max_str << endl;
+
+  max_str = mymax(a[5],a[9]);      // lexicographic comparison
+  cout << max_str << endl;
+
+  max_str = max_elem(N, a);        // lexicographic comparison
+  cout << max_str << endl;
+
+ return 0;
+}
+\end{lstlisting}
+
+Will man den resultierenden lexikographischen Vergleich \verb|operator>(string, string)|  in \verb|mymax| durch
+einen Vergleich der Stringl"angen ersetzen, dann hilft folgende Spezialisierung:
+\begin{lstlisting}[caption={Spezialisierung einer Templatefunktion.},label=lst:fkt_template_spec_2,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+template<>                       // Einleitung der Spezialisierung
+string mymax(const string &s1, const string &s2 )
+{
+  if ( s1.size()>s2.size() ) return s1;
+  else                       return s2;
+}
+\end{lstlisting}
+%
+Diese Funktion "uberl"adt, bei (genau!) passenden Parametern das entsprechende
+Funktions-Template von \verb|mymax|.
+Das Funktions-Template \verb|max_elem| kann nun sogar mit unserer Spezialisierung
+arbeiten.
+
+%Das Spezialisierungsbeispiel aus \cite[p.372f]{KirchPrinz:2002:OOP} konnte
+%ich nicht in der originalen Form zum korrekten Programmlauf "uberreden.
+%Vielleicht interpretieren andere Compiler die impliziten Typkonvertierungen
+%etwas anders als der \verb|g++|-3.2.3.
+
+%
+% Motivation \cite[p.365]{KirchPrinz:2002:OOP}
+%
+% Typ"ubereinstimmung \cite[p.371]{KirchPrinz:2002:OOP}
+%
+% Spezialisierung \cite[p.373]{KirchPrinz:2002:OOP}, Schmaranz, p.432
+%
+% Implizite und explizite Templateargumente \cite[p.377]{KirchPrinz:2002:OOP}
+% \verb|erg = max(x,y)|  vs. \verb|erg = max<float>(x,y)| .
+% \\
+%
+%
+% Idee: CG_alg mit <class MATRIX, class VEKTOR> und spezialisiertem Matrix-Vektor-Produkt
+% ==> Aufgabe: Matrixklassenhier. vs. Template (kombination von beiden?), Effizienz
+%
+%
+%                     K L A S S E N
+%
+%
+\section{Template-Klassen}
+\label{p:10.2}
+% V_14/v_8c
+\subsection{Ein Klassen-Template f"ur \texttt{Komplex}}
+\label{p:10.2.1}
+%
+Analog zu den Funktions-Templates bietet C++ die M"oglichkeit, Klassen-Templates zu
+definieren. Die Klassen-Templates werden in Anh"angigkeit von einem noch
+festzulegendem Typ (oder mehreren Typen) konstruiert.
+Diese Klassen-Templates werden h"aufig bei der Erstellung von Klassenbibliotheken
+eingesetzt, wir werden im Zusammenhang mit der STL in~\S\ref{p:11} auf solche Klassenbibliotheken zugreifen.
+
+Einem Klassen-Template ist der Pr"afix \verb| template<class T> | vorangestellt, dem
+die eigentliche Klassendefinition folgt.\index{Template!Klassen-}
+%
+\begin{lstlisting}[basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+template<class T>
+class X
+{
+...			// Definition der Klasse X<T>
+};
+\end{lstlisting}
+%
+Der Name des Template f"ur Klassen ist~\verb|X<T>|. Der Parameter~\texttt{T} steht wieder
+f"ur einen beliebigen (auch einfachen) Datentyp. Sowohl~\texttt{T} als auch
+\texttt{X<T>} werden in der Klassendefinition wie normale Datentypen verwendet.
+
+Zur Demonstration leiten wir aus der  Klasse \texttt{Komplex}
+von Seite~\pageref{lst:komplex_komplex.h_a} das Klassen-Template \texttt{Komplex<T>}
+ab
+%\exfile{A8/tmyvector.hpp}
+indem wir den original verwandten Datentyp \texttt{double} f"ur die
+Vektorelemente durch~\texttt{T} und \texttt{Komplex} durch \texttt{Komplex<T>} ersetzen.
+%
+\includecode[linerange={11-14,16-16,19-19,21-21,26-29,33-36,41-44,48-51,57-57,64-85,103-103},label=lst:komplex.h]{v_8c/komplex.h}{Header der Templateklasse}
+
+Die Deklaration der Methoden erfolgt dann analog, hier sei exemplarisch
+der Plus-Operator pr"asentiert im File.
+%
+\includecode[linerange={23-38},label=lst:komplex.tpp]{v_8c/komplex.tpp}{Implementierung der Methode einer Templateklasse}
+Wichtig ist, da"s vor jeder Methodendefinition der Pr"afix \verb|template<class T>| steht.
+
+\subsection{Mehrere Parameter}
+\label{p:10.2.2}
+Analog zu den Funktions-Templates k"onnen auch Klassen-Templates mit mehreren
+Typparametern definiert werden.
+%
+\begin{lstlisting}[
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+    template<class T1, class T2>
+    class X
+    {
+    ...			// Definition der Klasse X<T1,T2>
+    };
+\end{lstlisting}
+
+Desweiteren ist ein Template mit einem festgelegtem Parameter, einem Argument,
+m"oglich~\cite[p.397ff]{KirchPrinz:2002:OOP},
+%
+\begin{lstlisting}[
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+    template<class T, int n>
+    class Queue {...};
+\end{lstlisting}
+mit welchem \texttt{n}, z.B., die Gr"o"se eines immer wieder gebrauchten,
+internen tempor"aren Feldes bezeichnet. So deklariert dann
+%
+\begin{lstlisting}[
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+    Queue<double, 100> db;
+\end{lstlisting}
+eine Instanz der Klasse \verb|Queue<double, 100>|, welche mit \verb|double|-Zahlen
+arbeitet und intern, z.B., ein temp.\  Feld \verb|double tmp[100]| verwaltet.
+
+Das Template-Argument kann mit einem Default-Parameter definiert werden,
+%
+\begin{lstlisting}[
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+    template<class T, int n=255>
+    class Queue {...};
+\end{lstlisting}
+wodurch \verb| Queue<double> db; |  ein temp.\  Feld der L"ange~$255$ intern verwalten
+w"urde.
+
+Gleitkommazahlen sind nicht als Template-Argumente erlaubt, wohl aber Referenzen auf
+Gleitkommazahlen.
+%
+%
+\subsection{Umwandlung einer Klasse in eine Template-Klasse}
+\label{p:10.2.3}
+%
+Ein kleiner Leitfaden um aus einer Klasse (\verb|Komplex|) eine Template-Klasse (\verb|Komplex<T>|)
+zu generieren:
+\begin{enumerate}
+    \item \verb|template <class T>| vor die Klassendeklaration schreiben. \hfill  (\emph{*.h})
+    \item Den zu verallgemeinernden Datentyp durch den Template-Parmeter \verb|T| ersetzen.
+      \hfill  (\emph{*.h, *.tpp}) \\
+        Achtung, vielleicht wollen Sie nicht an allen Stellen diesen Datentyp ersetzen.
+    \item Ersetze in allen Parameterlisten, Returntypen und Variablendeklarationen den Klasstentyp \verb|myclass|
+      durch die Template-Klasse \verb|myclass<T>|. \hfill  (\emph{*.h, *.tpp})
+    \item Vor jede Methodenimplementierung \verb|template <class T>| schreiben. \hfill(\emph{*.tpp}) \\
+      Desgleichen vor Funktionen, welche die Klasse \verb|myclass::| als Parameter benutzen. \hfill(\emph{*.tpp}) \\
+      Bei \verb|friend|-Funktionen muß man \verb|template <class T>| auch im Deklarationsteil vor der Funktion angeben.
+      \hfill  (\emph{*.h})
+    \item In der Methodenimplementierung \verb|myclass::| durch \verb|myclass<T>::| ersetzen. \hfill(\emph{*.tpp})
+    \item  Im Headerfile das Sourcefile includieren, also \verb|#include "myclass.tpp"|, oder
+      gleich alles in das Headerfile schreiben (nicht empfohlen). \hfill  (\emph{*.h})
+\end{enumerate}
+
+\subsection{Template-Klasse und \texttt{friend}-Funktionen}
+\label{p:10.2.4}
+%
+Wenn wir den Ausgabeoperator \verb|operator<<| der Template-Klasse \verb|Komplex<T>| als \texttt{friend}-Funktion deklarieren wollen,
+dann ändert sich nichts im Implementierungsteil (außer, daß wir direkt auf die Member zugreifen können).
+Im Deklarationsteil unserer Klasse müssen wir für diese \verb|friend|-Funktion einen anderen Template-Parameter 
+(hier \verb|S|) benutzen.
+\begin{lstlisting}[basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+
+template <class T>
+class Komplex
+{
+  public:
+    ...
+    Komplex<T> operator+(const Komplex<T>& rhs ) const;
+    ...
+    template <class S>              // template parameter for following deklaration
+    friend ostream& operator<<(ostream& s, const Komplex<S>& rhs);
+    ...
+};
+\end{lstlisting}
+%
+Diese Art der Deklaration funktioniert ohne Einschränkungen.
+
+\section{Einschränkung der Datentypen bei Templates}
+\label{p:10.3}
+Die Codes in \S\ref{p:10.1}-\ref{p:10.2} akzeptieren vorerst jeden Templateparameter~\verb|T|.
+Eine Deklaration \verb| Komplex<string> as("real","imag");| mit \verb|T = string| ist zwar möglich und selbst die Addition würde 
+in Listing~\ref{lst:komplex.tpp} funktionieren, jedoch stellt man sich unter einer komplexen Zahl etwas anderes vor.
+Nebenbei, beim Versuch einer Multiplikation würde der Compiler mit einer recht kryptischen Fehlermeldung reagieren.
+
+Es gibt zwei grundsätzliche Möglichkeiten die Anforderungen an den Templateparameter beim 
+Kompilieren frühzeitig zu überprüfen:
+\begin{itemize}
+ \item mit Type Traits und \texttt{static\_assert} [ab C++11],
+ \item mit Concepts [ab C++20].
+\end{itemize}
+Im folgenden werden diese Möglichkeiten für eine Klasse \verb|Komplex<T>| mit 
+der Einschränkung, daß \texttt{T} eine Gleitkommazahl sein muß demonstriert.
+
+
+\subsection{Überprüfung des Templatedatentyps mit Type Traits}
+\label{p:10.3.1}
+%
+Zur Laufzeit besteht die Möglichkeit Datentypen miteinander zu vergleichen bzw. diese 
+auf bestimmte Eigenschaften zu testen. 
+Diese \ghref{https://en.cppreference.com/w/cpp/header/type_traits}{\texttt{type\_{traits}}} 
+enthalten den für uns nützlichen 
+\index{type\_trait}
+\ghref{https://en.cppreference.com/w/cpp/types/is_floating_point}{Test auf eine Gleitkommazahl} 
+welcher in Zeile 8 des Listing~\ref{lst:komplex_17.h} benutzt wird. 
+\index{is\_floating\_point}
+Das Testergebnis (true oder false) könnte man zur Laufzeit in allen Methoden/Funktionen auswerten.
+%
+\includecode[linerange={2-2,5-6,14-20,75-77,102-105},label=lst:komplex_17.h]{v_8c_cpp17/komplex.h}{Templateklasse (teilw.) mit Type Traits}
+%
+Es aber komfortabler wenn bereits der Compiler die Übersetzung des Codes abbricht sobald 
+der Templateparameter die gewünschte Bedingung nicht erfüllt. 
+Dazu wird im Listing \verb|static_assert| benutzt, der zweite Parameter ist der (informative!) Fehlerstring 
+welchen der Compiler im Fehlerfalle ausgibt.
+
+Eine Deklaration von \verb|Komplex<string> as("real","imag");| oder \verb|Komplex<int> ai(1,2);|
+hat einen Abbruch der Compilation zur Folge, d.h., die Methoden werden natürlich auch nicht generiert.
+Funktionen welche den Templateparameter~\verb|T| ohne die Klasse benutzen, müßten bei Bedarf eine separate Überprüfung wie im Zeile 8 enthalten.
+
+\subsection{Überprüfung des Templatedatentyps mit Concepts}
+\label{p:10.3.1}
+Seit C++20 kann man über \ghref{https://en.cppreference.com/w/cpp/language/constraints}{Concepts und constraints} 
+Anforderungen an den Templateparameter zu stellen. 
+Listing~\ref{lst:komplex_20.h} demonstriert dies für unsere Templateklasse und Listing~\ref{lst:komplex_20.tcc} 
+für die enstprechende Implementierung der Methoden und Funktionen. In jedem Falle wird ein Kompilierfehler ausgegeben, falls der Templateparameter \verb|T| keine Gleitkommazahl ist.
+%
+\includecode[linerange={3-3,13-17,79-79,104-107},label=lst:komplex_20.h]{v_8c_cpp20/komplex.h}{Templateklasse (teilw.) unter Nutzung von Concepts}
+%
+\includecode[linerange={12-18},label=lst:komplex_20.tcc]{v_8c_cpp20/komplex.tcc}{Templatemethoden unter Nutzung von Concepts}
+%
+Neben den in \verb|<concepts>| \ghref{https://en.cppreference.com/w/cpp/concepts}{vordefinierten} Concepts wie dem hier benutzen 
+\ghref{https://en.cppreference.com/w/cpp/concepts/floating_point}{\texttt{floating\_point}} kann man auch eigene Concepts erstellen, siehe dazu~\cite[p.10 and \S4.1]{Grimm:2021:CGD}. 

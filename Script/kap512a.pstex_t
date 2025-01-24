@@ -1,0 +1,13 @@
+\begin{picture}(0,0)%
+\includegraphics{kap512a.pstex}%
+\end{picture}%
+\setlength{\unitlength}{2368sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(3024,624)(1189,-673)
+\end{picture}

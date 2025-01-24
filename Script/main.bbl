@@ -1,0 +1,177 @@
+\begin{thebibliography}{Wil20b}
+
+\bibitem[Bre17]{Breymann:2017:DCP}
+Ulrich Breymann.
+\newblock {\em Der C++ Programmierer - Aktuell zu C++17}.
+\newblock Hanser Fachbuchverlag, 5th edition, 2017.
+\newblock \url{http://www.cppbuch.de/}.
+
+\bibitem[Cor93]{Microsoft:1993:REC}
+Microsoft Corp.
+\newblock {\em Richtig einsteigen in {C++}}.
+\newblock Microsoft Press, 1993.
+
+\bibitem[Fib07]{Fibelkorn:2007:SKP}
+Fibelkorn.
+\newblock {\em Die schwarze Kunst der Programmierung}.
+\newblock Semele Verlag, 2007.
+
+\bibitem[Fil18]{Filipek:2018:SKP}
+Bart\l{}omiej Filipek.
+\newblock {\em C++17 in detail}.
+\newblock bfilipek.com, 2018.
+
+\bibitem[Gal17]{Galowicz:2017:CPS}
+Jacek Galowicz.
+\newblock {\em {C++17 STL} Cookbook}.
+\newblock Packt Publishing, 2017.
+
+\bibitem[God98]{Gode:1998:ANK}
+Eduard Gode.
+\newblock {\em {ANSI C++:} kurz $\&$ gut}.
+\newblock O'Reilly, 1998.
+
+\bibitem[Got19]{Gottschling:2019:FMC}
+Peter Gottschling.
+\newblock {\em Forschung mit modernem C++}.
+\newblock Hanser Fachbuch, 2019.
+
+\bibitem[Gri11]{Grimm:2011:CLP}
+Rainer Grimm.
+\newblock {\em C++11: Der Leitfaden für Programmierer zum neuen Standard}.
+\newblock Addison-Wesley, M\"unchen, 2011.
+
+\bibitem[Gri21a]{Grimm:2021:CST}
+Rainer Grimm.
+\newblock {\em The C++ Standard Library}.
+\newblock leanpub.com, 2021.
+
+\bibitem[Gri21b]{Grimm:2021:CGD}
+Rainer Grimm.
+\newblock {\em C++20: Get the Details}.
+\newblock leanpub.com, 2021.
+
+\bibitem[HT03]{HuntThomas:2003:DPP}
+Andrew Hunt and David Thomas.
+\newblock {\em Der {P}ragmatische {P}rogrammierer}.
+\newblock Hanser Fachbuch, 2003.
+
+\bibitem[KPP02]{KirchPrinz:2002:OOP}
+Ulla Kirch-Prinz and Peter Prinz.
+\newblock {\em OOP mit C++}.
+\newblock Galileo Press, limitierte studentenausgabe edition, 2002.
+
+\bibitem[KS02]{KuhlinsSchader:2002:DCS}
+Stefan Kuhlins and Martin Schader.
+\newblock {\em Die {C++} {S}tandardbibliothek}.
+\newblock Springer, Berlin, Heidelberg, 3. edition, 2002.
+
+\bibitem[Lou06]{Louis:2006:CPE}
+Dirk Louis.
+\newblock {\em C++: Programmieren mit einfachen Beispielen. Leicht - Klar -
+  Sofort}.
+\newblock Markt und Technik, 2006.
+
+\bibitem[Mey97]{Meyers:1997:MEC}
+Scott Meyers.
+\newblock {\em Mehr effektiv {C++} programmieren}.
+\newblock Addison-Wesley, 1997.
+
+\bibitem[Mey98]{Meyers:1998:ECP}
+Scott Meyers.
+\newblock {\em Effektiv {C++} programmieren}.
+\newblock Addison-Wesley, 3., aktualisierte edition, 1998.
+
+\bibitem[Mey15]{Meyers:2015:EMP}
+Scott Meyers.
+\newblock {\em Effective Modern {C++}: 42 Specific Ways to Improve Your Use of
+  {C++11} and {C++14}}.
+\newblock Addison-Wesley Professional Computing Series. O'Reilly, 2015.
+
+\bibitem[OT93]{OramTalbott:1993:MPM}
+Andrew Oram and Steve Talbott.
+\newblock {\em Managing Projects with make}.
+\newblock O'Reilly, 1993.
+
+\bibitem[PD08]{PombergerDobler:2008:AUD}
+Gustav Pomberger and Heinz Dobler.
+\newblock {\em Algorithmen und Datenstrukturen}.
+\newblock Pearson Studies, 2008.
+
+\bibitem[SB95]{SatirBrown:1995:PCP}
+Gregory Satir and Doug Brown.
+\newblock {\em C++: The Core Language}.
+\newblock O'Reilly, 1995.
+
+\bibitem[SB16]{SpillnerBreymann:2016:LTP}
+Andreas Spillner and Ulrich Breymann.
+\newblock {\em Lean Testing für C++-Programmierer}.
+\newblock dpunkt.verlag, 2016.
+
+\bibitem[Sch02]{Schmaranz:2002:SCP}
+Klaus Schmaranz.
+\newblock {\em Softwareentwicklung in {C++}}.
+\newblock Springer, Heidelberg, 2002.
+
+\bibitem[SK98]{SchaderKuhlins:1998:PCP}
+Martin Schader and Stefan Kuhlins.
+\newblock {\em Programmieren in {C++}}.
+\newblock Springer, Heidelberg, 5.~neubearbeitete edition, 1998.
+
+\bibitem[Str00]{Stroustrup:2000:CPP}
+Bjarne Stroustrup.
+\newblock {\em Die {C++} {P}rogrammiersprache}.
+\newblock Addison-Wesley, 4.~aktualisierte edition, 2000.
+
+\bibitem[Str03]{Strasser:2003:PMS}
+Thomas Strasser.
+\newblock {\em Programmieren mit {S}til. Eine systematische {E}inf\"uhrung}.
+\newblock dpunkt, 2003.
+
+\bibitem[Str10]{Stroustrup:2010:EPC}
+Bjarne Stroustrup.
+\newblock {\em Einf\"uhrung in die Programmierung mit {C++}}.
+\newblock Pearson Studium, M\"unchen, 2010.
+
+\bibitem[Wil12]{Will:2012:CPT}
+Torsten Will.
+\newblock {\em C++11 programmieren: 60 Techniken f\"ur guten C++11-Code}.
+\newblock Galileo Computing, 2012.
+\newblock mit CD-ROM.
+
+\bibitem[Wil18]{Will:2018:CPT}
+Torsten Will.
+\newblock {\em C++11 Das umfassende Handbuch - Aktuell zu C++17}.
+\newblock Rheinwerk Computing, 1st edition, 2018.
+\newblock Bsp. zum Download; 41,10 EUR.
+
+\bibitem[Wil20a]{Will:2020:CST}
+Torsten Will.
+\newblock {\em The C++ Standard Library}.
+\newblock \htmladdnormallink{Leanpub}{http://leanpub.com/cpplibrary}, 3rd
+  edition, 2020.
+
+\bibitem[Wil20b]{Will:2020:CGD}
+Torsten Will.
+\newblock {\em C++20 Get the Details}.
+\newblock \htmladdnormallink{Leanpub}{http://leanpub.com/c20}, 2020.
+
+\bibitem[Wil20c]{Will:2020:CMC}
+Torsten Will.
+\newblock {\em Concurrency with Modern C++}.
+\newblock
+  \htmladdnormallink{Leanpub}{http://leanpub.com/concurrencywithmodernc}, 2020.
+
+\bibitem[Wol06]{Wolf:2006:CAZ}
+J{\"u}rgen Wolf.
+\newblock {\em C++ von A bis Z}.
+\newblock Galileo Press, 2006.
+\newblock mit CD-ROM.
+
+\bibitem[Yan01]{Yang:2001:COO}
+Daoqi Yang.
+\newblock {\em C++ and object-oriented numeric computing for Scientists and
+  Engineers}.
+\newblock Springer, New York, 2001.
+
+\end{thebibliography}

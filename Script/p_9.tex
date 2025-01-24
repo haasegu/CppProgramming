@@ -1,0 +1,425 @@
+\chapter{Erste Schritte mit Klassen}
+\label{p:9}
+%
+Member -- Methoden; Kapselung; Kopierkonstruktor; Zuweisungsoperator
+
+Eine Klasse ist ein Konzept, welches Daten gemeinsam mit Funktionen auf diesen Daten definiert.
+Daher sind diese Funktionen an ein Objekt dieser Klasse gebunden und diese Art des
+Programmierens wird \emph{objektorientiert} (OOP) genannt.
+Ihre wahre Stärke spielen Klassen im Weiteren bei Klassenhierarchien und beim
+Polymorphismus in \S\ref{p:12} aus.
+
+Um klarer zwischen strukturierter und objektorientierten Konzepten zu unterscheiden werden
+folgende Begriffe benutzt:
+\begin{itemize}
+    \item Daten in einer Klasse $\longrightarrow$ \emph{Member}\index{Member} (auch \emph{Eigenschaften}),
+    \item Funktion in einer Klasse $\longrightarrow$ \emph{Methode}\index{Methode}
+    \item Variable vom Typ der Klasse  $\longrightarrow$ \emph{Instanz}\index{Instanz}
+    (auch \emph{Objekt}) der Klasse.
+    \item \emph{Konstruktoren} dienen der Erstinitialisierung von Membern bei Deklaration einer Instanz.
+    \item Der \emph{Destruktor} gibt Ressourcen wieder frei, wenn der Gültigkeitsbereich (scope)
+      einer Instanz endet.
+\end{itemize}
+Natürlich wird strukturierte Programmierung innerhalb der Methoden wieder benötigt.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Unsere Klasse \texttt{Komplex}}
+\label{p:9.1}
+%
+Wir führen weitere Begriffe an Hand der Beispielklasse \texttt{Komplex} ein, welche
+eine komplexe Zahl samt der entsprechenden Funktionalität speichert.
+Es gibt gibt bereits eine Template-Klasse
+\ghref{http://www.cplusplus.com/reference/complex/complex/?kw=complex}{\texttt{complex}}
+mit dieser Funktionalität, aber wir bezwecken hier eine einfache Einführung in Klassen.
+Aus Gründen des besseren Verständnisses werden die grundlegend notwendigen Methoden
+deklariert, obwohl diese vom Compiler auch automatisch angelegt würden.
+
+\includecode[linerange={5-34},label=lst:komplex_main.cpp]{komplex/main.cpp}{Nutzung unserer Klasse Komplex}
+%
+Mit unserer Klasse \texttt{Komplex} soll das Programm in Listing~\ref{lst:komplex_main.cpp} funktionieren.
+\begin{itemize}
+    \item \textbf{Zeilen 6-8}: Deklaration (und Initialisierung) dreier Instanzen von \texttt{Komplex}.
+    \item \textbf{Zeilen 9,15,17}: Addition zweier Instanzen und Zuweisung des Ergebnisses an eine dritte Instanz.
+    \item \textbf{Zeilen 11,12,18,22}: Ausgabe jeweils einer Instanz über die Standardausgabe.
+    \item \textbf{Zeile 24}: Ende des Gültigkeitsbereichs der drei Instanzen,
+    impliziter dreifacher Aufruf des Klassendestruktors.
+\end{itemize}
+Jede komplexe Zahl besteht aus Real- und Imaginärteil, welche wir als Member speichern müssen.
+Die Methoden der Klasse ergeben sich erstmal aus den Anforderungen des Listing.
+Das Projekt besteht aus dem Hauptprogramm \emph{main.cpp}, dem Headerfile unserer Klasse
+\emph{komplex.h} mit allen Deklarationen und dem Sourcefile \emph{komplex.cpp} mit den
+Implementierungen der Methoden unserer Klasse.
+Die Deklaration der Klasse kann GUI-unterstützt in codeblocks erfolgen
+(File $\rightarrow$ New $\rightarrow$ Class), allerdings werden für die Methoden nur die
+formalen Hüllen bereitgestellt - nicht die Implementierung!
+
+\includecode[linerange={1-4,8-33,70-81,98-98},label=lst:komplex_komplex.h_a]{komplex/komplex.h}
+{Teil des Headerfile für \texttt{Komplex}}
+%
+\begin{itemize}
+    \item \textbf{Zeilen 1,2,39}: Die \emph{Header Guards} sind Präprozessoranweisungen
+   welche verhindern, daß die Deklarationen (und gegebenfalls auch Definitionen) nur einmal
+   in jedes Quellfile eingebunden werden. Unbedingt benutzen!
+   \item \textbf{Zeilen 5,6,38} sind der Rahmen für die Deklaration der Klasse.
+   \item Einige Methoden sind in Zeilen 33 aufgeführt.
+   \item Die Member (Real- und Imaginärteil) werden in Zeilen 36-37 vom Typ \texttt{double} deklariert.
+   \item \textbf{Zeilen 7,34,35}: Für Member und Methoden werden Zugriffsrechte vergeben:
+   \begin{itemize}
+      \item Mit \emph{public} gekennzeichnte Member und Methoden sind von außerhalb der Klasse sichtbar und benutzbar.
+      \item  \emph{private} Member und Methoden sind nur innerhalb der Klasse sichtbar und benutzbar.
+      \item Sind Member und Methoden als \emph{protected} gekennzeichnet, dann sind diese nur innerhalb der Klasse, oder von ihr abgeleiteter Klassen sichtbar und benutzbar (im Listing über einne leeren Menge).
+      \item Aus Gründen der \emph{Datenkapselung} sollen Member nicht public sein. Um auf diese
+       zugreifen zu können, müssen Getter-/Settermethoden von der Klasse bereitgestellt werden.
+   \end{itemize}
+   \item \textbf{Zeilen 9, 15, 20}: Deklaration des Standardkonstruktors (leere Parameterliste),
+     eines Parameterkonstruktors und des Kopierkonstruktors.
+   \item \textbf{Zeile 22}: Deklaration des Destruktors.
+   \item \textbf{Zeile 26}: Deklaration des Zuweisungsoperators \texttt{operator=}\;.
+   \item \textbf{Zeile 33}: Deklaration des Additionsoperators \texttt{operator+}\;.
+     Das Schlüsselwort \texttt{const} am Ende der Deklaration garantiert, daß diese Methode
+     keine Member der aufrufenden Instanz verändert. Damit ist diese Methode für kontante
+     Instanzen anwendbar.
+   \item Die Klasse ist für die Verarbeitung mit doygen dokumentiert.
+\end{itemize}
+
+%
+\section{Konstruktoren}
+\label{p:9.2}
+Konstruktoren dienen der Erstinitialisierung von Membern einer Klasse und sie haben keinen
+Rückgabetyp.
+Man unterscheidet im wesentlichen zwischen dem Standardkonstruktor mit leerer Parameterliste,
+den Parameterkonstruktoren und den Kopierkonstruktoren.
+Ob diese Konstruktoren zur Funktionalität einer Klasse dazugehören sollen oder
+nicht liegt im Ermessen des Designers der Klasse.
+
+Deren Deklarationen erfolgt im Headerfile \emph{komplex.h}, die Implemenierungen schreiben wir hier
+in das Sourcefile \emph{komplex.cpp}.
+%
+%
+
+\subsection{Standardkonstruktor}
+\label{p:9.2.1}
+%
+Damit eine Instanz über \verb|  Komplex c; | deklariert werden kann, ist
+der Standardkonstruktor\index{Standardkonstruktor} notwendig.
+%
+\includecode[linerange={8-10,12-12,81-81},label=lst:komplex_komplex.h_b]{komplex/komplex.h}
+{Deklaration des Standardkonstruktors im Headerfile}
+%
+Wir implementieren die Methode im Sourcefile.
+\includecode[linerange={3-3,7-11},label=lst:komplex_komplex.cpp_b]{komplex/komplex.cpp}
+{Implementierung des Standardkonstruktors im Sourcefile}
+%
+Jede Methode ist ein Funktion, welche genau einer Klasse zugeordnet ist.
+Damit muß der Klassenname zur Identifikation mit in die Signatur\index{Signatur} der Funktion aufgenommen werden.
+Damit hat der Standardkonstruktor der Klasse \texttt{Komplex} die Signatur
+\verb| Komplex::Komplex( ) | welche im Sourcefile so angegeben werden muß.
+
+Klassenmember sollten in der \emph{Member Initialization List}\index{Member Initialization List}
+(Zeile~3 in Listing~\ref{lst:komplex_komplex.cpp_b}) initialisiert werden.
+Für konstante Member und Basisklassen einer Klasse ist dies die einzige
+Möglichkeit der Initialisierung.
+Damit bleibt der Funktionskörper bei uns leer, was aber bei komplizierteren
+Klassen nicht mehr der Fall sein muß.
+
+\subsection{Parameterkonstruktor}
+\label{p:9.2.2}
+%
+Eine Instanzdeklaration  \verb|  Komplex a(3.2,-1.1); | erfordert
+den entsprechenden Parameterkonstruktor\index{Parameterkonstruktor}.
+\includecode[linerange={8-10,17-18,81-81},label=lst:komplex_komplex.h_c]{komplex/komplex.h}
+{Deklaration des Parameterkonstruktors im Headerfile}
+%
+Die Member werden in der Implementierung wieder über die {Member Initialization List}
+deklariert
+\includecode[linerange={3-3,13-17},label=lst:komplex_komplex.cpp_c]{komplex/komplex.cpp}
+{Implementierung des Parameterkonstruktors im Sourcefile}
+%
+Durch das optionale zweite Argument der Deklaration in Listing~\ref{lst:komplex_komplex.h_c}
+kann der Konstruktor auch als \verb| Komplex aa(-7.8) |  verwendet werden, wodurch
+eine komplexe Zahl mit Imaginärteil gleich~0 festgelegt wird.
+
+Dieser Konstruktor wird auch benutzt, um ein Casting\index{Casting}
+von \texttt{double} zu \texttt{Komplex} durchführen wie in Zeile~17 von
+Listing~\ref{lst:komplex_main.cpp}.
+Dies kann notwendig werden, falls einer Funktion eine \texttt{double}-Variable
+übergeben wird obwohl eine \texttt{Komplex}-Variable erwartet wird.
+Diese implizite Nutzung des Konstruktor kann durch das Schlüsselwort
+\texttt{explicit} in der Deklaration verhindert werden.
+
+Eine Klasse kann mehrere Parameterkonstruktoren haben, selbstverständlich
+mit unterschiedlichen Parameterlisten.
+
+\subsection{Kopierkonstruktor}
+\label{p:9.2.3}
+%
+Eine Deklaration  \verb|  Komplex b(a); | erfordert
+den entsprechenden Kopierkonstruktor\index{Kopierkonstruktor}.
+\includecode[linerange={8-10,24-24,81-81},label=lst:komplex_komplex.h_d]{komplex/komplex.h}
+{Deklaration des Kopierkonstruktor im Headerfile}
+%
+Die Member werden in der Implementierung wieder über die {Member Initialization List}
+deklariert
+\includecode[linerange={3-3,19-23},label=lst:komplex_komplex.cpp_d]{komplex/komplex.cpp}
+{Implementierung des Kopierkonstruktors im Sourcefile}
+%
+Der Zugriff auf private Member (\verb| org._re |) ist hier erlaubt, da die Methode
+(also unser Konstruktor) zur gleichen Klasse gehört wie die Instanz~\texttt{org}.
+
+Der Kopierkonstruktor ist ein spezieller Parameterkonstruktor einer Instanz der Klasse als
+einziges Element der Parameterliste. Unser Kopierkonstruktor wird auch benutzt, wenn eine Instanz
+der Klasse \texttt{Komplex} per value (also als Kopie!) an eine Funktion/Methode übergeben wird.
+Wird die Instanz dagegen per reference übergeben, dann ist keinerlei Kopieroperation notwendig!
+%
+%
+%
+\section{Der Destruktor}
+\label{p:9.3}
+%
+Der Destruktor\index{Destruktor} wird automatisch aufgerufen wenn das Ende des Gültigkeitsbereiches
+einer Instanz dieser Klasse erreicht wird (schließende Klammer~$\}$~).
+Diese Methode hat keinen Rückgabetyp.
+Die Funktion des Destruktors besteht darin, die von der Instanz belegten Ressourcen
+ordnungsgemäß freizugeben. Es gibt im Code stets soviele Desktruktoraufrufe wie es in Summe
+Konstruktoraufrufe gibt.
+Der Destruktor kann nicht direkt aufgerufen werden.
+%
+\includecode[linerange={8-10,27-27,81-81},label=lst:komplex_komplex.h_e]{komplex/komplex.h}
+{Deklaration des Destruktors im Headerfile}
+%
+Falls der Destruktor automatisch vom Compiler generiert wird oder, wie bei uns,
+einen leeren Funktionskörper enthält, dann werden die Destruktoren der Member (und der Basisklassen)
+aufgerufen. Das Schlüsselwort \verb|virtual| sollte bei Klassenhierarchien
+zum Destruktor hinzugefügt werden um die korrekte Freigabe aller Ressourcen der Hierarchie
+zu garantieren.
+\includecode[linerange={3-3,25-28},label=lst:komplex_komplex.cpp_e]{komplex/komplex.cpp}
+{Implementierung des Destruktors im Sourcefile}
+%
+Bei eigenem dynamischen Resourcenmanagement muß der Destruktor diese Ressourcen freigeben.
+Ansonsten wird Speicher nicht wieder freigegeben und irgendwann sind selbts 64~GB voll.
+
+%
+\section{Der Zuweisungsoperator}
+\label{p:9.4}
+Eine Zuweisung \verb| c = d; | wird vom Compiler als \verb|c.operator=(d)| umgesetzt,
+es wird also eine Methode \verb| Komplex::operator= | in unserer Klasse benötigt.
+Dieser Zuweisungsoperator ist die erste \glqq normale\grqq\  Methode, d.h., mit Rückgabetyp,
+unserer Klasse.
+%
+\includecode[linerange={8-10,33-33,81-81},label=lst:komplex_komplex.h_f]{komplex/komplex.h}
+{Deklaration des Zuweisungsoperators im Headerfile}
+%
+Die Implementierung der Zuweisung bei unserer Klasse ist nicht schwer.
+Der Test \verb| if ( this!=&rhs)  | verhindert die Selbstzuweisung im Falle von \verb| c=c |,
+mit \texttt{this} als dem Pointer auf die aktuelle Instanz
+(bei uns also~\texttt{c} und somit ist hier \verb|this==&c|).{}
+%
+\includecode[linerange={3-3,30-38},label=lst:komplex_komplex.cpp_f]{komplex/komplex.cpp}
+{Implementierung des Zuweisungsoperators im Sourcefile}
+%
+Die dreifache Verwendung von \verb|Komplex| in Zeile~2 mag verwirrend erscheinen, aber diese
+bezeichnen Rückgabetyp, Klassenname und Typ des Inputparameters.
+Der Rückgabetyp \verb|Komplex&| erfordert die Rückgabe einer Referenz auf die aktuelle Instanz
+(wieder~\texttt{c}), realsiert in Zeile 9.
+Damit sind Mehrfachzuweisungen wie \verb| f = c = d; |, aber auf Funktionsaufrufe wie
+\verb| print(c=d); | möglich.
+
+Es können auch mehrere Zuweisungsoperatoren mit anderen Klassen als Parameter
+definiert werden. Mit jedem neuen Zuweisungsoperator erfolgt eine
+\emph{Operatorüberladung}\index{Operatorüberladung}, d.h., gleicher Operator aber andere
+Parameterliste.
+
+%
+\section{Compilergenerierte Methoden}
+\label{p:9.5}
+Folgende Methoden werden vom Compiler {automatisch} generiert wenn diese
+in der Klassendeklaration nicht aufscheinen:
+\begin{itemize}
+    \item Kopierkonstruktor und Movekonstruktor (mit der eigenen Klasse)
+    \item Zuweisungsoperator und Movezuweisung (mit der eigenen Klasse)
+    \item Destruktor
+\end{itemize}
+Solange man in seiner Klasse nur einfache Datentypen, Klassen oder Container der STL
+für die Member benutzt sind die compilergenerierten Methoden völlig ausreichend.
+Auch eigene Klassen können dabei als Typ von Membern fungieren solange diese die
+notwendigen Methoden besitzen. 
+\\
+Es empfiehlt sich die standardmäßig generierten Methode per \verb|=default| zu kennzeichnen, 
+siehe \ghref{https://en.cppreference.com/w/cpp/language/rule_of_three}{\emph{Rule of Five}}.
+\index{Rule of Five}\index{=default}
+%
+\begin{lstlisting}[caption=Rule of Five: explizit alles default,label=lst:9_5_1,basicstyle=\scriptsize]{}
+class Komplex
+{
+public:
+   // Rule of five
+    Komplex(const Komplex&  org)            = default; // Copykonstruktor
+    Komplex(      Komplex&& org)            = default; // Movekonstruktor
+    Komplex& operator=(const Komplex&  rhs) = default; // Copy-Zuweisungsoperator
+    Komplex& operator=(      Komplex&& rhs) = default; // Move-Zuweisungsoperator
+    ~Komplex()                              = default; // Destruktor
+}
+\end{lstlisting}
+
+Sobald Sie eine eigene dynamische Speicherverwaltung Ihrer Member verwenden wollen
+(\verb|new|/\verb|delete[]| oder \verb|malloc|/\verb|free|), dann müssen
+Sie obige  Methoden selbst implementieren (deep copy vs.\  shallow copy)!
+
+Will man obige (oder andere) Methoden 
+\ghref{https://en.cppreference.com/w/cpp/language/function\#Deleted_functions}{explizit verbieten}, 
+dann ist der Deklaration ein \verb| = delete; | anzuschließen.
+Ein generelles Verbot unseres Kopierkonstruktors wäre also im Headerfile
+via \verb|  Komplex(const Komplex& org) = delete;| zu erreichen.
+\index{=delete}
+
+%http://www.developerfusion.com/article/133063/constructors-in-c11/
+%http://de.wikibooks.org/wiki/C%2B%2B-Programmierung/_Eigene_Datentypen_definieren/_Leere_Klassen%3F#Compilergenerierte_Funktionen_explizit_verbieten
+
+%
+\section{Zugriffsmethoden}
+\label{p:9.6}
+Wenn die Member einer Klasse alle public wären, dann könnte man auf diese z.B.,
+über \verb| c._re | direkt zugreifen. Jede Änderung der Membernamen oder
+deren Speicherung würde ein Adaptieren aller Codes mit direktem Zugriff nach sich ziehen.
+Daher sollen \textbf{Member immer private} sein und nur über Zugriffsmethoden
+der Klasse erreichbar sein.
+
+Diese, oft als Getter-/Settermethoden bezeichneten, Zugriffsmethoden werden aus
+Effizienzgründen normalerweise gleich als Inlinemethoden in der Klassendeklaration
+implementiert. Das folgende Listing zeigt die Setter- (schreibender Zugriff) und
+Gettermethode (lesender Zugriff) für den Realteil,
+die Methoden für den Imaginärteil sind analog.
+Die Getter-/Settermethoden können beliebig bezeichnet werden.
+
+\includecode[linerange={8-10,39-43,48-51,81-81},label=lst:komplex_komplex.h_g]{komplex/komplex.h}
+{Deklaration und Implemenierung de Getter/Setter im Headerfile}
+
+Das Listing~\ref{lst:demo_zugriff} zeigt den Einsatz der Getter-/Settermethoden.
+Insbesondere ist bei der Deklaration der Gettermethoden (also beim Lesen) darauf zu achten,
+daß diese Methoden als \verb|const| gekennzeichnet werden.
+Ansonsten können im gesamten Code keinerlei konstante Instanzen der Klasse verwendet werden.
+\begin{lstlisting}[caption={Demonstration der Getter/Setter},label=lst:demo_zugriff,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+{
+  Komplex d(3.2, -1);
+  double dd = d.Get_re();             // get real part of 'd'
+  d.Set_re(5.2);                      // new value for  real part of 'd'
+
+  const Komplex b(-1.2, 3);           // 'b' is a constant instance
+  cout << b.Get_re();                 //  ==> only constant methods allowed for 'b'
+}
+\end{lstlisting}
+%
+%
+%
+\section{Der Additionsoperator}
+\label{p:9.7}
+In Listing~\ref{lst:komplex_main.cpp} benötigen wir mehrfach den Additionsoperator ($+$), welchen
+wir durch \emph{Operatorüberladung}\index{Operatorüberladung} für unsere
+Klasse \texttt{Komplex} nutzbar machen können.
+
+Die Operation \verb| a+b |  kann vom Compiler als \verb| a.operator+(b) | interpretiert werden
+wodurch eine entsprechende Methode \verb|Komplex::operator+| mit entsprechendem Argument
+in der Klasse notwendig wird.
+%
+\includecode[linerange={8-10,70-75,81-81},label=lst:komplex_komplex.h_h]{komplex/komplex.h}
+{Deklaration des Additionsoperators im Headerfile}
+%
+Die Addition zweier komplexer Zahlen  erfolgt durch die Addition der entsprechenden
+Real- und Imaginärteile.
+Beide Summanden bleiben unverändert, damit ist diese Methode \texttt{const}.
+%
+\includecode[linerange={3-3,40-44},label=lst:komplex_komplex.cpp_h]{komplex/komplex.cpp}
+{Implementierung der Methode zum Addieren}
+%
+Der Rückgabetyp des Additonsoperators darf keine Referenz sein,
+da diese auf die temporäre Instanz~\texttt{tmp} verweist welche
+nach dem Verlassen des Scopes der Methode nicht mehr existiert.
+Der Funktionskörper der Methode kann auch ganz kompakt als
+\verb|return Komplex(_re+rhs._re, _im+rhs._im);| geschrieben werden.
+
+Zeile~5 im Listing~\ref{lst:demo_addition} zeigt, daß der Additionsoperator unserer Klasse, im Verbund
+mit dem Parameterkonstruktor, auch die Addition mit einer \texttt{double}-Zahl als
+zweitem Summanden erlaubt.
+\begin{lstlisting}[caption={Additionsoperator erweitert},label=lst:demo_addition,
+basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+{
+  Komplex a(3.2, -1), b;
+  double dd = -2.1;
+
+  c = a + dd;              // a.operator+( Komplex(dd,0.0) )
+  c = dd + a;              // operator+(const double, const Komplex&)
+}
+\end{lstlisting}
+%
+Dies gelingt aber nicht mehr wenn der erste Summand eine \texttt{double}-Zahl ist, da
+dann die hier nicht mögliche  Methode \verb|double::operator+| benötigt würde.
+Der Ausweg besteht in einer Funktion (keine Methode!)
+\verb|operator+(const double, const Komplex&)| welche die Summanden vertauscht und dann
+die Methode aus unserer Klasse aufruft.
+%
+\includecode[linerange={3-3,55-60},label=lst:komplex_komplex.cpp_i]{komplex/komplex.cpp}
+{Implementierung der Funktion zum Addieren mit \texttt{double}
+ als erstem Summanden in Sourcefile}
+%
+Als Kommentar ist eine andere Möglichkeit der Implementierung angegeben.
+
+\underline{Bemerkung:} Eine allgemeinere Lösung der Implementierung für vertauschbare
+Operatoren arbeitet mit der Methode \verb|operator+=|
+und der Funktion \verb|operator+(const Komplex&, const Komplex&)|.
+%
+%
+%
+\section{Der Ausgabeoperator}
+\label{p:9.8}
+Um eine Klasseninstanz einfach via \verb|cout << a|  auszugeben ist die
+Funktion (keine Methode!) des Ausgabeoperators \verb|operator<<| erforderlich, welche
+hierzu für eine Instanz unserer Klasse überladen wird.
+%
+\includecode[linerange={3-4,85-89},label=lst:komplex_komplex.j_f]{komplex/komplex.h}
+{Deklaration des Ausgabeoperators im Headerfile}
+%
+Beim Ausgabeoperator ist der Rückgabetype wie auch der erste Parameter mit \verb|ostream&|
+(Outputstream) festgelegt. Da \verb|operator<<| eine Funktion ist darf diese
+nicht auf direkt auf die privaten Member der Klasse zugreifen, sondern
+nur über die Zugriffsmethoden.
+%
+\includecode[linerange={1-3,49-53},label=lst:komplex_komplex.cpp_j]{komplex/komplex.cpp}
+{Implementierung des Ausgabeoperators im Sourcefile}
+%
+
+\underline{Bemerkung:} Der Mechanismus der Datenkapselung
+(nur eigene Methoden dürfen auf Member zugreifen) läßt sich über \texttt{friend}-Funktionen
+\index{friend} aufweichen. Dies wird im Rahmen dieser LV nicht empfohlen.
+%
+%\begin{lstlisting}[caption={Ausgabeoerator als friend-Funktion},label=lst:demo_friend,
+%basicstyle=\scriptsize,numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt]
+%// Deklaration
+%class Komplex
+%{
+%public:
+     %...
+     %friendo stream& operator<<(ostream& s, const Komplex& rhs);
+%};
+
+%// Implementierung
+%ostream& operator<<(ostream& s, const Komplex& rhs)
+%{
+    %s << "("<< rhs._re<< ","<<rhs._im <<")";   // direct access to private members
+    %return s;
+%}
+%\end{lstlisting}
+
+%
+
+
+
+%\section{Entwurf einer Klasse \texttt{StuKomplex}}
+%\label{p:9.9}
+%Beispiel V_{14}/v_{7a}
+
+
+
+
+
+
