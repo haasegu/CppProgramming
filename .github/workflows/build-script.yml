@@ -7,7 +7,7 @@ on:
   pull_request:
     paths:
       - 'Script/**'
-      - 'Beispiele/**'`
+      - 'Beispiele/**'
       - '.github/workflows/**'
   workflow_dispatch:
 
