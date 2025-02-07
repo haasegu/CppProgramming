@@ -1,0 +1,40 @@
+#!/bin/bash
+
+EXAMPLES='file_io v_5b v_5c ConstExpr v_5d char_sum v_6a'
+EXAMPLES=`ls -d */`
+# EXAMPLES='template_seq'
+COMPTYPE='GCC_ CLANG_'
+#' ICC_ PGI_'
+
+#echo ${EXAMPLES}
+#exit
+
+LOG_FILE='compile.log'
+rm -f ${LOG_FILE}
+
+echo
+echo '     Compile examples'
+echo
+
+
+for verz in ${EXAMPLES}
+  do echo                                          2>&1 | tee -a  ${LOG_FILE}
+    echo '-----------  '  $verz  '  -----------'   2>&1 | tee -a  ${LOG_FILE}
+    pushd $verz         > /dev/null
+    echo                                           2>&1 | tee -a  ../${LOG_FILE}
+    pwd                                            2>&1 | tee -a  ../${LOG_FILE}
+    for comp in ${COMPTYPE}
+    do echo                                        2>&1 | tee -a  ../${LOG_FILE}
+      echo '###########  '  $comp '  ###########'  2>&1 | tee -a  ../${LOG_FILE}
+      echo                                         2>&1 | tee -a  ../${LOG_FILE}
+      make clean COMPILER=${comp}                  2>&1 | tee -a  ../${LOG_FILE}
+      make COMPILER=${comp}                        2>&1 | tee -a  ../${LOG_FILE}
+      make clean COMPILER=${comp}                  2>&1 | tee -a  ../${LOG_FILE}
+#       make run COMPILER=${comp}                    2>&1 | tee -a  ../${LOG_FILE}
+    done
+    make COMPILER=CLANG_ tidy_check
+    make clean_all
+    #make tar
+    popd         > /dev/null
+  done
+    

@@ -1,0 +1,8 @@
+------------------- 2021-03-12
+Done in v_3a/Doxyfile
+GENERATE_TREEVIEW      = YES
+HAVE_DOT               = YES
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+
+ToDo: Apply changes to */Doxyfile

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+EXAMPLES='v_5d v_6a v_7a v_7b v_8b  v_8c v_9a v_9b graph graph_1 graph_2'
+# EXAMPLES='template_seq'
+
+for verz in ${EXAMPLES}
+  do echo                                          2>&1 | tee -a  ${LOG_FILE}
+    echo '-----------  '  $verz  '  -----------'   2>&1 | tee -a  ${LOG_FILE}
+    pushd $verz         > /dev/null
+    make zip
+    popd         > /dev/null
+  done
+    
