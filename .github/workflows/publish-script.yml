@@ -27,6 +27,10 @@ jobs:
             mv main.pdf script_programmieren.pdf
 
       - name: Commit to download repository
+        # To enable the pushing from the action, the GITHUB_TOKEN needs additional rights.
+        # These can be granted via:
+        #   Settings > Actions > General
+        #   Set the workflow permissions to "Read and write permissions"
         run: |
           set -x
           git clone -b download https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git download
